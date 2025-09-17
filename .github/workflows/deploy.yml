@@ -1,0 +1,46 @@
+name: Deploy SivaSuthakaran Sanjeev Portfolio
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - sanjeev-dev
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # 3. Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Build the project (different for dev and prod if needed)
+      - name: Build project
+        run: |
+          if [ "${GITHUB_REF}" == "refs/heads/main" ]; then
+            echo "Building for production..."
+            npm run build
+          else
+            echo "Building for development..."
+            npm run build:dev || npm run build
+          fi
+
+      # 5. Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
+          destination_branch: ${{ github.ref == 'refs/heads/main' && 'gh-pages' || 'gh-pages-dev' }}
