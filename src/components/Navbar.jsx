@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Code2, Sun, Moon, X, Menu } from "lucide-react";
-import { useTheme } from "../../context/ThemeContext.jsx";
+import { useTheme } from "../context/ThemeContext.jsx";
 
 const Navbar = () => {
     const { isDarkMode, toggleDarkMode } = useTheme();
