@@ -18,13 +18,13 @@ const Navbar = () => {
     return (
         <motion.nav
             style={{ opacity: 1 }}
-            className={`fixed top-0 w-full z-50 px-6 py-4 ${
-                isDarkMode ? "bg-gray-950/80" : "bg-gray-50/80"
-            } backdrop-blur-md border-b ${
+            className={`fixed top-0 w-full z-50 px-6 h-16 md:h-20 ${
+                isDarkMode ? "bg-gray-950" : "bg-gray-50"
+            } border-b ${
                 isDarkMode ? "border-gray-800" : "border-gray-200"
-            }`}
+            } shadow-sm`}
         >
-            <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="max-w-7xl mx-auto h-full flex items-center justify-between">
                 {/* Logo + Title */}
                 <motion.div
                     whileHover={{ scale: 1.05 }}
@@ -117,11 +117,11 @@ const Navbar = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.3 }}
-                        className={`md:hidden mt-4 p-4 rounded-lg ${
+                        className={`md:hidden absolute inset-x-0 top-full z-40 px-6 pt-3 pb-4 ${
                             isDarkMode ? "bg-gray-900" : "bg-white"
                         } border ${
                             isDarkMode ? "border-gray-800" : "border-gray-200"
-                        }`}
+                        } shadow-lg`}
                     >
                         {/* Mobile nav items go here */}
                         {["Home", "Skills", "Work", "About", "Contact"].map((item, index) => (

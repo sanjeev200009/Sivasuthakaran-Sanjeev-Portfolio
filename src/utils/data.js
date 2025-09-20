@@ -19,13 +19,13 @@ import {
 
 import { FiGithub, FiLinkedin, FiTwitter} from "react-icons/fi";
 
-import PROJECT_IMG_1 from "../images/project-1.png";
-import PROJECT_IMG_2 from "../images/project-2.png";
-import PROJECT_IMG_3 from "../images/project-3.png";
-import PROJECT_IMG_4 from "../images/project-4.png";
-import PROJECT_IMG_5 from "../images/project-5.png";
-import PROJECT_IMG_6 from "../images/project-6.png";
-import PROJECT_IMG_7 from "../images/project-7.png";
+import PROJECT_IMG_1 from "../assets/images/project-1.png";
+import PROJECT_IMG_2 from "../assets/images/project-1.png";
+import PROJECT_IMG_3 from "../assets/images/project-1.png";
+import PROJECT_IMG_4 from "../assets/images/project-1.png";
+import PROJECT_IMG_5 from "../assets/images/project-1.png";
+import PROJECT_IMG_6 from "../assets/images/project-1.png";
+import PROJECT_IMG_7 from "../assets/images/project-1.png";
 import {FaGithub, FaMedium, FaTwitter} from "react-icons/fa";
 
 export const SKILLS_CATEGORIES = [
