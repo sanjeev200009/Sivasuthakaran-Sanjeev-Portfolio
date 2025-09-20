@@ -3,6 +3,7 @@ import {
     useScroll,
     useTransform,
 } from "framer-motion"
+import { useEffect, useState } from "react";
 
 import {
     ArrowDown,
@@ -13,40 +14,28 @@ import { FiGithub, FiLinkedin } from "react-icons/fi"
 import { useTheme } from "../../context/ThemeContext.jsx";
 
 import PROFILE_PIC from "../../assets/images/profile.jpg"
+import { containerVariants, itemVariants} from "../../utils/Helper.js";
 
 function HeroSection() {
     const { isDarkMode } = useTheme();
     const { scrollY } = useScroll();
-    const heroY = useTransform(scrollY, [0, 500], [0, -100]);
+    // Limit parallax shift to avoid creating a visible gap near the navbar
+    const heroY = useTransform(scrollY, [0, 400], [0, -40]);
+    // Disable upward parallax on small screens to avoid content sliding under the navbar
+    const [isLarge, setIsLarge] = useState(false);
+    useEffect(() => {
+        const mq = window.matchMedia('(min-width: 1024px)');
+        const update = () => setIsLarge(mq.matches);
+        update();
+        mq.addEventListener('change', update);
+        return () => mq.removeEventListener('change', update);
+    }, []);
 
     const scrollToSection = (sectionId) => {
         const element = document.getElementById(sectionId);
         if (element) {
             element.scrollIntoView({ behavior: "smooth" });
         }
-    };
-
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.2,
-                delayChildren: 0.3,
-            },
-        },
-    };
-
-    const itemVariants = {
-        hidden: { y: 30, opacity: 0 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.8,
-                ease: "easeOut",
-            },
-        },
     };
 
     const textVariants = {
@@ -76,12 +65,12 @@ function HeroSection() {
 
     return (
         <div
-            className={`min-h-screen transition-all duration-500 ${
+            className={`transition-all duration-500 ${
                 isDarkMode ? "bg-gray-950 text-white" : "bg-gray-50 text-gray-900"
             }`}
         >
             {/* hero section */}
-            <motion.section id="home" style={{ y: heroY }} className="min-h-screen flex items-center justify-center relative px-6 pt-10 ">
+            <motion.section id="home" className="min-h-screen scroll-mt-16 md:scroll-mt-20 pt-20 md:pt-24 pb-0 flex items-start md:items-center justify-center relative px-6">
                 <div className="absolute inset-0 overflow-hidden ">
                     <motion.div
                         animate={{
@@ -113,18 +102,34 @@ function HeroSection() {
                     />
                 </div>
 
-                <div className="max-w-7xl mx-auto w-full z-10 mt-20">
+                <motion.div style={{ y: isLarge ? heroY : 0 }} className="max-w-7xl mx-auto w-full z-10 mt-2 md:mt-0">
                     {/* mobile layout - Centered */}
                     <div className="block lg:hidden">
                         <motion.div
                             initial="hidden"
                             animate="visible"
                             variants={containerVariants}
-                            className="text-center"
+                            className="text-center mt-4 sm:mt-5"
                         >
                             {/* Profile Image - Mobile */}
                             <motion.div variants={imageVariants} className="mb-8">
-                                <div className="w-32 h-32 mx-auto relative">
+                                {/* Tech stack (mobile) shown above the image to keep image top visible */}
+                                <div
+                                    className={`mx-auto mb-3 w-max z-20 flex items-center gap-2 px-3 py-1 rounded-full text-[10px] sm:text-xs shadow-md pointer-events-none ${
+                                        isDarkMode
+                                            ? "bg-gray-900/80 text-gray-200"
+                                            : "bg-white/80 text-gray-700"
+                                    }`}
+                                >
+                                    <span>React</span>
+                                    <span className={isDarkMode ? "text-gray-500" : "text-gray-400"}>•</span>
+                                    <span>Node.js</span>
+                                    <span className={isDarkMode ? "text-gray-500" : "text-gray-400"}>•</span>
+                                    <span>TypeScript</span>
+                                    <span className={isDarkMode ? "text-gray-500" : "text-gray-400"}>•</span>
+                                    <span>MongoDB</span>
+                                </div>
+                                <div className="w-32 h-32 mx-auto relative overflow-visible">
                                     <motion.div
                                         whileHover={{ scale: 1.05 }}
                                         className={`w-full h-32 rounded-2xl overflow-hidden border-4 ${
@@ -158,22 +163,7 @@ function HeroSection() {
                                         }}
                                         className="absolute -inset-4 rounded-2xl border border-purple-500/10"
                                     />
-                                    {/* Tech stack overlay - Mobile */}
-                                    <div
-                                        className={`absolute -top-10 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 px-3 py-1 rounded-full text-[10px] sm:text-xs shadow-md pointer-events-none ${
-                                            isDarkMode
-                                                ? "bg-gray-900/80 text-gray-200"
-                                                : "bg-white/80 text-gray-700"
-                                        }`}
-                                    >
-                                        <span>React</span>
-                                        <span className={isDarkMode ? "text-gray-500" : "text-gray-400"}>•</span>
-                                        <span>Node.js</span>
-                                        <span className={isDarkMode ? "text-gray-500" : "text-gray-400"}>•</span>
-                                        <span>TypeScript</span>
-                                        <span className={isDarkMode ? "text-gray-500" : "text-gray-400"}>•</span>
-                                        <span>MongoDB</span>
-                                    </div>
+                                    {/* Tech stack overlay removed on mobile (now placed above image) */}
                                     {/* Animated blobs behind photo - Mobile */}
                                     <motion.div
                                         aria-hidden
@@ -199,14 +189,14 @@ function HeroSection() {
 
                             <motion.div
                                 variants={textVariants}
-                                className={`text-5xl uppercase tracking-widest ${
+                                className={`text-xs sm:text-sm uppercase tracking-[0.22em] ${
                                     isDarkMode ? "text-gray-500" : "text-gray-600"
-                                } mb-4`}
+                                } mb-3`}
                             >
                                 Full stack Developer
                             </motion.div>
 
-                        <motion.h1 variants={itemVariants} className="text-3xl md:text-5xl font-light mb-6 leading-tight">
+                        <motion.h1 variants={itemVariants} className="text-2xl sm:text-3xl md:text-5xl font-light mb-6 leading-snug">
                             <span
                                 className={`${
                                     isDarkMode ? "text-white" : "text-gray-900"
@@ -258,7 +248,7 @@ function HeroSection() {
                                 Get in Touch
                             </motion.button>
                             <a
-                                href="/cv.pdf"
+                                href={`${import.meta.env.BASE_URL}demo-cv.txt`}
                                 download
                                 className={`inline-flex items-center justify-center px-8 py-3 rounded-full text-sm uppercase tracking-wider font-medium transition-all duration-300 ${
                                     isDarkMode
@@ -381,7 +371,7 @@ function HeroSection() {
                                     Get in Touch
                                 </motion.button>
                                 <a
-                                    href="/cv.pdf"
+                                    href={`${import.meta.env.BASE_URL}demo-cv.txt`}
                                     download
                                     className={`inline-flex items-center justify-center px-8 py-3 rounded-full text-sm uppercase tracking-wider font-medium transition-all duration-300 ${
                                         isDarkMode
@@ -500,13 +490,13 @@ function HeroSection() {
                             </motion.div>
                         </motion.div>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Scroll indicator */}
                 <motion.div
                     animate={{ y: [0, 8, 0] }}
                     transition={{ duration: 2, repeat: Infinity }}
-                    className="absolute bottom-8 left-1/2 -translate-x-1/2"
+                    className="absolute bottom-4 left-1/2 -translate-x-1/2"
                 >
                     <ArrowDown
                         size={20}

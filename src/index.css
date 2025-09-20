@@ -9,11 +9,33 @@
     html {
         scroll-behavior: smooth;
         font-family: var(--font-display), sans-serif;
+        height: 100%;
+        /* Offset programmatic scroll (scrollIntoView, anchor links) for fixed navbar */
+    scroll-padding-top: 4rem; /* 64px = h-16 */
     }
 
     body {
+        margin: 0;
+        height: 100%;
         overflow-x: hidden;
-        @apply bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-white;
+        background-color: transparent; /* background set on html via inline script to prevent flash */
+        @apply text-gray-900 dark:text-white;
         transition: background-color 0.3s ease, color 0.3s ease;
     }
+}
+
+/* Increase scroll padding on larger screens to match navbar height */
+@media (min-width: 768px) {
+    html {
+        scroll-padding-top: 5rem; /* 80px = h-20 */
+    }
+}
+
+/* Utility: hide scrollbars while keeping scroll functionality */
+.scrollbar-none {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+.scrollbar-none::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
 }
