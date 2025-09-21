@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { Calendar } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext.jsx";
-import { JOURNEY_STEPS, PASSIONS } from "../../utils/data.js";
+import { JOURNEY_STEPS, PASSIONS, SOCIAL_LINKS } from "../../utils/data.js";
 import { containerVariants, itemVariants } from "../../utils/Helper.js";
 
 export default function AboutSection() {
@@ -254,6 +255,16 @@ When I'm not coding, you'll find me exploring new frameworks, contributing to op
               </motion.div>
             </div>
           </motion.div>
+        </motion.div>
+
+        {/* Contact & Social Section */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mt-16 grid md:grid-cols-2 gap-8 max-w-4xl mx-auto"
+        >
         </motion.div>
       </div>
 

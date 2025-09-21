@@ -12,12 +12,25 @@ import {
 
 import { FiGithub, FiLinkedin } from "react-icons/fi"
 import { useTheme } from "../../context/ThemeContext.jsx";
+import { downloadCVFetch, downloadCV } from "../../utils/cvDownload.js";
 
 import PROFILE_PIC from "../../assets/images/profile.jpg"
 import { containerVariants, itemVariants} from "../../utils/Helper.js";
 
 function HeroSection() {
     const { isDarkMode } = useTheme();
+    
+    // CV Download handler with fallback
+    const handleCVDownload = async () => {
+        try {
+            // Try fetch method first
+            await downloadCVFetch();
+        } catch (error) {
+            // Fallback to simple link method
+            console.log('Fetch failed, trying simple download...');
+            downloadCV();
+        }
+    };
     const { scrollY } = useScroll();
     // Limit parallax shift to avoid creating a visible gap near the navbar
     const heroY = useTransform(scrollY, [0, 400], [0, -40]);
@@ -247,17 +260,18 @@ function HeroSection() {
                             >
                                 Get in Touch
                             </motion.button>
-                            <a
-                                href={`${import.meta.env.BASE_URL}demo-cv.txt`}
-                                download
+                            <motion.button
+                                onClick={handleCVDownload}
                                 className={`inline-flex items-center justify-center px-8 py-3 rounded-full text-sm uppercase tracking-wider font-medium transition-all duration-300 ${
                                     isDarkMode
                                         ? "bg-gray-800 hover:bg-gray-700 text-gray-100"
                                         : "bg-gray-200 hover:bg-gray-300 text-gray-800"
                                 }`}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
                             >
                                 Download CV
-                            </a>
+                            </motion.button>
                         </motion.div>
 
                         {/* Social links - mobile*/}
@@ -370,17 +384,18 @@ function HeroSection() {
                                 >
                                     Get in Touch
                                 </motion.button>
-                                <a
-                                    href={`${import.meta.env.BASE_URL}demo-cv.txt`}
-                                    download
+                                <motion.button
+                                    onClick={handleCVDownload}
                                     className={`inline-flex items-center justify-center px-8 py-3 rounded-full text-sm uppercase tracking-wider font-medium transition-all duration-300 ${
                                         isDarkMode
                                             ? "bg-gray-800 hover:bg-gray-700 text-gray-100"
                                             : "bg-gray-200 hover:bg-gray-300 text-gray-800"
                                     }`}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
                                 >
                                     Download CV
-                                </a>
+                                </motion.button>
                             </motion.div>
 
                             {/* Social links under buttons - Desktop */}
