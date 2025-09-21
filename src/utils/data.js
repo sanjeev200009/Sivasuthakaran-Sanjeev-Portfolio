@@ -95,10 +95,10 @@ export const TECH_STACK = [
 ];
 
 export const STATS = [
-    { number: "50+", label: "Projects Completed" },
-    { number: "3+", label: "Years Undergraduate Journey" },
-    { number: "20+", label: "Technologies Mastered" },
-    { number: "100%", label: "Client Satisfaction" },
+    { number: "25+", label: "Projects Built", icon: Code2 },
+    { number: "15+", label: "Happy Clients", icon: Heart },
+    { number: "10+", label: "Live Websites", icon: Cloud },
+    { number: "99%", label: "Performance Score", icon: Zap },
 ];
 
 export const PROJECTS = [
@@ -161,6 +161,27 @@ export const PROJECTS = [
         githubURL: "https://github.com/yourusername/quickcart-app",
         featured: true,
         category: "mobile",
+    },
+    {
+        id: 6,
+        title: "Travel Safety & Weather Dashboard",
+        description:
+            "A comprehensive dashboard that helps travelers make informed decisions with real-time weather, government travel advisories, and country details. Includes smart search, responsive UI, OAuth authentication, and MongoDB-backed history.",
+        image: PROJECT_IMG_6,
+        tags: [
+            "HTML5",
+            "CSS3",
+            "JavaScript",
+            "Node.js",
+            "Express.js",
+            "MongoDB",
+            "OAuth 2.0",
+            "OpenWeatherMap",
+        ],
+        liveURL: "#",
+        githubURL: "https://github.com/prabasajee/Travel-Safety-Weather-Dashboard",
+        featured: true,
+        category: "full-stack",
     },
 ];
 
