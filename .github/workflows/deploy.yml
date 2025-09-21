@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # 4. Build the project (different for dev and prod if needed)
+      # 4. Build the project with environment variables
       - name: Build project
         run: |
           if [ "${GITHUB_REF}" == "refs/heads/main" ]; then
@@ -36,6 +36,9 @@ jobs:
             echo "Building for development..."
             npm run build:dev || npm run build
           fi
+        env:
+          VITE_WEB3FORMS_ACCESS_KEY: ${{ secrets.VITE_WEB3FORMS_ACCESS_KEY }}
+          VITE_CONTACT_EMAIL: ${{ secrets.VITE_CONTACT_EMAIL }}
 
       # 5. Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
