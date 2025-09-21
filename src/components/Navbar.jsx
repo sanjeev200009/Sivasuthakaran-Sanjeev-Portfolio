@@ -37,7 +37,7 @@ const Navbar = () => {
                             isDarkMode ? "text-white" : "text-gray-900"
                         }`}
                     >
-                        Time to Progress
+                        Sivasuthakaran Sanjeev
                     </span>
                 </motion.div>
 
