@@ -3,14 +3,13 @@ import { motion } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext.jsx";
 import { PROJECTS, STATS } from "../../utils/data.js";
-import PLACEHOLDER from "../../assets/images/project-1.png";
 import { containerVariants, itemVariants } from "../../utils/Helper.js";
 
 export default function ProjectSection() {
   const { isDarkMode } = useTheme();
 
-  // Use one placeholder image for all projects (regardless of PROJECTS.image)
-  const projects = PROJECTS?.map((p) => ({ ...p, image: PLACEHOLDER })) ?? [];
+  // Use the actual project images from data.js
+  const projects = PROJECTS ?? [];
 
   return (
     <section
