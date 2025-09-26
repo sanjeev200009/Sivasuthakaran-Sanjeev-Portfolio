@@ -20,12 +20,11 @@ import {
 import { FiGithub, FiLinkedin, FiTwitter} from "react-icons/fi";
 
 import PROJECT_IMG_1 from "../assets/images/project-1.png";
-import PROJECT_IMG_2 from "../assets/images/project-1.png";
-import PROJECT_IMG_3 from "../assets/images/project-1.png";
-import PROJECT_IMG_4 from "../assets/images/project-1.png";
-import PROJECT_IMG_5 from "../assets/images/project-1.png";
-import PROJECT_IMG_6 from "../assets/images/project-1.png";
-import PROJECT_IMG_7 from "../assets/images/project-1.png";
+import PROJECT_IMG_2 from "../assets/images/project-2.png";
+import PROJECT_IMG_3 from "../assets/images/project-3.png";
+import PROJECT_IMG_4 from "../assets/images/project-4.jpg";
+import PROJECT_IMG_5 from "../assets/images/project-5.jpg";
+import PROJECT_IMG_6 from "../assets/images/project-6.png";
 import {FaGithub, FaMedium, FaTwitter} from "react-icons/fa";
 
 export const SKILLS_CATEGORIES = [
@@ -110,7 +109,7 @@ export const PROJECTS = [
         image: PROJECT_IMG_1,
         tags: ["Android Studio", "Java", "Firebase"],
         liveURL: "#",
-        githubURL: "https://github.com/yourusername/zero-hunger-app",
+        githubURL: "https://github.com/sanjeev200009/ZeroHunger.git",
         featured: true,
         category: "mobile",
     },
@@ -121,22 +120,22 @@ export const PROJECTS = [
             "Web application using Python, Streamlit, and Scikit-learn to predict students at risk of academic failure. Includes probability visualization, intervention recommendations, data exploration, feature importance analysis, and performance metrics visualization.",
         image: PROJECT_IMG_2,
         tags: ["Python", "Streamlit", "Scikit-learn"],
-        liveURL: "#",
-        githubURL: "https://github.com/yourusername/academic-risk-prediction",
+        liveURL: "https://aaxadzf7t2vqyfbtbhvkdu.streamlit.app/",
+        githubURL: "https://github.com/sanjeev200009/sanjeev200009-Mini-Project-Academic_Risk_Prediction-.git",
         featured: true,
         category: "machine-learning",
     },
     {
         id: 3,
-        title: "School Management System",
+        title: "NatureGo.lk - Eco-Tourism Platform",
         description:
-            "Desktop application developed with Java, JavaFX, and MySQL to automate school operations, including student/staff management, marks, and results. Features an intuitive user interface for efficient administrative task management.",
+            "Full-stack eco-tourism platform for Sri Lanka built with React, TypeScript, and Node.js. Features eco-friendly destination discovery, sustainable booking system, review management, and GitHub Actions deployment. Promotes environmental consciousness through accessible travel experiences.",
         image: PROJECT_IMG_3,
-        tags: ["Java", "JavaFX", "MySQL"],
-        liveURL: "#",
-        githubURL: "https://github.com/yourusername/school-management-system",
-        featured: false,
-        category: "desktop",
+        tags: ["React", "TypeScript", "Node.js", "MongoDB", "Tailwind CSS"],
+        liveURL: "https://sanjeev200009.github.io/NatureGo.lk",
+        githubURL: "https://github.com/sanjeev200009/NatureGo.lk",
+        featured: true,
+        category: "full-stack",
     },
     {
         id: 4,
@@ -146,7 +145,7 @@ export const PROJECTS = [
         image: PROJECT_IMG_4,
         tags: ["React", "TypeScript", "Tailwind CSS"],
         liveURL: "#",
-        githubURL: "https://github.com/yourusername/react-projects",
+        githubURL: "https://github.com/sanjeev200009/30_DAYS_CHALLANG_REACT.git",
         featured: false,
         category: "frontend",
     },
@@ -158,7 +157,7 @@ export const PROJECTS = [
         image: PROJECT_IMG_5,
         tags: ["React Native", "Node.js", "MongoDB"],
         liveURL: "#",
-        githubURL: "https://github.com/yourusername/quickcart-app",
+        githubURL: "https://github.com/sanjeev200009/ReactNative-Hackathon-QuickCard-App.git",
         featured: true,
         category: "mobile",
     },
@@ -169,9 +168,7 @@ export const PROJECTS = [
             "A comprehensive dashboard that helps travelers make informed decisions with real-time weather, government travel advisories, and country details. Includes smart search, responsive UI, OAuth authentication, and MongoDB-backed history.",
         image: PROJECT_IMG_6,
         tags: [
-            "HTML5",
-            "CSS3",
-            "JavaScript",
+            "React",
             "Node.js",
             "Express.js",
             "MongoDB",
@@ -257,7 +254,7 @@ export const SOCIAL_LINKS = [
     {
         name: "LinkedIn",
         icon: FiLinkedin,
-        url: "https://www.linkedin.com/in/sivasuthakaran-sanjeev09",
+        url: "http://www.linkedin.com/in/sivasuthakaran-sanjeev09",
         color: "hover:text-blue-400",
         bgColor: "hover:bg-blue-500/10",
     },

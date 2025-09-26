@@ -277,9 +277,9 @@ function HeroSection() {
                         {/* Social links - mobile*/}
                         <motion.div variants={itemVariants} className="flex justify-center space-x-6 mb-8 ">
                             {[
-                                { icon: FiGithub, href: "#" },
-                                { icon: FiLinkedin, href: "#" },
-                                { icon: Mail, href: "#" },
+                                { icon: FiGithub, href: "https://github.com/sanjeev200009" },
+                                { icon: FiLinkedin, href: "http://www.linkedin.com/in/sivasuthakaran-sanjeev09" },
+                                { icon: Mail, href: "mailto:sanjaysanjeev2000@gmail.com" },
                             ].map((social, index) => (
                                 <motion.a
                                     key={index}
@@ -401,9 +401,9 @@ function HeroSection() {
                             {/* Social links under buttons - Desktop */}
                             <motion.div variants={itemVariants} className="flex items-center gap-3 mt-4">
                                 {[
-                                    { icon: FiGithub, href: "#" },
-                                    { icon: FiLinkedin, href: "#" },
-                                    { icon: Mail, href: "#" },
+                                    { icon: FiGithub, href: "https://github.com/sanjeev200009" },
+                                    { icon: FiLinkedin, href: "http://www.linkedin.com/in/sivasuthakaran-sanjeev09" },
+                                    { icon: Mail, href: "mailto:sanjaysanjeev2000@gmail.com" },
                                 ].map((social, index) => (
                                     <motion.a
                                         key={index}

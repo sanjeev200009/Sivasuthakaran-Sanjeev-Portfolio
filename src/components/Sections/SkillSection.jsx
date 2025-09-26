@@ -19,11 +19,13 @@ const itemVariants = {
 
 function SkillBar({ name, level, color }) {
   const barRef = useRef(null);
+  const { isDarkMode } = useTheme();
+  
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between text-sm">
-        <span className="font-medium text-gray-700 dark:text-gray-200">{name}</span>
-        <span className="tabular-nums text-gray-500 dark:text-gray-400">{level}%</span>
+        <span className={`font-medium ${isDarkMode ? "text-gray-200" : "text-gray-900"}`}>{name}</span>
+        <span className={`tabular-nums ${isDarkMode ? "text-gray-400" : "text-gray-700"}`}>{level}%</span>
       </div>
       <div className="h-2.5 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-800">
         {/* Animated inner bar grows from 0 to target width when in view */}
@@ -131,7 +133,7 @@ export default function SkillSection() {
               className={`inline-flex px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm transition-colors shadow-sm border ${
                 isDarkMode
                   ? "bg-gray-900/60 border-gray-800 text-gray-200 hover:border-gray-700"
-                  : "bg-white/70 border-gray-200 text-gray-700 hover:border-gray-300"
+                  : "bg-white/70 border-gray-200 text-gray-900 hover:border-gray-300"
               }`}
             >
               {tech}
