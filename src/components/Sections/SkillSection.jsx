@@ -54,7 +54,7 @@ function CategoryCard({ title, icon: Icon, description, skills, isDarkMode }) {
         isDarkMode ? "bg-gray-900/60 border-gray-800" : "bg-white/70 border-gray-200"
       }`}
     >
-      <div className="flex items-start gap-3">
+      <div className="flex items-start gap-3 ">
         <div
           className={`grid h-10 w-10 place-items-center rounded-xl ${
             isDarkMode ? "bg-blue-500/10 text-blue-400" : "bg-blue-50 text-blue-600"
