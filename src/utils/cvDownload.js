@@ -5,7 +5,7 @@ export const downloadCV = () => {
   
   // Use correct base URL for Vite app
   const baseUrl = import.meta.env.BASE_URL || '/';
-  const cvPath = `${baseUrl}Sivasuthakaran_Sanjeev_CV.pdf`;
+  const cvPath = `${baseUrl}sanjeev-cv.pdf`;
   
   console.log('Simple download from:', cvPath);
   
@@ -13,7 +13,7 @@ export const downloadCV = () => {
   link.href = cvPath;
   
   // Set download attribute with desired filename
-  link.download = 'Sivasuthakaran_Sanjeev_CV.pdf';
+  link.download = 'sanjeev-cv.pdf';
   
   // Append to body, click, and remove
   document.body.appendChild(link);
@@ -29,7 +29,7 @@ export const downloadCVFetch = async () => {
   try {
     // Use correct base URL for Vite app
     const baseUrl = import.meta.env.BASE_URL || '/';
-    const cvPath = `${baseUrl}Sivasuthakaran_Sanjeev_CV.pdf`;
+    const cvPath = `${baseUrl}sanjeev-cv.pdf`;
     
     console.log('Attempting to download CV from:', cvPath);
     
@@ -44,7 +44,7 @@ export const downloadCVFetch = async () => {
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'Sivasuthakaran_Sanjeev_CV.pdf';
+    link.download = 'sanjeev-cv.pdf';
     
     document.body.appendChild(link);
     link.click();
