@@ -1,278 +1,616 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar } from "lucide-react";
+import { Calendar, MapPin, ExternalLink, Award, BookOpen, Briefcase, Code2, GraduationCap, Laptop, Heart, Coffee, CheckCircle2, Sparkles, Terminal } from "lucide-react";
 import { useTheme } from "../../context/ThemeContext.jsx";
 import { JOURNEY_STEPS, PASSIONS, SOCIAL_LINKS } from "../../utils/data.js";
-import { containerVariants, itemVariants } from "../../utils/Helper.js";
+import PROFILE_PIC from "../../assets/images/profile.jpg";
+import SublevelSectionHeader from "./SublevelSectionHeader.jsx";
+
+const PASSION_ICONS = [Heart, Coffee, BookOpen];
 
 export default function AboutSection() {
   const { isDarkMode } = useTheme();
   const [activeStep, setActiveStep] = useState(0);
 
-  // Mission statement
-  const missionText = `I believe technology should be a bridge that connects people and solves real-world problems. My passion lies in crafting digital experiences that are not just functional, but delightful and accessible to everyone.
+  const bioLines = [
+    "Associate Product & AI Engineer at Career141 — building production systems across modern web, cloud infrastructure, and autonomous agentic AI.",
+    "Promoted from Web Developer Intern by delivering an AI recruitment pipeline processing 115,000+ candidates, a custom transactional email CRM cutting overhead by 78%, and 50-page Next.js 15 rebuilds.",
+    "Based in Colombo, Sri Lanka. Part of the FTTLP Leadership Track. Focused on shipping software that actually moves business needles.",
+  ];
 
-When I'm not coding, you'll find me exploring new frameworks, contributing to open source, or mentoring aspiring developers. I love the constant evolution of web technologies and the endless possibilities they bring to create meaningful digital experiences.`;
+  const quickStats = [
+    { label: "AI PIPELINES", val: "115K Profiles", sub: "Recruitment Automation" },
+    { label: "COST REDUCTION", val: "78% Saved", sub: "Cloud CRM Architecture" },
+    { label: "PAGES REBUILT", val: "50+ Shipped", sub: "Next.js 15 App Router" },
+    { label: "ACTIVE LEADERSHIP", val: "FTTLP Track", sub: "Engineering Excellence" },
+  ];
 
   return (
     <section
       id="about"
-      className={`relative scroll-mt-16 md:scroll-mt-20 px-6 py-16 md:py-24 transition-colors ${
-        isDarkMode ? "bg-gray-950 text-white" : "bg-gray-50 text-gray-900"
-      }`}
+      style={{
+        position: "relative",
+        background: "#0a0a0a",
+        overflow: "hidden",
+        padding: "120px 0 140px",
+      }}
     >
-      <div className="mx-auto max-w-7xl">
-        {/* Header */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="text-center mb-16"
-        >
-          <p
-            className={`mb-2 text-xs tracking-[0.22em] uppercase ${
-              isDarkMode ? "text-gray-400" : "text-gray-500"
-            }`}
-          >
-            GET TO KNOW ME
-          </p>
-          <h2
-            className={`text-3xl sm:text-4xl md:text-5xl font-bold leading-tight ${
-              isDarkMode ? "text-white" : "text-gray-900"
-            }`}
-          >
-            About <span className="text-blue-500">Me</span>
-          </h2>
-        </motion.div>
+      {/* Background vertical guideline grid lines */}
+      <div className="sublevel-bg-vrules" aria-hidden="true">
+        <i /><i /><i /><i /><i /><i />
+      </div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start"
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
+          width: "100%",
+          maxWidth: "82.5rem",
+          margin: "0 auto",
+          padding: "0 16px",
+        }}
+      >
+        {/* Grand Sublevel Header */}
+        <SublevelSectionHeader
+          tag="IDENTITY // ENGINEER PROFILE"
+          title="Studio Profile"
+          subtitle="Associate Product & AI Engineer based in Colombo — engineering production web platforms, autonomous LLM pipelines, and resilient cloud architectures."
+          topRule={true}
+        />
+
+        {/* Main Grid — 12 column layout */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(12, minmax(0, 1fr))",
+            gap: 24,
+          }}
+          className="about-grid"
         >
-          {/* Left Side - Mission & Passion */}
-          <motion.div variants={itemVariants} className="space-y-8">
-            {/* My Mission */}
+          {/* Left Column (5 cols): Identity, Quick Stats, Channels */}
+          <motion.div
+            initial={{ opacity: 0, x: -18 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.6, ease: [0.16, 0.84, 0.24, 1] }}
+            style={{
+              gridColumn: "span 5 / span 5",
+              display: "flex",
+              flexDirection: "column",
+              gap: 20,
+            }}
+            className="about-left-col"
+          >
+            {/* Identity Card */}
             <div
-              className={`relative p-8 rounded-2xl border transition-colors ${
-                isDarkMode
-                  ? "bg-gray-900/60 border-gray-800"
-                  : "bg-white/80 border-gray-200"
-              }`}
+              style={{
+                position: "relative",
+                border: "1px solid rgba(255,255,255,0.085)",
+                background: "linear-gradient(180deg, rgba(255,255,255,0.016), rgba(255,255,255,0.003))",
+                padding: "32px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                textAlign: "center",
+                gap: 20,
+              }}
+              className="sublevel-frame"
             >
-              <div className="flex items-center gap-3 mb-6">
-                <motion.div
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                  className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center"
-                >
-                  <span className="text-white text-lg">🎯</span>
-                </motion.div>
-                <h3 className="text-xl font-semibold">My Mission</h3>
+              <i className="sublevel-corner tl" />
+              <i className="sublevel-corner tr" />
+              <i className="sublevel-corner bl" />
+              <i className="sublevel-corner br" />
+
+              {/* Portrait */}
+              <div
+                style={{
+                  position: "relative",
+                  width: 120,
+                  height: 120,
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  overflow: "hidden",
+                  borderRadius: 2,
+                }}
+              >
+                <img
+                  src={PROFILE_PIC}
+                  alt="Sivasuthakaran Sanjeev"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    filter: "grayscale(0.15) contrast(1.1)",
+                  }}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.6))",
+                  }}
+                />
               </div>
-              <div className="space-y-4 text-sm leading-relaxed">
-                {missionText.split('\n\n').map((paragraph, index) => (
-                  <p
-                    key={index}
-                    className={isDarkMode ? "text-gray-300" : "text-gray-600"}
-                  >
-                    {paragraph}
-                  </p>
-                ))}
+
+              <div>
+                <span
+                  style={{
+                    fontFamily: "ui-monospace, 'Geist Mono', monospace",
+                    fontSize: 11,
+                    letterSpacing: "0.14em",
+                    color: "#3b82f6",
+                    textTransform: "uppercase",
+                    fontWeight: 600,
+                  }}
+                >
+                  SIVASUTHAKARAN SANJEEV
+                </span>
+                <h3
+                  style={{
+                    fontFamily: "'Urbanist', 'Geist', system-ui, sans-serif",
+                    fontSize: "1.45rem",
+                    fontWeight: 500,
+                    color: "#f3f4f6",
+                    margin: "6px 0 4px",
+                  }}
+                >
+                  Associate Product &amp; AI Engineer
+                </h3>
+                <p
+                  style={{
+                    fontFamily: "ui-monospace, 'Geist Mono', monospace",
+                    fontSize: 12,
+                    color: "#9ca3af",
+                    margin: 0,
+                  }}
+                >
+                  Career141 · Colombo, Sri Lanka
+                </p>
+              </div>
+
+              {/* Status Row */}
+              <div
+                style={{
+                  width: "100%",
+                  paddingTop: 16,
+                  borderTop: "1px solid rgba(255,255,255,0.07)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  fontFamily: "ui-monospace, 'Geist Mono', monospace",
+                  fontSize: 11,
+                }}
+              >
+                <span style={{ color: "#6b7280" }}>SYSTEM STATUS</span>
+                <span
+                  style={{
+                    color: "#34d399",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 6,
+                  }}
+                >
+                  <span
+                    style={{
+                      width: 6,
+                      height: 6,
+                      borderRadius: "50%",
+                      background: "#34d399",
+                      boxShadow: "0 0 6px rgba(52,211,153,0.8)",
+                    }}
+                  />
+                  FTTLP ACTIVE // 2026
+                </span>
               </div>
             </div>
 
-            {/* What I Love Building */}
+            {/* Quick Metrics Grid */}
             <div
-              className={`p-8 rounded-2xl border transition-colors ${
-                isDarkMode
-                  ? "bg-gray-900/60 border-gray-800"
-                  : "bg-white/80 border-gray-200"
-              }`}
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, 1fr)",
+                gap: 12,
+              }}
             >
-              <h3 className="text-xl font-semibold mb-6">What I Love Building</h3>
-              <div className="grid gap-4">
-                {PASSIONS.map((passion, index) => {
-                  const IconComponent = passion.icon;
+              {quickStats.map((st) => (
+                <div
+                  key={st.label}
+                  style={{
+                    position: "relative",
+                    border: "1px solid rgba(255,255,255,0.085)",
+                    background: "rgba(255,255,255,0.012)",
+                    padding: "16px 18px",
+                  }}
+                  className="sublevel-frame"
+                >
+                  <i className="sublevel-corner tl" />
+                  <i className="sublevel-corner tr" />
+                  <i className="sublevel-corner bl" />
+                  <i className="sublevel-corner br" />
+                  <p
+                    style={{
+                      fontFamily: "ui-monospace, 'Geist Mono', monospace",
+                      fontSize: 10,
+                      color: "#6b7280",
+                      letterSpacing: "0.1em",
+                      textTransform: "uppercase",
+                      margin: "0 0 6px",
+                    }}
+                  >
+                    {st.label}
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: "'Urbanist', system-ui, sans-serif",
+                      fontSize: "1.25rem",
+                      fontWeight: 600,
+                      color: "#f3f4f6",
+                      margin: "0 0 2px",
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    {st.val}
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: "ui-monospace, monospace",
+                      fontSize: 11,
+                      color: "#9ca3af",
+                      margin: 0,
+                    }}
+                  >
+                    {st.sub}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Channels & Social */}
+            <div
+              style={{
+                position: "relative",
+                border: "1px solid rgba(255,255,255,0.085)",
+                background: "rgba(255,255,255,0.012)",
+                padding: "20px 24px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 16,
+              }}
+              className="sublevel-frame"
+            >
+              <i className="sublevel-corner tl" />
+              <i className="sublevel-corner tr" />
+              <i className="sublevel-corner bl" />
+              <i className="sublevel-corner br" />
+              <span
+                style={{
+                  fontFamily: "ui-monospace, monospace",
+                  fontSize: 11,
+                  letterSpacing: "0.12em",
+                  color: "#3b82f6",
+                  textTransform: "uppercase",
+                  fontWeight: 600,
+                }}
+              >
+                NETWORK // CONNECT
+              </span>
+              <div style={{ display: "flex", gap: 8 }}>
+                {SOCIAL_LINKS.slice(0, 4).map((s) => {
+                  const Icon = s.icon;
                   return (
-                    <motion.div
-                      key={index}
-                      whileHover={{ x: 4 }}
-                      className="flex items-start gap-3 group cursor-pointer"
+                    <a
+                      key={s.name}
+                      href={s.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={s.name}
+                      style={{
+                        width: 34,
+                        height: 34,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        border: "1px solid rgba(255,255,255,0.1)",
+                        color: "#9ca3af",
+                        borderRadius: 2,
+                        transition: "all 0.2s ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)";
+                        e.currentTarget.style.color = "#ffffff";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)";
+                        e.currentTarget.style.color = "#9ca3af";
+                      }}
                     >
-                      <div
-                        className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
-                          isDarkMode
-                            ? "bg-blue-500/20 text-blue-400 group-hover:bg-blue-500/30"
-                            : "bg-blue-500/10 text-blue-600 group-hover:bg-blue-500/20"
-                        }`}
-                      >
-                        <IconComponent className="w-4 h-4" />
-                      </div>
-                      <div>
-                        <h4 className="font-medium text-sm">{passion.title}</h4>
-                        <p
-                          className={`text-xs ${
-                            isDarkMode ? "text-gray-400" : "text-gray-600"
-                          }`}
-                        >
-                          {passion.description}
-                        </p>
-                      </div>
-                    </motion.div>
+                      <Icon size={14} />
+                    </a>
                   );
                 })}
               </div>
             </div>
-
-            {/* Signature */}
-            <div className="text-center">
-              <p className={`text-sm ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
-                Crafted with passion by
-              </p>
-              <div className="mt-2 space-y-1">
-                <p className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
-                  Sivasuthakaran Sanjeev
-                </p>
-                <p className={`text-sm ${isDarkMode ? "text-blue-400" : "text-blue-600"}`}>
-                  Full Stack Developer
-                </p>
-              </div>
-            </div>
           </motion.div>
 
-          {/* Right Side - Developer Journey Timeline */}
-          <motion.div variants={itemVariants}>
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold mb-2">My Developer Journey</h3>
-              <p className={`text-sm ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
-                Always exploring new technologies and best practices
-              </p>
+          {/* Right Column (7 cols): Mission Statement + Timeline Journey */}
+          <motion.div
+            initial={{ opacity: 0, x: 18 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 0.84, 0.24, 1] }}
+            style={{
+              gridColumn: "span 7 / span 7",
+              display: "flex",
+              flexDirection: "column",
+              gap: 20,
+            }}
+            className="about-right-col"
+          >
+            {/* Mission Statement Box */}
+            <div
+              style={{
+                position: "relative",
+                border: "1px solid rgba(255,255,255,0.085)",
+                background: "linear-gradient(180deg, rgba(255,255,255,0.016), rgba(255,255,255,0.003))",
+                padding: "32px",
+                display: "flex",
+                flexDirection: "column",
+                gap: 16,
+              }}
+              className="sublevel-frame"
+            >
+              <i className="sublevel-corner tl" />
+              <i className="sublevel-corner tr" />
+              <i className="sublevel-corner bl" />
+              <i className="sublevel-corner br" />
+
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <span
+                  style={{
+                    fontFamily: "ui-monospace, monospace",
+                    fontSize: 11,
+                    letterSpacing: "0.14em",
+                    color: "#3b82f6",
+                    textTransform: "uppercase",
+                    fontWeight: 600,
+                  }}
+                >
+                  MISSION STATEMENT // ENGINEERING PHILOSOPHY
+                </span>
+                <span
+                  style={{
+                    fontFamily: "ui-monospace, monospace",
+                    fontSize: 11,
+                    color: "#6b7280",
+                  }}
+                >
+                  PRODUCTION FIRST
+                </span>
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+                {bioLines.map((line, i) => (
+                  <p
+                    key={i}
+                    style={{
+                      fontFamily: "system-ui, sans-serif",
+                      fontSize: "0.98rem",
+                      lineHeight: "1.65rem",
+                      color: "#d1d5db",
+                      borderLeft: "2px solid rgba(59, 130, 246, 0.4)",
+                      paddingLeft: 16,
+                      margin: 0,
+                    }}
+                  >
+                    {line}
+                  </p>
+                ))}
+              </div>
+
+              <div
+                style={{
+                  paddingTop: 16,
+                  borderTop: "1px solid rgba(255,255,255,0.07)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 24,
+                  fontFamily: "ui-monospace, monospace",
+                  fontSize: 11,
+                  color: "#9ca3af",
+                  flexWrap: "wrap",
+                }}
+              >
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                  <MapPin size={12} style={{ color: "#3b82f6" }} />
+                  Colombo, Sri Lanka
+                </span>
+                <a
+                  href="https://career141.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 6,
+                    color: "#34d399",
+                    textDecoration: "none",
+                  }}
+                >
+                  <ExternalLink size={12} />
+                  career141.com
+                </a>
+              </div>
             </div>
 
-            {/* Timeline */}
-            <div className="relative">
-              {/* Timeline Line */}
-              <div className="absolute left-8 top-0 w-0.5 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 opacity-30 h-full" />
+            {/* Developer Journey Timeline */}
+            <div
+              style={{
+                position: "relative",
+                border: "1px solid rgba(255,255,255,0.085)",
+                background: "linear-gradient(180deg, rgba(255,255,255,0.016), rgba(255,255,255,0.003))",
+                padding: "32px",
+                display: "flex",
+                flexDirection: "column",
+                gap: 20,
+              }}
+              className="sublevel-frame"
+            >
+              <i className="sublevel-corner tl" />
+              <i className="sublevel-corner tr" />
+              <i className="sublevel-corner bl" />
+              <i className="sublevel-corner br" />
 
-              <motion.div
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-                className="space-y-8"
-              >
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <span
+                  style={{
+                    fontFamily: "ui-monospace, monospace",
+                    fontSize: 11,
+                    letterSpacing: "0.14em",
+                    color: "#3b82f6",
+                    textTransform: "uppercase",
+                    fontWeight: 600,
+                  }}
+                >
+                  CAREER &amp; ACADEMIC TIMELINE // MILESTONES
+                </span>
+                <span
+                  style={{
+                    fontFamily: "ui-monospace, monospace",
+                    fontSize: 11,
+                    color: "#6b7280",
+                  }}
+                >
+                  {JOURNEY_STEPS.length} MILESTONES
+                </span>
+              </div>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                 {JOURNEY_STEPS.map((step, index) => {
-                  const IconComponent = step.icon;
-                  const isActive = index <= activeStep;
-                  const isLastStep = index === JOURNEY_STEPS.length - 1;
-
+                  const Icon = step.icon;
+                  const isActive = index === activeStep;
                   return (
-                    <div key={index} className="relative">
-                      <motion.div
-                        variants={itemVariants}
-                        whileHover={{ scale: 1.02 }}
-                        onHoverStart={() => setActiveStep(index)}
-                        className={`relative z-10 flex items-start gap-6 p-6 rounded-xl transition-all duration-300 cursor-pointer ${
-                          isDarkMode
-                            ? isActive 
-                              ? "bg-gray-800 border border-gray-700 shadow-lg" 
-                              : "bg-gray-900/95 hover:bg-gray-800"
-                            : isActive
-                              ? "bg-white border border-gray-200 shadow-lg"
-                              : "bg-gray-50 hover:bg-white"
-                        }`}
+                    <div
+                      key={index}
+                      onMouseEnter={() => setActiveStep(index)}
+                      onClick={() => setActiveStep(index)}
+                      style={{
+                        padding: "16px 20px",
+                        border: isActive
+                          ? "1px solid rgba(255,255,255,0.18)"
+                          : "1px solid rgba(255,255,255,0.04)",
+                        background: isActive
+                          ? "rgba(255,255,255,0.03)"
+                          : "rgba(255,255,255,0.008)",
+                        borderRadius: 2,
+                        cursor: "pointer",
+                        transition: "all 0.25s ease",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          gap: 16,
+                          marginBottom: 4,
+                        }}
                       >
-                        {/* Timeline Dot */}
-                        <div className={`relative z-10 w-16 h-16 rounded-full ${step.color} flex items-center justify-center shadow-lg`}>
-                          <IconComponent className="w-7 h-7 text-white" />
-                          {isActive && (
-                            <motion.div
-                              animate={{ scale: [1, 1.2, 1] }}
-                              transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
-                              className="absolute inset-0 rounded-full border-2 border-white/30"
-                            />
-                          )}
-                        </div>
-
-                        {/* Content */}
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between mb-2">
-                            <h4 className="font-semibold text-lg">{step.title}</h4>
-                            <span
-                              className={`text-sm font-medium px-3 py-1 rounded-full ${
-                                isDarkMode
-                                  ? "bg-blue-500/20 text-blue-400"
-                                  : "bg-blue-500/10 text-blue-600"
-                              }`}
-                            >
-                              {step.year}
-                            </span>
-                          </div>
-                          <p
-                            className={`text-sm font-medium mb-2 ${
-                              isDarkMode ? "text-blue-400" : "text-blue-600"
-                            }`}
-                          >
-                            {step.company}
-                          </p>
-                          <p
-                            className={`text-sm leading-relaxed ${
-                              isDarkMode ? "text-gray-300" : "text-gray-600"
-                            }`}
-                          >
-                            {step.description}
-                          </p>
-                        </div>
-                      </motion.div>
-
-                      {/* Subtle Flow Arrow - Very Minimal */}
-                      {!isLastStep && (
-                        <div className="absolute left-7 -bottom-3 z-0 w-2 h-4 flex items-center justify-center">
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: [0, isDarkMode ? 0.15 : 0.3, 0] }}
-                            transition={{ 
-                              delay: 0.5 + index * 0.1,
-                              duration: 4,
-                              repeat: Infinity,
-                              repeatDelay: 3
-                            }}
-                            viewport={{ once: false }}
-                            className="w-0 h-0 border-l-[2px] border-r-[2px] border-t-[4px] border-l-transparent border-r-transparent"
+                        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                          <div
                             style={{
-                              borderTopColor: isDarkMode ? 'rgba(59, 130, 246, 0.15)' : 'rgba(59, 130, 246, 0.4)'
+                              width: 28,
+                              height: 28,
+                              borderRadius: 2,
+                              background: isActive ? "#2563eb" : "rgba(255,255,255,0.06)",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              color: "#ffffff",
+                              transition: "background 0.25s ease",
                             }}
-                          />
+                          >
+                            <Icon size={14} />
+                          </div>
+                          <div>
+                            <h4
+                              style={{
+                                fontFamily: "'Urbanist', system-ui, sans-serif",
+                                fontSize: "1.1rem",
+                                fontWeight: 600,
+                                color: "#f3f4f6",
+                                margin: 0,
+                              }}
+                            >
+                              {step.title}
+                            </h4>
+                            <p
+                              style={{
+                                fontFamily: "ui-monospace, monospace",
+                                fontSize: 11,
+                                color: "#9ca3af",
+                                margin: 0,
+                              }}
+                            >
+                              {step.company}
+                            </p>
+                          </div>
                         </div>
+
+                        <span
+                          style={{
+                            fontFamily: "ui-monospace, monospace",
+                            fontSize: 11,
+                            color: "#60a5fa",
+                            background: "rgba(59, 130, 246, 0.1)",
+                            border: "1px solid rgba(59, 130, 246, 0.25)",
+                            padding: "3px 8px",
+                            borderRadius: 2,
+                            fontWeight: 600,
+                          }}
+                        >
+                          {step.year}
+                        </span>
+                      </div>
+
+                      {isActive && (
+                        <motion.p
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          style={{
+                            fontFamily: "system-ui, sans-serif",
+                            fontSize: "0.9rem",
+                            lineHeight: "1.5rem",
+                            color: "#c4c4c4",
+                            marginTop: 10,
+                            marginBottom: 0,
+                            paddingTop: 10,
+                            borderTop: "1px solid rgba(255,255,255,0.06)",
+                          }}
+                        >
+                          {step.description}
+                        </motion.p>
                       )}
                     </div>
                   );
                 })}
-              </motion.div>
+              </div>
             </div>
           </motion.div>
-        </motion.div>
-
-        {/* Contact & Social Section */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="mt-16 grid md:grid-cols-2 gap-8 max-w-4xl mx-auto"
-        >
-        </motion.div>
+        </div>
       </div>
 
-      {/* Background Decoration */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-gradient-to-r from-pink-500/10 to-orange-500/10 rounded-full blur-3xl" />
-      </div>
+      <style>{`
+        @media (max-width: 960px) {
+          .about-grid {
+            display: flex !important;
+            flex-direction: column !important;
+          }
+          .about-left-col, .about-right-col {
+            grid-column: 1 / -1 !important;
+            width: 100% !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

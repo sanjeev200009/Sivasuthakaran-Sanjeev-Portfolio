@@ -1,0 +1,440 @@
+/* Sublevel Studio exact aesthetic - Technologies & Core Stack */
+.sublevel-builders-section {
+  --k: #0a0a0a;
+  --w1: #f3f4f6;
+  --w2: #9ca3af;
+  --g1: #6b7280;
+  --g2: #1f2937;
+  --o: #3b82f6;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-soft: rgba(255, 255, 255, 0.04);
+  --maxw: 82.5rem;
+  --gutter: 24px;
+  position: relative;
+  width: 100%;
+  padding: clamp(120px, 14vh, 180px) 0;
+  background-color: transparent; /* perfectly inherits portfolio background */
+  color: #ffffff;
+  overflow: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sublevel-builders-section.light-mode {
+  --k: #f9fafb;
+  --w1: #111827;
+  --w2: #4b5563;
+  --g1: #6b7280;
+  --g2: #e5e7eb;
+  --o: #2563eb;
+  --line: rgba(0, 0, 0, 0.08);
+  --line-soft: rgba(0, 0, 0, 0.04);
+  background-color: transparent; /* perfectly inherits portfolio background */
+  color: #111827;
+}
+
+.sublevel-grid-layout {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  position: relative;
+  z-index: 1;
+}
+
+.sublevel-header-row {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.sublevel-framed {
+  position: relative;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0));
+}
+
+.sublevel-builders-section.light-mode .sublevel-framed {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.015), rgba(0, 0, 0, 0));
+}
+
+.sublevel-framed.label {
+  padding: 11px 20px;
+  width: max-content;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.sublevel-framed .corner {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.sublevel-builders-section.light-mode .sublevel-framed .corner {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.sublevel-framed .corner.tl {
+  top: -1px;
+  left: -1px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.sublevel-framed .corner.tr {
+  top: -1px;
+  right: -1px;
+  border-left: 0;
+  border-bottom: 0;
+}
+
+.sublevel-framed .corner.bl {
+  bottom: -1px;
+  left: -1px;
+  border-right: 0;
+  border-top: 0;
+}
+
+.sublevel-framed .corner.br {
+  bottom: -1px;
+  right: -1px;
+  border-left: 0;
+  border-top: 0;
+}
+
+.sublevel-mono-badge {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10.5px;
+  line-height: 14px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--o);
+}
+
+.sublevel-f-h3 {
+  font-size: 1.25rem;
+  line-height: 1.45rem;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  color: var(--w1);
+  margin: 0;
+}
+
+.sublevel-lede-text {
+  font-size: 0.85rem;
+  line-height: 1.3rem;
+  color: var(--g1);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  letter-spacing: 0.04em;
+}
+
+.sublevel-rule {
+  border: 0;
+  height: 1px;
+  width: 100%;
+  background: var(--line);
+  grid-column: 1 / -1;
+  margin: 0 0 28px 0;
+}
+
+.sublevel-grid {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.sublevel-logos a {
+  --brand-color: #3b82f6;
+  aspect-ratio: 202 / 115;
+  color: var(--w2);
+  display: block;
+  position: relative;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.012);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease, box-shadow 0.25s ease;
+  border-radius: 2px;
+}
+
+.sublevel-builders-section.light-mode .sublevel-logos a {
+  background: rgba(0, 0, 0, 0.015);
+}
+
+.sublevel-logos a:hover {
+  transform: translateY(-3px);
+  background: color-mix(in srgb, var(--brand-color) 8%, rgba(255, 255, 255, 0.03));
+}
+
+.sublevel-builders-section.light-mode .sublevel-logos a:hover {
+  background: color-mix(in srgb, var(--brand-color) 8%, rgba(0, 0, 0, 0.025));
+}
+
+.sublevel-logos a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+  z-index: 10;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  border-radius: inherit;
+}
+
+.sublevel-builders-section.light-mode .sublevel-logos a::after {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.sublevel-logos a:hover::after {
+  border-color: var(--brand-color);
+  box-shadow: 
+    inset 0 0 14px color-mix(in srgb, var(--brand-color) 20%, transparent),
+    0 0 16px color-mix(in srgb, var(--brand-color) 25%, transparent);
+}
+
+.sublevel-cell {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 16px;
+  gap: 7px;
+  text-align: center;
+}
+
+.sublevel-tech-icon {
+  font-size: 30px;
+  color: var(--w1);
+  opacity: 0.9;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s ease, opacity 0.25s ease, filter 0.25s ease;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sublevel-logos a:hover .sublevel-tech-icon {
+  opacity: 1;
+  transform: scale(1.15);
+  color: var(--brand-color) !important;
+  filter: drop-shadow(0 0 12px var(--brand-color));
+}
+
+.sublevel-tech-name {
+  font-size: 13.5px;
+  line-height: 17px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--w1);
+  position: relative;
+  z-index: 2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  transition: color 0.25s ease;
+}
+
+.sublevel-logos a:hover .sublevel-tech-name {
+  color: #ffffff;
+}
+
+.sublevel-builders-section.light-mode .sublevel-logos a:hover .sublevel-tech-name {
+  color: #111827;
+}
+
+.sublevel-tech-category {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 9.5px;
+  line-height: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--g1);
+  position: relative;
+  z-index: 2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  transition: color 0.25s ease;
+}
+
+.sublevel-logos a:hover .sublevel-tech-category {
+  color: var(--brand-color);
+  font-weight: 600;
+}
+
+.sublevel-with-dots {
+  position: relative;
+}
+
+.sublevel-with-dots::before,
+.sublevel-with-dots::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  z-index: 11;
+  background-image: linear-gradient(
+    to right,
+    #ffffff 0,
+    #ffffff 1px,
+    transparent 1px,
+    transparent calc(100% - 1px),
+    #ffffff calc(100% - 1px),
+    #ffffff 100%
+  );
+  opacity: 0.45;
+  transition: opacity 0.25s ease;
+}
+
+.sublevel-builders-section.light-mode .sublevel-with-dots::before,
+.sublevel-builders-section.light-mode .sublevel-with-dots::after {
+  background-image: linear-gradient(
+    to right,
+    #000000 0,
+    #000000 1px,
+    transparent 1px,
+    transparent calc(100% - 1px),
+    #000000 calc(100% - 1px),
+    #000000 100%
+  );
+  opacity: 0.35;
+}
+
+.sublevel-logos a:hover .sublevel-with-dots::before,
+.sublevel-logos a:hover .sublevel-with-dots::after {
+  opacity: 0.85;
+}
+
+.sublevel-with-dots::before {
+  top: 0;
+}
+
+.sublevel-with-dots::after {
+  bottom: 0;
+}
+
+.sublevel-with-diagonal-lines {
+  position: relative;
+  overflow: hidden;
+}
+
+.sublevel-with-diagonal-lines::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: -64px;
+  background-repeat: repeat;
+  animation: sublevelDiag 6s linear infinite;
+  background-image: url("data:image/svg+xml,%3Csvg width='64' height='64' viewBox='0 0 64 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23c)' stroke='%23fff' stroke-opacity='.12'%3E%3Cpath d='M-27 27 91-91M-27 35 91-83M-27 43 91-75M-27 51 91-67M-27 59 91-59M-27 67 91-51M-27 75 91-43M-27 83 91-35M-27 91 91-27M-27 99 91-19M-27 107 91-11M-27 115 91-3M-27 123 91 5M-27 131 91 13M-27 139 91 21M-27 147 91 29M-27 155 91 37'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='c'%3E%3Cpath fill='%23fff' d='M0 0h64v64H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+}
+
+.sublevel-builders-section.light-mode .sublevel-with-diagonal-lines::after {
+  background-image: url("data:image/svg+xml,%3Csvg width='64' height='64' viewBox='0 0 64 64' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23c)' stroke='%23000' stroke-opacity='.08'%3E%3Cpath d='M-27 27 91-91M-27 35 91-83M-27 43 91-75M-27 51 91-67M-27 59 91-59M-27 67 91-51M-27 75 91-43M-27 83 91-35M-27 91 91-27M-27 99 91-19M-27 107 91-11M-27 115 91-3M-27 123 91 5M-27 131 91 13M-27 139 91 21M-27 147 91 29M-27 155 91 37'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='c'%3E%3Cpath fill='%23000' d='M0 0h64v64H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+}
+
+@keyframes sublevelDiag {
+  to {
+    transform: translate(64px, 64px);
+  }
+}
+
+.sublevel-lines {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.sublevel-logos a:hover .sublevel-lines {
+  opacity: 1;
+}
+
+/* Background vertical rules matching Sublevel Studio architectural grid */
+.sublevel-vrules {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.sublevel-vrules i {
+  position: relative;
+  display: block;
+}
+
+.sublevel-vrules i::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: var(--line-soft);
+}
+
+.sublevel-vrules i:last-child::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 1px;
+  background: var(--line-soft);
+}
+
+@media (max-width: 1023px) {
+  .sublevel-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .sublevel-vrules {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .sublevel-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .sublevel-vrules {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .sublevel-logos a {
+    aspect-ratio: 160 / 100;
+  }
+  .sublevel-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .sublevel-rule {
+    margin-bottom: 20px;
+  }
+}

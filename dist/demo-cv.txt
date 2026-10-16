@@ -1,0 +1,22 @@
+Sivasuthakaran Sanjeev — Demo CV
+
+This is a placeholder demo file for the Download CV button.
+
+Replace this file with your actual CV (PDF recommended) by adding a file named `cv.pdf` or `Sivasuthakaran_Sanjeev_CV.pdf` in the `public/` folder, then update the link if needed.
+
+Quick Info
+- Role: Full‑Stack Developer
+- Location: Batticaloa, Sri Lanka
+- Email: sanjaysanjeev2000@gmail.com
+- GitHub: https://github.com/sanjeev200009
+- LinkedIn: https://www.linkedin.com/in/sivasuthakaran-sanjeev09
+
+Skills
+- React, TypeScript, Node.js, Tailwind CSS, Framer Motion
+- MongoDB, Express, REST APIs
+
+Experience
+- Built multiple projects focused on responsive design and performance.
+
+Education
+- BIT (Hons) in Network & Mobile Computing — Horizon Campus

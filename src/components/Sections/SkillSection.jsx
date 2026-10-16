@@ -1,81 +1,55 @@
-import React, { useRef } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "../../context/ThemeContext.jsx";
-import { SKILLS_CATEGORIES, TECH_STACK, STATS } from "../../utils/data.js";
+import { Code2, Cpu, Cloud, Database, ArrowUpRight } from "lucide-react";
+import SublevelSectionHeader from "./SublevelSectionHeader.jsx";
 
-const containerVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut", when: "beforeChildren", staggerChildren: 0.08 },
+const CAPABILITY_PILLARS = [
+  {
+    icon: Code2,
+    code: "01 // ARCHITECTURE",
+    title: "Full-Stack Web & Mobile Architecture",
+    description:
+      "Engineering modern, accessible web applications and cross-platform mobile systems with strict TypeScript safety, Next.js server components, fluid animations, and production SEO.",
+    tags: ["Next.js 15", "React.js", "React Native", "TypeScript", "Tailwind CSS", "Framer Motion", "Vite"],
+    metricLabel: "BENCHMARK",
+    metrics: "50+ Pages Rebuilt · Sub-second TTFB",
+    status: "PRODUCTION ACTIVE",
   },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
-};
-
-function SkillBar({ name, level, color }) {
-  const barRef = useRef(null);
-  const { isDarkMode } = useTheme();
-  
-  return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between text-sm">
-        <span className={`font-medium ${isDarkMode ? "text-gray-200" : "text-gray-900"}`}>{name}</span>
-        <span className={`tabular-nums ${isDarkMode ? "text-gray-400" : "text-gray-700"}`}>{level}%</span>
-      </div>
-      <div className="h-2.5 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-800">
-        {/* Animated inner bar grows from 0 to target width when in view */}
-        <motion.div
-          ref={barRef}
-          className={`h-2.5 rounded-full ${color}`}
-          initial={{ width: 0 }}
-          whileInView={{ width: `${level}%` }}
-          viewport={{ once: true, amount: 0.6 }}
-          transition={{ duration: 0.9, ease: "easeOut" }}
-          role="progressbar"
-          aria-valuenow={level}
-          aria-valuemin={0}
-          aria-valuemax={100}
-        />
-      </div>
-    </div>
-  );
-}
-
-function CategoryCard({ title, icon: Icon, description, skills, isDarkMode }) {
-  return (
-    <motion.div
-      variants={itemVariants}
-      className={`relative rounded-2xl border p-6 shadow-sm transition-colors ${
-        isDarkMode ? "bg-gray-900/60 border-gray-800" : "bg-white/70 border-gray-200"
-      }`}
-    >
-      <div className="flex items-start gap-3 ">
-        <div
-          className={`grid h-10 w-10 place-items-center rounded-xl ${
-            isDarkMode ? "bg-blue-500/10 text-blue-400" : "bg-blue-50 text-blue-600"
-          }`}
-        >
-          {Icon ? <Icon size={20} /> : null}
-        </div>
-        <div>
-          <h3 className={`text-lg font-semibold ${isDarkMode ? "text-white" : "text-gray-900"}`}>{title}</h3>
-          <p className={`text-sm mt-1 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>{description}</p>
-        </div>
-      </div>
-
-      <div className="mt-5 space-y-4">
-        {skills.map((s) => (
-          <SkillBar key={s.name} name={s.name} level={s.level} color={s.color} />
-        ))}
-      </div>
-    </motion.div>
-  );
-}
+  {
+    icon: Cpu,
+    code: "02 // AGENTIC AI",
+    title: "Autonomous AI & LLM Pipelines",
+    description:
+      "Architecting multi-agent workflows for continuous unstructured data extraction, semantic vector matching, Whisper speech-to-text, and conversational AI tools for executive search.",
+    tags: ["OpenAI GPT-4o", "Claude API", "Whisper STT", "Vector Search", "Autonomous Agents", "Prompt Tuning"],
+    metricLabel: "THROUGHPUT",
+    metrics: "8 Autonomous Agents · 115K Profiles Parsed",
+    status: "AGENT RUNTIME",
+  },
+  {
+    icon: Cloud,
+    code: "03 // CLOUD & EDGE",
+    title: "Cloud Infrastructure & Edge Systems",
+    description:
+      "Deploying highly cost-effective cloud services across AWS and Cloudflare: serverless endpoints, high-volume transactional email dispatchers, cold archive migrations, and R2 media delivery.",
+    tags: ["AWS SES / SNS", "API Gateway", "Lambda", "Cloudflare Workers", "Cloudflare R2", "Tunnels", "Docker"],
+    metricLabel: "EFFICIENCY",
+    metrics: "78% Cost Reduction · 84K+ Contacts Scaled",
+    status: "CLOUD VERIFIED",
+  },
+  {
+    icon: Database,
+    code: "04 // DATA & QUEUES",
+    title: "Databases, Realtime & Task Queues",
+    description:
+      "Implementing resilient data layers: hot/cold storage tiering, high-throughput BullMQ background queues, reactive Convex DB sync, and ACID-compliant PostgreSQL schemas.",
+    tags: ["Convex DB", "PostgreSQL", "Supabase", "BullMQ", "Upstash Redis", "Prisma ORM", "MariaDB"],
+    metricLabel: "RESILIENCY",
+    metrics: "Two-Tier Storage · 30-Day Hot Sync",
+    status: "HIGH THROUGHPUT",
+  },
+];
 
 export default function SkillSection() {
   const { isDarkMode } = useTheme();
@@ -83,88 +57,223 @@ export default function SkillSection() {
   return (
     <section
       id="skills"
-      className={`relative scroll-mt-20 md:scroll-mt-24 px-6 pt-6 md:pt-8 pb-16 transition-colors ${
-        isDarkMode ? "bg-gray-950 text-white" : "bg-gray-50 text-gray-900"
-      }`}
+      style={{
+        position: "relative",
+        background: "#0a0a0a",
+        overflow: "hidden",
+        padding: "120px 0 140px",
+      }}
     >
-      {/* Heading */}
-      <div className="mx-auto max-w-5xl text-center">
-        <p className={`mb-2 text-xs tracking-[0.22em] ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
-          TECHNICAL EXPERTISE
-        </p>
-        <h2 className={`text-3xl sm:text-4xl md:text-5xl font-bold leading-tight ${isDarkMode ? "text-white" : "text-gray-900"}`}>
-          <span>Skills &amp; </span>
-          <span className="text-blue-500">Technologies</span>
-        </h2>
-        <p className={`mt-3 text-sm sm:text-base ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
-          A comprehensive toolkit for building modern, scalable web applications from concept to deployment.
-        </p>
+      {/* Background vertical guideline grid lines */}
+      <div className="sublevel-bg-vrules" aria-hidden="true">
+        <i /><i /><i /><i /><i /><i />
       </div>
 
-      {/* Cards Grid */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        className="mx-auto mt-10 grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-2"
-      >
-        {SKILLS_CATEGORIES.map((cat) => (
-          <CategoryCard key={cat.title} {...cat} isDarkMode={isDarkMode} />
-        ))}
-      </motion.div>
-
-      {/* Also Working With */}
-      <div className="mx-auto mt-12 max-w-5xl text-center">
-        <h3 className={`text-sm sm:text-base font-medium ${isDarkMode ? "text-gray-200" : "text-gray-800"}`}>
-          Also Working With
-        </h3>
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="mt-5 flex items-center gap-3 sm:gap-4 overflow-x-auto whitespace-nowrap -mx-6 px-6 md:mx-0 md:px-0 md:flex-wrap md:whitespace-normal md:justify-center scrollbar-none"
-        >
-          {TECH_STACK.map((tech) => (
-            <motion.span
-              key={tech}
-              variants={itemVariants}
-              className={`inline-flex px-3 sm:px-4 py-1.5 rounded-full text-xs sm:text-sm transition-colors shadow-sm border ${
-                isDarkMode
-                  ? "bg-gray-900/60 border-gray-800 text-gray-200 hover:border-gray-700"
-                  : "bg-white/70 border-gray-200 text-gray-900 hover:border-gray-300"
-              }`}
-            >
-              {tech}
-            </motion.span>
-          ))}
-        </motion.div>
-      </div>
-
-      {/* Stats Row */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        className="mx-auto mt-10 max-w-6xl border-t border-gray-200 dark:border-gray-800 pt-8"
-      >
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          {STATS.map((s) => (
-            <motion.div key={s.label} variants={itemVariants} className="space-y-1">
-              <div className="text-2xl sm:text-3xl font-semibold text-blue-500">{s.number}</div>
-              <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">{s.label}</div>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
-
-      {/* Subtle background gradient */}
       <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-transparent to-blue-500/5"
-      />
+        style={{
+          position: "relative",
+          zIndex: 1,
+          width: "100%",
+          maxWidth: "82.5rem",
+          margin: "0 auto",
+          padding: "0 16px",
+        }}
+      >
+        {/* Grand Sublevel Header */}
+        <SublevelSectionHeader
+          tag="DIAGNOSTICS // DOMAIN CAPABILITIES"
+          title="Engineering Capabilities"
+          subtitle="Four core disciplines: full-stack systems, multi-agent AI pipelines, resilient cloud architecture, and high-throughput data layers."
+          topRule={true}
+        />
+
+        {/* 4 Pillars Grid — Grand Scale matching Featured Projects */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 540px), 1fr))",
+            gap: 20,
+          }}
+        >
+          {CAPABILITY_PILLARS.map((pillar, index) => {
+            const Icon = pillar.icon;
+            return (
+              <motion.article
+                key={pillar.code}
+                initial={{ opacity: 0, y: 22 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 0.84, 0.24, 1] }}
+                style={{
+                  position: "relative",
+                  border: "1px solid rgba(255,255,255,0.085)",
+                  background: "linear-gradient(180deg, rgba(255,255,255,0.016), rgba(255,255,255,0.003))",
+                  padding: "36px 36px 32px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  gap: 28,
+                  minHeight: 380,
+                  transition: "border-color 0.25s ease, background 0.25s ease",
+                }}
+                className="sublevel-frame sublevel-frame-hover"
+              >
+                <i className="sublevel-corner tl" />
+                <i className="sublevel-corner tr" />
+                <i className="sublevel-corner bl" />
+                <i className="sublevel-corner br" />
+
+                <div>
+                  {/* Top bar: Code + Status Badge */}
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: 16,
+                      marginBottom: 24,
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                      <div
+                        style={{
+                          width: 36,
+                          height: 36,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          border: "1px solid rgba(255,255,255,0.1)",
+                          background: "rgba(255,255,255,0.03)",
+                          color: "#3b82f6",
+                          borderRadius: 2,
+                        }}
+                      >
+                        <Icon size={18} />
+                      </div>
+                      <span
+                        style={{
+                          fontFamily: "ui-monospace, 'Geist Mono', monospace",
+                          fontSize: 11,
+                          letterSpacing: "0.12em",
+                          color: "#9ca3af",
+                          textTransform: "uppercase",
+                          fontWeight: 600,
+                        }}
+                      >
+                        {pillar.code}
+                      </span>
+                    </div>
+
+                    <span
+                      style={{
+                        fontFamily: "ui-monospace, 'Geist Mono', monospace",
+                        fontSize: 10,
+                        letterSpacing: "0.1em",
+                        color: "#34d399",
+                        background: "rgba(52, 211, 153, 0.08)",
+                        border: "1px solid rgba(52, 211, 153, 0.2)",
+                        padding: "3px 8px",
+                        borderRadius: 2,
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 6,
+                      }}
+                    >
+                      <span
+                        style={{
+                          width: 5,
+                          height: 5,
+                          borderRadius: "50%",
+                          background: "#34d399",
+                          boxShadow: "0 0 6px rgba(52,211,153,0.8)",
+                        }}
+                      />
+                      {pillar.status}
+                    </span>
+                  </div>
+
+                  {/* Title — Grand Urbanist font */}
+                  <h3
+                    style={{
+                      fontFamily: "'Urbanist', 'Geist', system-ui, sans-serif",
+                      fontSize: "clamp(1.4rem, 2.2vw, 1.85rem)",
+                      lineHeight: 1.2,
+                      letterSpacing: "-0.025em",
+                      fontWeight: 500,
+                      color: "#f3f4f6",
+                      margin: "0 0 14px 0",
+                    }}
+                  >
+                    {pillar.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p
+                    style={{
+                      fontFamily: "system-ui, sans-serif",
+                      fontSize: "0.95rem",
+                      lineHeight: "1.6rem",
+                      color: "#9ca3af",
+                      margin: 0,
+                    }}
+                  >
+                    {pillar.description}
+                  </p>
+                </div>
+
+                <div>
+                  {/* Tech Tag Pills */}
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: 6,
+                      marginBottom: 20,
+                    }}
+                  >
+                    {pillar.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        style={{
+                          fontFamily: "ui-monospace, 'Geist Mono', monospace",
+                          fontSize: 11,
+                          padding: "4px 9px",
+                          background: "rgba(255,255,255,0.03)",
+                          border: "1px solid rgba(255,255,255,0.08)",
+                          color: "#d1d5db",
+                          borderRadius: 2,
+                        }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Benchmark Rule & Metric */}
+                  <div
+                    style={{
+                      paddingTop: 16,
+                      borderTop: "1px solid rgba(255,255,255,0.07)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      fontFamily: "ui-monospace, 'Geist Mono', monospace",
+                      fontSize: 11,
+                    }}
+                  >
+                    <span style={{ color: "#6b7280", letterSpacing: "0.08em" }}>
+                      {pillar.metricLabel}:
+                    </span>
+                    <span style={{ color: "#60a5fa", fontWeight: 600 }}>
+                      {pillar.metrics}
+                    </span>
+                  </div>
+                </div>
+              </motion.article>
+            );
+          })}
+        </div>
+      </div>
     </section>
   );
 }

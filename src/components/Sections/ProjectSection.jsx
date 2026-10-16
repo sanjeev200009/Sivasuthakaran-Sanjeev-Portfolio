@@ -1,205 +1,420 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { useTheme } from "../../context/ThemeContext.jsx";
-import { PROJECTS, STATS } from "../../utils/data.js";
-import { containerVariants, itemVariants } from "../../utils/Helper.js";
+import { PROJECTS } from "../../utils/data.js";
+import PROJECT_IMG_1 from "../../assets/images/project-1.png";
+import PROJECT_IMG_2 from "../../assets/images/project-2.png";
+import PROJECT_IMG_3 from "../../assets/images/project-3.png";
+import PROJECT_IMG_4 from "../../assets/images/project-4.jpg";
+import PROJECT_IMG_5 from "../../assets/images/project-5.jpg";
+import PROJECT_IMG_6 from "../../assets/images/project-6.png";
+
+/* Arrow icon exactly from Sublevel source */
+const ArrowIcon = () => (
+  <svg viewBox="0 0 20 20" width="18" height="18" style={{ fill: "currentColor", opacity: 0.5 }}>
+    <path d="m11.1075 14.2752 4.2763-4.29004-4.2625-4.2625h1.9112l4.2625 4.27625-4.2763 4.27629h-1.9112ZM2.5 10.8102V9.17391h13.8188v1.63629H2.5Z" />
+  </svg>
+);
+
+/* AnimatedRule — scaleX from left on scroll enter, exactly like Sublevel's .rule data-line */
+function AnimatedRule({ className = "", thin = false }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, amount: 0.5 });
+  return (
+    <hr
+      ref={ref}
+      className={className}
+      style={{
+        border: 0,
+        height: 1,
+        width: "100%",
+        background: thin ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.085)",
+        transformOrigin: "left",
+        transform: inView ? "scaleX(1)" : "scaleX(0)",
+        transition: "transform 1.1s cubic-bezier(.16,.84,.24,1)",
+      }}
+    />
+  );
+}
+
+/* ScrollReveal — fades + slides up on scroll enter, mimicking Sublevel's data-ps particle-scroll */
+function ScrollReveal({ children, delay = 0, className = "" }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, amount: 0.15 });
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: inView ? 1 : 0,
+        transform: inView ? "translateY(0)" : "translateY(22px)",
+        transition: `opacity 0.7s ease ${delay}s, transform 0.7s cubic-bezier(.16,.84,.24,1) ${delay}s`,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+/* Exact project data mapped from CV / data.js */
+const FEATURED = [
+  {
+    id: 1,
+    cats: "Mobile · Android · Firebase",
+    title: "Zero Hunger App",
+    desc: "Mobile application connecting food donors with those in need — real-time map, donation system, and SDG Goal 2 support shipped on Android.",
+    image: PROJECT_IMG_1,
+    liveURL: "#",
+    githubURL: "https://github.com/sanjeev200009/ZeroHunger.git",
+  },
+  {
+    id: 2,
+    cats: "AI · Machine Learning · Data",
+    title: "Academic Risk Predictor",
+    desc: "Python and Streamlit system predicting students at academic risk. Probability visualisation, intervention recommendations, and feature importance — live on Streamlit.",
+    image: PROJECT_IMG_2,
+    liveURL: "https://aaxadzf7t2vqyfbtbhvkdu.streamlit.app/",
+    githubURL: "https://github.com/sanjeev200009/sanjeev200009-Mini-Project-Academic_Risk_Prediction-.git",
+  },
+  {
+    id: 3,
+    cats: "Full-Stack · Eco-Tourism · React",
+    title: "NatureGo.lk",
+    desc: "End-to-end eco-tourism platform for Sri Lanka. Sustainable booking, destination discovery, and OAuth auth — shipped with GitHub Actions CI/CD.",
+    image: PROJECT_IMG_3,
+    liveURL: "https://sanjeev200009.github.io/NatureGo.lk",
+    githubURL: "https://github.com/sanjeev200009/NatureGo.lk",
+  },
+  {
+    id: 4,
+    cats: "Frontend · React · TypeScript",
+    title: "React Front-End Projects",
+    desc: "A collection of 30+ React mini projects — E-Commerce App, Smart Review Filter, state management, hooks, and API integrations in a 30-day challenge.",
+    image: PROJECT_IMG_4,
+    liveURL: "#",
+    githubURL: "https://github.com/sanjeev200009/30_DAYS_CHALLANG_REACT.git",
+  },
+  {
+    id: 5,
+    cats: "Mobile · Commerce · Hackathon",
+    title: "QuickCart — React Native",
+    desc: "Hackathon-built mobile e-commerce app. Seamless shopping, secure transactions, and a Node.js + MongoDB backend API — full-stack in 48 hours.",
+    image: PROJECT_IMG_5,
+    liveURL: "#",
+    githubURL: "https://github.com/sanjeev200009/ReactNative-Hackathon-QuickCard-App.git",
+  },
+  {
+    id: 6,
+    cats: "Dashboard · Travel · OAuth",
+    title: "Travel Safety Dashboard",
+    desc: "Real-time travel advisory dashboard — government travel warnings, live weather, OAuth auth, and MongoDB history. A smart search tool that keeps travellers informed.",
+    image: PROJECT_IMG_6,
+    liveURL: "#",
+    githubURL: "https://github.com/prabasajee/Travel-Safety-Weather-Dashboard",
+  },
+];
 
 export default function ProjectSection() {
-  const { isDarkMode } = useTheme();
+  const headRef = useRef(null);
+  const headInView = useInView(headRef, { once: true, amount: 0.3 });
 
-  // Use the actual project images from data.js
-  const projects = PROJECTS ?? [];
+  /* Split into 3 masonry columns */
+  const col1 = FEATURED.filter((_, i) => i % 3 === 0);
+  const col2 = FEATURED.filter((_, i) => i % 3 === 1);
+  const col3 = FEATURED.filter((_, i) => i % 3 === 2);
 
   return (
     <section
       id="work"
-      className={`relative scroll-mt-16 md:scroll-mt-20 px-6 pt-8 md:pt-12 pb-16 transition-colors ${
-        isDarkMode ? "bg-gray-950 text-white" : "bg-gray-50 text-gray-900"
-      }`}
+      style={{
+        position: "relative",
+        background: "#000",
+        overflow: "hidden",
+        padding: "120px 0 140px",
+      }}
     >
-  <div className="mx-auto max-w-5xl text-center">
-        <p
-          className={`mb-2 text-xs tracking-[0.22em] ${
-            isDarkMode ? "text-gray-400" : "text-gray-500"
-          }`}
-        >
-          SELECTED PROJECTS
-        </p>
-        <h2
-          className={`text-3xl sm:text-4xl md:text-5xl font-bold leading-tight ${
-            isDarkMode ? "text-white" : "text-gray-900"
-          }`}
-        >
-          Things I’ve <span className="text-blue-500">built recently</span>
-        </h2>
-        <p
-          className={`mt-3 text-sm sm:text-base ${
-            isDarkMode ? "text-gray-400" : "text-gray-600"
-          }`}
-        >
-          A mix of mobile, web, and desktop apps using modern stacks.
-        </p>
+      {/* Vertical guide rules — exact Sublevel vrules pattern */}
+      <div className="sublevel-bg-vrules" aria-hidden="true">
+        <i /><i /><i /><i /><i /><i />
       </div>
 
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        className="mx-auto mt-10 grid max-w-6xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
+          width: "100%",
+          maxWidth: "82.5rem",
+          margin: "0 auto",
+          padding: "0 16px",
+        }}
       >
-        {projects.map((proj) => (
-          <motion.article
-            key={proj.id}
-            variants={itemVariants}
-            className={`group relative overflow-hidden rounded-2xl border shadow-sm transition-colors ${
-              isDarkMode
-                ? "bg-gray-900/60 border-gray-800 hover:border-gray-700"
-                : "bg-white/80 border-gray-200 hover:border-gray-300"
-            }`}
+        {/* Top hairline rule — scaleX animated */}
+        <AnimatedRule style={{ marginBottom: 36 }} />
+
+        {/* Section Head — exactly: framed big title + framed subtitle side-by-side */}
+        <div
+          ref={headRef}
+          style={{
+            display: "flex",
+            alignItems: "flex-end",
+            justifyContent: "space-between",
+            gap: 24,
+            flexWrap: "wrap",
+            marginBottom: 48,
+            marginTop: 36,
+          }}
+        >
+          {/* Big title — f-h1 scale, framed */}
+          <div
+            style={{
+              position: "relative",
+              border: "1px solid rgba(255,255,255,0.085)",
+              padding: "28px 32px",
+              background: "linear-gradient(180deg,rgba(255,255,255,.014),rgba(255,255,255,0))",
+              opacity: headInView ? 1 : 0,
+              transform: headInView ? "translateY(0)" : "translateY(18px)",
+              transition: "opacity 0.7s ease, transform 0.7s cubic-bezier(.16,.84,.24,1)",
+            }}
           >
-            {/* Image */}
-            <div className="relative p-4">
-              <div className="overflow-hidden rounded-xl">
-                <img
-                  src={proj.image}
-                  alt={proj.title}
-                  className="h-44 w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                />
-              </div>
-            </div>
+            <i className="sublevel-corner tl" />
+            <i className="sublevel-corner tr" />
+            <i className="sublevel-corner bl" />
+            <i className="sublevel-corner br" />
+            <h2
+              style={{
+                fontFamily: "'Urbanist', 'Geist', system-ui, sans-serif",
+                fontSize: "clamp(2.2rem, 5vw, 4.75rem)",
+                lineHeight: 1,
+                letterSpacing: "-0.035em",
+                fontWeight: 400,
+                color: "#e6e6e6",
+                margin: 0,
+              }}
+            >
+              Featured Projects
+            </h2>
+          </div>
 
-            {/* Content */}
-            <div className="px-5 pb-5">
-              <h3 className="text-lg font-semibold">{proj.title}</h3>
-              <p
-                className={`${
-                  isDarkMode ? "text-gray-400" : "text-gray-600"
-                } mt-2 text-sm leading-relaxed min-h-[3.5rem]`}
-              >
-                {proj.description}
-              </p>
-
-              {/* Tech stack */}
-              <div className="mt-3 -mx-2 flex items-center gap-2 overflow-x-auto whitespace-nowrap px-2 md:mx-0 md:px-0 md:flex-wrap md:whitespace-normal">
-                {proj.tags?.map((t) => (
-                  <span
-                    key={t}
-                    className={`inline-flex rounded-full border px-3 py-1 text-xs ${
-                      isDarkMode
-                        ? "bg-gray-900/60 border-gray-800 text-gray-200"
-                        : "bg-white/70 border-gray-200 text-gray-700"
-                    }`}
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Hover overlay with actions */}
-            <div className="pointer-events-none absolute inset-0 opacity-0 transition-all duration-300 group-hover:opacity-100">
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-              <div className="pointer-events-auto absolute inset-0 flex items-center justify-center">
-                <div className="flex gap-3 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                  <a
-                    href={proj.liveURL || "#"}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full bg-blue-500 px-4 py-2.5 text-sm font-medium text-white shadow-lg hover:bg-blue-600 hover:shadow-xl transition-all duration-200 transform hover:scale-105"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    Live Demo
-                  </a>
-                  <a
-                    href={proj.githubURL || "#"}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border-2 border-white/80 bg-white/10 backdrop-blur-sm px-4 py-2.5 text-sm font-medium text-white hover:bg-white/20 hover:border-white transition-all duration-200 transform hover:scale-105"
-                  >
-                    <Github className="w-4 h-4" />
-                    GitHub Repo
-                  </a>
-                </div>
-              </div>
-            </div>
-          </motion.article>
-        ))}
-      </motion.div>
-
-      {/* Statistics Section */}
-      <div className="mx-auto mt-16 max-w-4xl">
-        <div className="text-center mb-8">
-          <p
-            className={`text-sm ${
-              isDarkMode ? "text-gray-400" : "text-gray-600"
-            }`}
+          {/* Subtitle — framed */}
+          <div
+            style={{
+              position: "relative",
+              border: "1px solid rgba(255,255,255,0.085)",
+              padding: "20px 24px",
+              maxWidth: "34rem",
+              background: "linear-gradient(180deg,rgba(255,255,255,.014),rgba(255,255,255,0))",
+              opacity: headInView ? 1 : 0,
+              transform: headInView ? "translateY(0)" : "translateY(18px)",
+              transition: "opacity 0.7s ease 0.12s, transform 0.7s cubic-bezier(.16,.84,.24,1) 0.12s",
+            }}
           >
-            Want to see more of my work?
-          </p>
-          <button
-            className={`mt-3 inline-flex items-center gap-2 rounded-full border px-6 py-2.5 text-sm font-medium transition-colors ${
-              isDarkMode
-                ? "border-gray-700 bg-gray-900/60 text-gray-200 hover:border-gray-600 hover:bg-gray-800/80"
-                : "border-gray-300 bg-white/80 text-gray-700 hover:border-gray-400 hover:bg-gray-50"
-            }`}
-          >
-            VIEW ALL PROJECTS
-            <ExternalLink className="w-4 h-4" />
-          </button>
+            <i className="sublevel-corner tl" />
+            <i className="sublevel-corner tr" />
+            <i className="sublevel-corner bl" />
+            <i className="sublevel-corner br" />
+            <p
+              style={{
+                fontFamily: "'Urbanist', system-ui, sans-serif",
+                fontSize: "1.15rem",
+                lineHeight: "1.5rem",
+                letterSpacing: "-0.02em",
+                fontWeight: 600,
+                color: "#c4c4c4",
+                margin: 0,
+              }}
+            >
+              Six selected builds from the last eighteen months — AI pipelines, product launches and a few experiments that got out of hand.
+            </p>
+          </div>
         </div>
 
-        {/* Statistics Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8"
+        {/* ─── MASONRY GRID — 3 columns, exactly like Sublevel ─── */}
+        <div
+          style={{
+            columns: 3,
+            columnGap: 12,
+          }}
+          className="project-masonry"
         >
-          {STATS.map((stat, index) => {
-            const IconComponent = stat.icon;
-            return (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className="text-center"
-              >
-                <div
-                  className={`inline-flex items-center justify-center w-12 h-12 rounded-full mb-3 ${
-                    isDarkMode
-                      ? "bg-blue-500/20 text-blue-400"
-                      : "bg-blue-500/10 text-blue-600"
-                  }`}
-                >
-                  <IconComponent className="w-6 h-6" />
-                </div>
-                <div
-                  className={`text-2xl md:text-3xl font-bold ${
-                    isDarkMode ? "text-white" : "text-gray-900"
-                  }`}
-                >
-                  {stat.number}
-                </div>
-                <div
-                  className={`text-sm ${
-                    isDarkMode ? "text-gray-400" : "text-gray-600"
-                  }`}
-                >
-                  {stat.label}
-                </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+          {FEATURED.map((proj, index) => (
+            <ProjectCard key={proj.id} proj={proj} delay={index * 0.07} />
+          ))}
+        </div>
+
+        <div style={{ height: 80 }} />
       </div>
 
-      {/* Subtle gradient decoration */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-transparent to-blue-500/5"
-      />
+      {/* Responsive masonry CSS */}
+      <style>{`
+        @media (max-width: 1023px) {
+          .project-masonry { columns: 2 !important; }
+        }
+        @media (max-width: 639px) {
+          .project-masonry { columns: 1 !important; }
+        }
+        .proj-shot img {
+          transition: opacity 0.3s ease;
+        }
+        .proj-shot:hover img {
+          opacity: 0.82;
+        }
+        .proj-go {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          color: #e6e6e6;
+          font-family: ui-monospace, 'Geist Mono', monospace;
+          font-size: 0.8125rem;
+          font-weight: 600;
+          line-height: 1rem;
+          text-decoration: none;
+          transition: opacity 0.18s ease;
+          position: relative;
+        }
+        .proj-go::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: -2px;
+          height: 1px;
+          background: currentColor;
+          opacity: 0;
+          transition: opacity 0.15s ease;
+        }
+        .proj-go:hover::before { opacity: 1; }
+        .proj-go:hover { opacity: 0.85; }
+      `}</style>
     </section>
+  );
+}
+
+function ProjectCard({ proj, delay }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, amount: 0.1 });
+
+  return (
+    <article
+      ref={ref}
+      style={{
+        breakInside: "avoid",
+        display: "block",
+        margin: "0 0 12px",
+        opacity: inView ? 1 : 0,
+        transform: inView ? "translateY(0)" : "translateY(24px)",
+        transition: `opacity 0.65s ease ${delay}s, transform 0.65s cubic-bezier(.16,.84,.24,1) ${delay}s`,
+      }}
+    >
+      {/* Shot — image frame, no bottom border (meta attaches flush) */}
+      <div
+        className="proj-shot"
+        style={{
+          display: "block",
+          position: "relative",
+          background: "#0a0a0a",
+          border: "1px solid rgba(255,255,255,0.085)",
+          borderBottom: 0,
+          overflow: "hidden",
+          cursor: "pointer",
+        }}
+        onClick={() => proj.liveURL && proj.liveURL !== "#" && window.open(proj.liveURL, "_blank")}
+      >
+        <img
+          src={proj.image}
+          alt={proj.title}
+          style={{
+            width: "100%",
+            height: "auto",
+            display: "block",
+            filter: "grayscale(0.2) contrast(1.05)",
+          }}
+        />
+        {/* Gradient vignette */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: "linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.35))",
+            opacity: 0.9,
+            pointerEvents: "none",
+          }}
+        />
+      </div>
+
+      {/* Meta — framed, flush top (border-top: 0) */}
+      <div
+        style={{
+          position: "relative",
+          border: "1px solid rgba(255,255,255,0.085)",
+          borderTop: 0,
+          padding: "20px 22px 22px",
+          background: "linear-gradient(180deg,rgba(255,255,255,.014),rgba(255,255,255,0))",
+          display: "flex",
+          flexDirection: "column",
+          gap: 12,
+        }}
+      >
+        <i className="sublevel-corner tl" />
+        <i className="sublevel-corner tr" />
+        <i className="sublevel-corner bl" />
+        <i className="sublevel-corner br" />
+
+        {/* Category tags — monospace, exactly .cats */}
+        <p
+          style={{
+            color: "#757575",
+            fontFamily: "ui-monospace, 'Geist Mono', monospace",
+            fontSize: 11,
+            lineHeight: "16px",
+            letterSpacing: "0.08em",
+            textTransform: "uppercase",
+            margin: 0,
+          }}
+        >
+          {proj.cats}
+        </p>
+
+        {/* Title — f-h3 scale */}
+        <h3
+          style={{
+            fontFamily: "'Urbanist', 'Geist', system-ui, sans-serif",
+            fontSize: "1.5rem",
+            lineHeight: "1.5rem",
+            letterSpacing: "-0.02em",
+            fontWeight: 500,
+            color: "#e6e6e6",
+            margin: 0,
+            textWrap: "pretty",
+          }}
+        >
+          {proj.title}
+        </h3>
+
+        {/* Description — .desc */}
+        <p
+          style={{
+            color: "#c4c4c4",
+            fontSize: "0.875rem",
+            lineHeight: "1.375rem",
+            fontWeight: 500,
+            margin: 0,
+            textWrap: "pretty",
+          }}
+        >
+          {proj.desc}
+        </p>
+
+        {/* View project link — exact .go design */}
+        <a
+          href={proj.githubURL || "#"}
+          target="_blank"
+          rel="noreferrer"
+          className="proj-go"
+        >
+          <span>View project</span>
+          <ArrowIcon />
+        </a>
+      </div>
+    </article>
   );
 }
