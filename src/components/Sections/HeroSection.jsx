@@ -17,7 +17,13 @@ export default function HeroSection() {
   const [isAvatarPinned, setIsAvatarPinned] = useState(false);
   const portraitBoxRef = useRef(null);
 
+  const handlePortraitMouseEnter = () => {
+    if (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(hover: none)").matches) return;
+    setPortraitHovered(true);
+  };
+
   const handlePortraitMouseMove = (e) => {
+    if (typeof window !== "undefined" && window.matchMedia && window.matchMedia("(hover: none)").matches) return;
     if (!portraitBoxRef.current) return;
     const rect = portraitBoxRef.current.getBoundingClientRect();
     setPortraitMouse({
@@ -117,9 +123,9 @@ export default function HeroSection() {
           setTypedSecond(currentTitle.line2.slice(0, typedSecond.length + 1));
           timeoutId = setTimeout(tick, 30);
         } else {
-          // Hold for 1 second then change
+          // Hold for 2.5 seconds so title is clearly readable
           setPhase("HOLD");
-          timeoutId = setTimeout(tick, 1100);
+          timeoutId = setTimeout(tick, 2500);
         }
       } else if (phase === "HOLD") {
         setPhase("DELETE_SECOND");
@@ -184,8 +190,10 @@ export default function HeroSection() {
         <i /><i /><i /><i /><i /><i />
       </div>
 
-      {/* ─── LAYER 1: Concentric Sonic Glow Rings (Behind Sanjeev) ─── */}
-      <motion.div
+      {/* ─── HERO VISUAL STAGE: 100svh On Mobile, Transparent On Desktop ─── */}
+      <div className="hero-visual-stage">
+        {/* ─── LAYER 1: Concentric Sonic Glow Rings (Behind Sanjeev) ─── */}
+        <motion.div
         style={{
           x: ringsX,
           y: ringsY,
@@ -243,6 +251,7 @@ export default function HeroSection() {
 
       {/* ─── LAYER 2: Giant Background Name Typography (Behind Cutout) ─── */}
       <motion.div
+        className="hero-bg-title-wrapper"
         style={{
           y: textScrollY,
           x: textShiftX,
@@ -263,6 +272,7 @@ export default function HeroSection() {
         }}
       >
         <motion.h1
+          className="hero-bg-title"
           initial={{ opacity: 0, y: 50, scale: 0.94 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.95, ease: [0.16, 0.84, 0.24, 1] }}
@@ -319,6 +329,7 @@ export default function HeroSection() {
 
       {/* ─── LAYER 3: 3D Foreground Cutout Portrait ─── */}
       <motion.div
+        className="hero-portrait-wrapper"
         style={{
           y: portraitScrollY,
           scale: portraitScale,
@@ -336,16 +347,17 @@ export default function HeroSection() {
         <motion.div
           ref={portraitBoxRef}
           onMouseMove={handlePortraitMouseMove}
-          onMouseEnter={() => setPortraitHovered(true)}
+          onMouseEnter={handlePortraitMouseEnter}
           onMouseLeave={() => setPortraitHovered(false)}
           onClick={() => setIsAvatarPinned((prev) => !prev)}
           title="Hover to reveal neural avatar, or click to pin"
+          className="hero-portrait-inner"
           style={{
             x: portraitX,
             y: portraitY,
             rotate: portraitRotate,
             position: "relative",
-            width: "clamp(360px, 50vw, 730px)",
+            width: "clamp(300px, 48vw, 730px)",
             maxHeight: "84vh",
             display: "flex",
             justifyContent: "center",
@@ -375,6 +387,7 @@ export default function HeroSection() {
           <img
             src={SANJEEV_CUTOUT}
             alt="Sanjeev Sivasuthakaran"
+            className="hero-cutout-base"
             style={{
               width: "100%",
               height: "auto",
@@ -383,6 +396,8 @@ export default function HeroSection() {
               objectPosition: "bottom center",
               filter: "contrast(1.06) brightness(1.02) drop-shadow(0 20px 45px rgba(0,0,0,0.85))",
               display: "block",
+              opacity: isAvatarPinned ? 0 : 1,
+              transition: "opacity 0.35s ease",
             }}
           />
 
@@ -390,6 +405,7 @@ export default function HeroSection() {
           <img
             src={SANJEEV_ILLUSTRATED}
             alt="Sanjeev Sivasuthakaran Cyber Avatar"
+            className="hero-illustrated-overlay"
             style={{
               position: "absolute",
               top: 0,
@@ -402,7 +418,7 @@ export default function HeroSection() {
               filter: "contrast(1.08) brightness(1.04) drop-shadow(0 20px 45px rgba(2, 210, 227, 0.35))",
               pointerEvents: "none",
               opacity: isAvatarPinned ? 1 : portraitHovered ? 1 : 0,
-              transition: isAvatarPinned ? "opacity 0.3s ease" : "opacity 0.08s ease",
+              transition: isAvatarPinned ? "opacity 0.35s ease" : "opacity 0.08s ease",
               WebkitMaskImage: isAvatarPinned
                 ? "none"
                 : portraitHovered
@@ -450,55 +466,71 @@ export default function HeroSection() {
               zIndex: 15,
             }}
           />
-
-          {/* Floating Mode Toggle Pill */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: 14,
-              left: "50%",
-              transform: "translateX(-50%)",
-              zIndex: 16,
-              pointerEvents: "auto",
-            }}
-          >
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setIsAvatarPinned((prev) => !prev);
-              }}
-              style={{
-                fontFamily: "ui-monospace, monospace",
-                fontSize: 10,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                background: isAvatarPinned ? "rgba(2, 210, 227, 0.22)" : "rgba(6, 5, 11, 0.78)",
-                border: isAvatarPinned ? "1px solid #02d2e3" : "1px solid rgba(255, 255, 255, 0.16)",
-                color: isAvatarPinned ? "#02d2e3" : "#d1d5db",
-                borderRadius: 9999,
-                padding: "5px 14px",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 6,
-                cursor: "pointer",
-                backdropFilter: "blur(10px)",
-                boxShadow: isAvatarPinned
-                  ? "0 0 18px rgba(2, 210, 227, 0.45)"
-                  : "0 4px 14px rgba(0,0,0,0.6)",
-                transition: "all 0.25s ease",
-              }}
-              title="Click to toggle between real photo and full vector avatar"
-            >
-              <Sparkles size={11} style={{ color: isAvatarPinned ? "#02d2e3" : "#a78bfa" }} />
-              <span>{isAvatarPinned ? "PINNED: VECTOR AVATAR" : "HOVER: LENS REVEAL"}</span>
-            </button>
-          </div>
         </motion.div>
       </motion.div>
 
-      {/* ─── LAYER 4: Foreground Interactive Information Grid ─── */}
-      <div
+      {/* Mode Toggle Pill */}
+      <div className="hero-avatar-pill-container">
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsAvatarPinned((prev) => !prev);
+          }}
+          style={{
+            fontFamily: "ui-monospace, monospace",
+            fontSize: 10,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            background: isAvatarPinned ? "rgba(2, 210, 227, 0.22)" : "rgba(6, 5, 11, 0.78)",
+            border: isAvatarPinned ? "1px solid #02d2e3" : "1px solid rgba(255, 255, 255, 0.16)",
+            color: isAvatarPinned ? "#02d2e3" : "#d1d5db",
+            borderRadius: 9999,
+            padding: "5px 14px",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            cursor: "pointer",
+            backdropFilter: "blur(10px)",
+            boxShadow: isAvatarPinned
+              ? "0 0 18px rgba(2, 210, 227, 0.45)"
+              : "0 4px 14px rgba(0,0,0,0.6)",
+            transition: "all 0.25s ease",
+          }}
+          title="Click to toggle between real photo and full vector avatar"
+        >
+          <Sparkles size={11} style={{ color: isAvatarPinned ? "#02d2e3" : "#a78bfa" }} />
+          <span className="hidden sm:inline">{isAvatarPinned ? "PINNED: VECTOR AVATAR" : "HOVER: LENS REVEAL"}</span>
+          <span className="inline sm:hidden">{isAvatarPinned ? "VECTOR AVATAR" : "TAP: AVATAR"}</span>
+        </button>
+      </div>
+
+      {/* Mobile-only Bottom Hero Dock (visible on the first 100svh screen) */}
+      <div className="hero-mobile-dock">
+        <div className="hero-mobile-dock-pill">
+          <span className="hero-mobile-dock-role">{HERO_TITLES[titleIndex].cardRole}</span>
+          <span className="hero-mobile-dock-dot" />
+          <button
+            type="button"
+            onClick={() => scrollToSection("contact")}
+            className="hero-mobile-dock-cta"
+          >
+            <span>Let's Talk</span>
+            <ArrowUpRight size={13} />
+          </button>
+        </div>
+        <div className="hero-mobile-scroll-hint">
+          <span>Scroll for bio &amp; projects</span>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            <path d="M7 10l5 5 5-5" />
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    {/* ─── LAYER 4: Foreground Interactive Information Grid ─── */}
+    <div
+      className="hero-info-layer"
         style={{
           position: "relative",
           zIndex: 20,
@@ -529,6 +561,7 @@ export default function HeroSection() {
         >
           {/* Left Wing: Bio, Role, Social Pills */}
           <motion.div
+            className="hero-left-wing"
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 0.84, 0.24, 1] }}
@@ -666,6 +699,7 @@ export default function HeroSection() {
 
           {/* Right Wing: Statement & Glowing "Let's Talk ↗" Pill Button */}
           <motion.div
+            className="hero-right-wing"
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 0.84, 0.24, 1] }}
@@ -715,6 +749,7 @@ export default function HeroSection() {
 
             {/* Exact "Let's Talk ↗" Pill from Reference Design */}
             <motion.button
+              className="hero-lets-talk-btn"
               onClick={() => scrollToSection("contact")}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
@@ -765,16 +800,268 @@ export default function HeroSection() {
       </div>
 
       <style>{`
+        /* ── Desktop: contents so visual stage acts transparently under #home ── */
+        .hero-visual-stage {
+          display: contents;
+        }
+        .hero-mobile-dock {
+          display: none !important;
+        }
+        .hero-avatar-pill-container {
+          position: absolute;
+          bottom: 14px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 26;
+          pointer-events: auto;
+        }
+
+        /* ── Tablet (641–900px) ──────────────────────────────── */
         @media (max-width: 900px) {
           .hero-wings-grid {
             grid-template-columns: 1fr !important;
-            gap: 20px !important;
+            gap: 16px !important;
           }
           .hero-wings-grid > div {
             max-width: 100% !important;
             margin: 0 !important;
             text-align: left !important;
             align-items: flex-start !important;
+          }
+        }
+
+        /* ── Mobile (≤ 640px): Dedicated 100svh Grand Hero Visual ── */
+        @media (max-width: 640px) {
+          #home {
+            flex-direction: column !important;
+            min-height: auto !important;
+            padding-top: 0 !important;
+            overflow-x: hidden !important;
+          }
+
+          /* Full 100svh Dedicated Visual Stage */
+          .hero-visual-stage {
+            display: flex !important;
+            position: relative !important;
+            width: 100% !important;
+            height: 100svh !important;
+            min-height: 640px !important;
+            overflow: hidden !important;
+            flex-direction: column !important;
+            justifyContent: flex-end !important;
+            align-items: center !important;
+            padding-top: 70px !important;
+          }
+
+          /* Giant Title placed clearly behind upper head and shoulders - moved down per request & enlarged */
+          .hero-bg-title-wrapper {
+            top: clamp(125px, 15vh, 175px) !important;
+            padding: 0 10px !important;
+            z-index: 2 !important;
+          }
+
+          .hero-bg-title {
+            font-size: clamp(3.2rem, 13.5vw, 5.2rem) !important;
+            line-height: 0.86 !important;
+            letter-spacing: -0.015em !important;
+          }
+
+          /* Big Grand Portrait: symmetrically centered at 210vw without flexbox clipping */
+          .hero-portrait-wrapper {
+            position: absolute !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            z-index: 10 !important;
+            pointer-events: none !important;
+            margin: 0 !important;
+            overflow: hidden !important;
+          }
+
+          .hero-portrait-inner {
+            position: absolute !important;
+            bottom: 0 !important;
+            left: -55vw !important;
+            width: 210vw !important;
+            max-width: none !important;
+            height: auto !important;
+            max-height: 85vh !important;
+            pointer-events: auto !important;
+            display: block !important;
+            flex-shrink: 0 !important;
+          }
+
+          .hero-portrait-inner .hero-cutout-base {
+            width: 100% !important;
+            height: auto !important;
+            max-height: 85vh !important;
+            object-fit: contain !important;
+            object-position: bottom center !important;
+            display: block !important;
+          }
+
+          .hero-portrait-inner .hero-illustrated-overlay {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            max-height: 85vh !important;
+            object-fit: contain !important;
+            object-position: bottom center !important;
+          }
+
+          /* Mode Toggle Pill: placed cleanly at top right below navbar */
+          .hero-avatar-pill-container {
+            top: 74px !important;
+            bottom: auto !important;
+            right: 14px !important;
+            left: auto !important;
+            transform: none !important;
+            z-index: 30 !important;
+          }
+
+          .hero-avatar-pill-container button {
+            font-size: 11px !important;
+            padding: 7px 15px !important;
+            gap: 7px !important;
+          }
+
+          /* Mobile bottom dock */
+          .hero-mobile-dock {
+            position: absolute !important;
+            bottom: 14px !important;
+            left: 0 !important;
+            right: 0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 8px !important;
+            z-index: 25 !important;
+            pointer-events: auto !important;
+            padding: 0 14px !important;
+          }
+
+          .hero-mobile-dock-pill {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            padding: 8px 10px 8px 16px !important;
+            border-radius: 9999px !important;
+            background: rgba(10, 10, 18, 0.9) !important;
+            border: 1px solid rgba(255, 255, 255, 0.18) !important;
+            backdrop-filter: blur(14px) !important;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.75), 0 0 24px rgba(124, 58, 237, 0.3) !important;
+            max-width: 95vw !important;
+          }
+
+          .hero-mobile-dock-role {
+            font-family: 'Urbanist', system-ui, sans-serif !important;
+            font-size: 0.94rem !important;
+            font-weight: 700 !important;
+            color: #f3f4f6 !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+          }
+
+          .hero-mobile-dock-dot {
+            width: 5px !important;
+            height: 5px !important;
+            border-radius: 50% !important;
+            background: #a78bfa !important;
+            flex-shrink: 0 !important;
+          }
+
+          .hero-mobile-dock-cta {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            padding: 8px 14px !important;
+            border-radius: 9999px !important;
+            background: linear-gradient(90deg, #7c3aed 0%, #6366f1 100%) !important;
+            border: none !important;
+            color: #ffffff !important;
+            font-family: 'Urbanist', system-ui, sans-serif !important;
+            font-size: 0.92rem !important;
+            font-weight: 700 !important;
+            cursor: pointer !important;
+            flex-shrink: 0 !important;
+            box-shadow: 0 0 16px rgba(124, 58, 237, 0.5) !important;
+          }
+
+          .hero-mobile-scroll-hint {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 5px !important;
+            font-family: ui-monospace, monospace !important;
+            font-size: 10.5px !important;
+            letter-spacing: 0.1em !important;
+            text-transform: uppercase !important;
+            color: #9ca3af !important;
+            opacity: 0.85 !important;
+            animation: heroBounce 2s ease infinite !important;
+          }
+
+          @keyframes heroBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(3px); }
+          }
+
+          /* Information layer stacked right below the 100svh hero stage */
+          .hero-info-layer {
+            position: relative !important;
+            z-index: 20 !important;
+            flex: unset !important;
+            padding: 24px 16px 40px !important;
+            pointer-events: auto !important;
+            background: #06050b !important;
+          }
+
+          .hero-wings-grid {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+            padding-bottom: 0 !important;
+            margin-top: 0 !important;
+          }
+
+          .hero-left-wing,
+          .hero-right-wing {
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 24px 22px !important;
+            border-radius: 12px !important;
+            text-align: left !important;
+            align-items: flex-start !important;
+          }
+
+          .hero-left-wing h2 {
+            font-size: 1.55rem !important;
+            line-height: 1.25 !important;
+          }
+
+          .hero-left-wing p {
+            font-size: 1.02rem !important;
+            line-height: 1.65rem !important;
+          }
+
+          .hero-right-wing p:first-of-type {
+            font-size: 1.3rem !important;
+            line-height: 1.65rem !important;
+          }
+
+          .hero-right-wing p:last-of-type {
+            font-size: 0.98rem !important;
+            line-height: 1.6rem !important;
+          }
+
+          .hero-lets-talk-btn {
+            width: 100% !important;
+            justify-content: space-between !important;
+            font-size: 1.12rem !important;
+            padding: 13px 18px 13px 24px !important;
           }
         }
       `}</style>
