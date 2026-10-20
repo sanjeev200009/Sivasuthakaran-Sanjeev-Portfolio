@@ -5,10 +5,11 @@ import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
 import { useTheme } from "../../context/ThemeContext.jsx";
 import { downloadCVFetch, downloadCV } from "../../utils/cvDownload.js";
-import { PORTFOLIO_IMAGES } from "../../utils/media.js";
+import sanjeevCutout from "../../assets/images/sanjeev-cutout.webp";
+import sanjeevIllustrated from "../../assets/images/sanjeev-illustrated.webp";
 
-const SANJEEV_CUTOUT = PORTFOLIO_IMAGES.hero.cutout;
-const SANJEEV_ILLUSTRATED = PORTFOLIO_IMAGES.hero.illustrated;
+const SANJEEV_CUTOUT = sanjeevCutout;
+const SANJEEV_ILLUSTRATED = sanjeevIllustrated;
 const HERO_WHATSAPP_URL = `https://wa.me/94722858346?text=${encodeURIComponent(
   "Hi Sanjeev, I found your portfolio and would like to discuss a freelance project."
 )}`;
@@ -22,6 +23,17 @@ const HERO_TITLES = [
 export default function HeroSection() {
   const { isDarkMode } = useTheme();
   const heroRef = useRef(null);
+  const [isMobileViewport, setIsMobileViewport] = useState(() =>
+    typeof window !== "undefined" && window.matchMedia("(max-width: 640px)").matches
+  );
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 640px)");
+    const updateViewportMode = () => setIsMobileViewport(mediaQuery.matches);
+    updateViewportMode();
+    mediaQuery.addEventListener("change", updateViewportMode);
+    return () => mediaQuery.removeEventListener("change", updateViewportMode);
+  }, []);
 
   // Portrait Hover Reveal Lens Tracking
   const [portraitHovered, setPortraitHovered] = useState(false);
@@ -74,7 +86,7 @@ export default function HeroSection() {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.15]);
 
   const handleMouseMove = (e) => {
-    if (!heroRef.current) return;
+    if (isMobileViewport || !heroRef.current) return;
     const rect = heroRef.current.getBoundingClientRect();
     const xPct = (e.clientX - rect.left) / rect.width - 0.5;
     const yPct = (e.clientY - rect.top) / rect.height - 0.5;
@@ -111,6 +123,15 @@ export default function HeroSection() {
     let isMounted = true;
 
     const currentTitle = HERO_TITLES[titleIndex];
+
+    if (isMobileViewport) {
+      setTypedFirst(currentTitle.line1);
+      setTypedSecond(currentTitle.line2);
+      setPhase("HOLD");
+      return () => {
+        isMounted = false;
+      };
+    }
 
     const tick = () => {
       if (!isMounted) return;
@@ -164,7 +185,7 @@ export default function HeroSection() {
       isMounted = false;
       clearTimeout(timeoutId);
     };
-  }, [typedFirst, typedSecond, phase, titleIndex]);
+  }, [typedFirst, typedSecond, phase, titleIndex, isMobileViewport]);
 
   const replayTypewriter = () => {
     setTypedFirst("");
@@ -177,8 +198,8 @@ export default function HeroSection() {
     <section
       id="home"
       ref={heroRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      onMouseMove={isMobileViewport ? undefined : handleMouseMove}
+      onMouseLeave={isMobileViewport ? undefined : handleMouseLeave}
       style={{
         position: "relative",
         minHeight: "100vh",
@@ -200,7 +221,7 @@ export default function HeroSection() {
       {/* ─── HERO VISUAL STAGE: 100svh On Mobile, Transparent On Desktop ─── */}
       <div className="hero-visual-stage">
         {/* ─── LAYER 1: Concentric Sonic Glow Rings (Behind Sanjeev) ─── */}
-        <motion.div
+        {!isMobileViewport && <motion.div
         style={{
           x: ringsX,
           y: ringsY,
@@ -254,15 +275,15 @@ export default function HeroSection() {
             }}
           />
         ))}
-      </motion.div>
+      </motion.div>}
 
       {/* ─── LAYER 2: Giant Background Name Typography (Behind Cutout) ─── */}
       <motion.div
         className="hero-bg-title-wrapper"
         style={{
-          y: textScrollY,
-          x: textShiftX,
-          opacity: heroOpacity,
+          y: isMobileViewport ? 0 : textScrollY,
+          x: isMobileViewport ? 0 : textShiftX,
+          opacity: isMobileViewport ? 1 : heroOpacity,
           position: "absolute",
           top: "clamp(85px, 13vh, 130px)",
           left: 0,
@@ -307,7 +328,7 @@ export default function HeroSection() {
             }}
           >
             <span>{typedFirst}</span>
-            {(phase === "TYPE_FIRST" || phase === "DELETE_FIRST" || phase === "PAUSE") && (
+            {!isMobileViewport && (phase === "TYPE_FIRST" || phase === "DELETE_FIRST" || phase === "PAUSE") && (
               <span className="hero-typewriter-cursor">|</span>
             )}
           </span>
@@ -321,7 +342,7 @@ export default function HeroSection() {
             <span>
               {typedSecond}
             </span>
-            {(phase === "TYPE_SECOND" || phase === "HOLD" || phase === "DELETE_SECOND") && (
+            {!isMobileViewport && (phase === "TYPE_SECOND" || phase === "HOLD" || phase === "DELETE_SECOND") && (
               <span className="hero-typewriter-cursor">|</span>
             )}
           </span>
@@ -332,8 +353,8 @@ export default function HeroSection() {
       <motion.div
         className="hero-portrait-wrapper"
         style={{
-          y: portraitScrollY,
-          scale: portraitScale,
+          y: isMobileViewport ? 0 : portraitScrollY,
+          scale: isMobileViewport ? 1 : portraitScale,
           position: "absolute",
           bottom: 0,
           left: 0,
@@ -350,28 +371,30 @@ export default function HeroSection() {
           onMouseMove={handlePortraitMouseMove}
           onMouseEnter={handlePortraitMouseEnter}
           onMouseLeave={() => setPortraitHovered(false)}
-          onClick={() => setIsAvatarPinned((prev) => !prev)}
+          onClick={() => {
+            if (!isMobileViewport) setIsAvatarPinned((prev) => !prev);
+          }}
           title="Hover to reveal neural avatar, or click to pin"
           className="hero-portrait-inner"
           style={{
-            x: portraitX,
-            y: portraitY,
-            rotate: portraitRotate,
+            x: isMobileViewport ? 0 : portraitX,
+            y: isMobileViewport ? 0 : portraitY,
+            rotate: isMobileViewport ? 0 : portraitRotate,
             position: "relative",
             width: "clamp(300px, 48vw, 730px)",
             maxHeight: "84vh",
             display: "flex",
             justifyContent: "center",
             pointerEvents: "auto",
-            cursor: isAvatarPinned ? "pointer" : "crosshair",
+            cursor: isMobileViewport ? "default" : isAvatarPinned ? "pointer" : "crosshair",
             userSelect: "none",
           }}
-          initial={{ opacity: 0, y: 80, scale: 0.95 }}
+          initial={isMobileViewport ? false : { opacity: 0, y: 80, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1.1, ease: [0.16, 0.84, 0.24, 1], delay: 0.15 }}
         >
           {/* Subtle back ambient rim glow */}
-          <div
+          {!isMobileViewport && <div
             style={{
               position: "absolute",
               top: "18%",
@@ -382,13 +405,16 @@ export default function HeroSection() {
               filter: "blur(55px)",
               zIndex: -1,
             }}
-          />
+          />}
 
           {/* Base Layer: Photographic Cutout */}
           <img
             src={SANJEEV_CUTOUT}
             alt="Sanjeev Sivasuthakaran"
             className="hero-cutout-base"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
             style={{
               width: "100%",
               height: "auto",
@@ -403,7 +429,7 @@ export default function HeroSection() {
           />
 
           {/* Top Layer: Cyber Illustrated Vector Avatar revealed via Cursor Mask */}
-          <img
+          {!isMobileViewport && <img
             src={SANJEEV_ILLUSTRATED}
             alt="Sanjeev Sivasuthakaran Cyber Avatar"
             className="hero-illustrated-overlay"
@@ -432,7 +458,7 @@ export default function HeroSection() {
                   : "none",
               zIndex: 5,
             }}
-          />
+          />}
 
           {/* Water ripple cursor glow — soft ambient only, no hard outline */}
           {portraitHovered && !isAvatarPinned && (
@@ -919,6 +945,10 @@ export default function HeroSection() {
             pointer-events: none !important;
             margin: 0 !important;
             overflow: hidden !important;
+            transform: translate3d(0, 0, 0) !important;
+            backface-visibility: hidden !important;
+            -webkit-backface-visibility: hidden !important;
+            contain: layout paint !important;
           }
 
           .hero-portrait-inner {
@@ -932,6 +962,9 @@ export default function HeroSection() {
             pointer-events: auto !important;
             display: block !important;
             flex-shrink: 0 !important;
+            transform: translate3d(0, 0, 0) !important;
+            backface-visibility: hidden !important;
+            -webkit-backface-visibility: hidden !important;
           }
 
           .hero-portrait-inner .hero-cutout-base {
@@ -941,6 +974,10 @@ export default function HeroSection() {
             object-fit: contain !important;
             object-position: bottom center !important;
             display: block !important;
+            filter: none !important;
+            transform: translate3d(0, 0, 0) !important;
+            backface-visibility: hidden !important;
+            -webkit-backface-visibility: hidden !important;
           }
 
           .hero-portrait-inner .hero-illustrated-overlay {
@@ -956,12 +993,7 @@ export default function HeroSection() {
 
           /* Mode Toggle Pill: placed cleanly at top right below navbar */
           .hero-avatar-pill-container {
-            top: 74px !important;
-            bottom: auto !important;
-            right: 14px !important;
-            left: auto !important;
-            transform: none !important;
-            z-index: 30 !important;
+            display: none !important;
           }
 
           .hero-avatar-pill-container button {
@@ -993,7 +1025,7 @@ export default function HeroSection() {
             border-radius: 9999px !important;
             background: ${isDarkMode ? "rgba(10, 10, 18, 0.9)" : "rgba(255, 255, 255, 0.92)"} !important;
             border: 1px solid ${isDarkMode ? "rgba(255, 255, 255, 0.18)" : "rgba(0, 0, 0, 0.12)"} !important;
-            backdrop-filter: blur(14px) !important;
+            backdrop-filter: none !important;
             box-shadow: ${isDarkMode ? "0 8px 30px rgba(0, 0, 0, 0.75), 0 0 24px rgba(124, 58, 237, 0.3)" : "0 8px 30px rgba(0, 0, 0, 0.08), 0 0 20px rgba(124, 58, 237, 0.15)"} !important;
             max-width: 95vw !important;
           }
@@ -1045,7 +1077,7 @@ export default function HeroSection() {
             background: ${isDarkMode ? "rgba(7, 24, 16, 0.86)" : "rgba(240, 253, 244, 0.94)"} !important;
             color: ${isDarkMode ? "#86efac" : "#15803d"} !important;
             text-decoration: none !important;
-            backdrop-filter: blur(12px) !important;
+            backdrop-filter: none !important;
             box-shadow: ${isDarkMode ? "0 8px 22px rgba(0, 0, 0, 0.5)" : "0 8px 22px rgba(15, 23, 42, 0.08)"} !important;
           }
 
@@ -1092,6 +1124,7 @@ export default function HeroSection() {
             border-radius: 12px !important;
             text-align: left !important;
             align-items: flex-start !important;
+            backdrop-filter: none !important;
           }
 
           .hero-left-wing h2 {
