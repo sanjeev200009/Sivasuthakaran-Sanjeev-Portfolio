@@ -521,17 +521,17 @@ export default function HeroSection() {
             <span>Let's Talk</span>
             <ArrowUpRight size={13} />
           </button>
+          <a
+            className="hero-mobile-whatsapp"
+            href={HERO_WHATSAPP_URL}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="WhatsApp Sanjeev at +94 72 285 8346"
+            title="Chat on WhatsApp"
+          >
+            <FaWhatsapp size={19} aria-hidden="true" />
+          </a>
         </div>
-        <a
-          className="hero-mobile-whatsapp"
-          href={HERO_WHATSAPP_URL}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="WhatsApp Sanjeev at +94 72 285 8346"
-        >
-          <FaWhatsapp size={15} aria-hidden="true" />
-          <span>+94 72 285 8346</span>
-        </a>
         <div className="hero-mobile-scroll-hint">
           <span>Scroll for bio &amp; projects</span>
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -761,7 +761,8 @@ export default function HeroSection() {
             </div>
 
             {/* Exact "Let's Talk ↗" Pill from Reference Design */}
-            <motion.button
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 10 }}>
+              <motion.button
               className="hero-lets-talk-btn"
               onClick={openScheduleModal}
               whileHover={{ scale: 1.05 }}
@@ -805,34 +806,33 @@ export default function HeroSection() {
               >
                 <ArrowUpRight size={18} strokeWidth={2.5} />
               </span>
-            </motion.button>
-            <motion.a
+              </motion.button>
+              <motion.a
               className="hero-whatsapp-link"
               href={HERO_WHATSAPP_URL}
               target="_blank"
               rel="noreferrer"
               aria-label="WhatsApp Sanjeev at +94 72 285 8346"
+              title="Chat on WhatsApp"
               whileHover={{ scale: 1.03, y: -1 }}
               whileTap={{ scale: 0.98 }}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: 8,
-                padding: "9px 14px",
-                borderRadius: 9999,
+                justifyContent: "center",
+                width: 42,
+                height: 42,
+                borderRadius: "50%",
                 border: isDarkMode ? "1px solid rgba(37, 211, 102, 0.35)" : "1px solid rgba(22, 163, 74, 0.3)",
                 background: isDarkMode ? "rgba(37, 211, 102, 0.08)" : "rgba(22, 163, 74, 0.07)",
                 color: isDarkMode ? "#86efac" : "#15803d",
                 textDecoration: "none",
-                fontFamily: "ui-monospace, monospace",
-                fontSize: "0.78rem",
-                fontWeight: 700,
-                letterSpacing: "0.04em",
+                boxShadow: isDarkMode ? "0 0 22px rgba(37, 211, 102, 0.12)" : "0 6px 18px rgba(22, 163, 74, 0.1)",
               }}
-            >
-              <FaWhatsapp size={16} aria-hidden="true" />
-              <span>+94 72 285 8346</span>
-            </motion.a>
+              >
+                <FaWhatsapp size={20} aria-hidden="true" />
+              </motion.a>
+            </div>
           </motion.div>
         </div>
 
@@ -1035,16 +1035,14 @@ export default function HeroSection() {
           .hero-mobile-whatsapp {
             display: inline-flex !important;
             align-items: center !important;
-            gap: 7px !important;
-            padding: 7px 12px !important;
-            border-radius: 9999px !important;
+            justify-content: center !important;
+            width: 38px !important;
+            height: 38px !important;
+            padding: 0 !important;
+            border-radius: 50% !important;
             border: 1px solid ${isDarkMode ? "rgba(37, 211, 102, 0.38)" : "rgba(22, 163, 74, 0.3)"} !important;
             background: ${isDarkMode ? "rgba(7, 24, 16, 0.86)" : "rgba(240, 253, 244, 0.94)"} !important;
             color: ${isDarkMode ? "#86efac" : "#15803d"} !important;
-            font-family: ui-monospace, monospace !important;
-            font-size: 11px !important;
-            font-weight: 700 !important;
-            letter-spacing: 0.04em !important;
             text-decoration: none !important;
             backdrop-filter: blur(12px) !important;
             box-shadow: ${isDarkMode ? "0 8px 22px rgba(0, 0, 0, 0.5)" : "0 8px 22px rgba(15, 23, 42, 0.08)"} !important;
