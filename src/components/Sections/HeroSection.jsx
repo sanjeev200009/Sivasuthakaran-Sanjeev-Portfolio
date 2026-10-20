@@ -2,12 +2,16 @@ import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
 import { ArrowUpRight, Download, Terminal, Sparkles, Send } from "lucide-react";
 import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
+import { FaWhatsapp } from "react-icons/fa";
 import { useTheme } from "../../context/ThemeContext.jsx";
 import { downloadCVFetch, downloadCV } from "../../utils/cvDownload.js";
 import { PORTFOLIO_IMAGES } from "../../utils/media.js";
 
 const SANJEEV_CUTOUT = PORTFOLIO_IMAGES.hero.cutout;
 const SANJEEV_ILLUSTRATED = PORTFOLIO_IMAGES.hero.illustrated;
+const HERO_WHATSAPP_URL = `https://wa.me/94722858346?text=${encodeURIComponent(
+  "Hi Sanjeev, I found your portfolio and would like to discuss a freelance project."
+)}`;
 
 const HERO_TITLES = [
   { line1: "SANJEEV", line2: "SIVASUTHAKARAN", cardRole: "Associate Product & AI Engineer" },
@@ -518,6 +522,16 @@ export default function HeroSection() {
             <ArrowUpRight size={13} />
           </button>
         </div>
+        <a
+          className="hero-mobile-whatsapp"
+          href={HERO_WHATSAPP_URL}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="WhatsApp Sanjeev at +94 72 285 8346"
+        >
+          <FaWhatsapp size={15} aria-hidden="true" />
+          <span>+94 72 285 8346</span>
+        </a>
         <div className="hero-mobile-scroll-hint">
           <span>Scroll for bio &amp; projects</span>
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -792,6 +806,33 @@ export default function HeroSection() {
                 <ArrowUpRight size={18} strokeWidth={2.5} />
               </span>
             </motion.button>
+            <motion.a
+              className="hero-whatsapp-link"
+              href={HERO_WHATSAPP_URL}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="WhatsApp Sanjeev at +94 72 285 8346"
+              whileHover={{ scale: 1.03, y: -1 }}
+              whileTap={{ scale: 0.98 }}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "9px 14px",
+                borderRadius: 9999,
+                border: isDarkMode ? "1px solid rgba(37, 211, 102, 0.35)" : "1px solid rgba(22, 163, 74, 0.3)",
+                background: isDarkMode ? "rgba(37, 211, 102, 0.08)" : "rgba(22, 163, 74, 0.07)",
+                color: isDarkMode ? "#86efac" : "#15803d",
+                textDecoration: "none",
+                fontFamily: "ui-monospace, monospace",
+                fontSize: "0.78rem",
+                fontWeight: 700,
+                letterSpacing: "0.04em",
+              }}
+            >
+              <FaWhatsapp size={16} aria-hidden="true" />
+              <span>+94 72 285 8346</span>
+            </motion.a>
           </motion.div>
         </div>
 
@@ -989,6 +1030,24 @@ export default function HeroSection() {
             cursor: pointer !important;
             flex-shrink: 0 !important;
             box-shadow: 0 0 16px rgba(124, 58, 237, 0.5) !important;
+          }
+
+          .hero-mobile-whatsapp {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 7px !important;
+            padding: 7px 12px !important;
+            border-radius: 9999px !important;
+            border: 1px solid ${isDarkMode ? "rgba(37, 211, 102, 0.38)" : "rgba(22, 163, 74, 0.3)"} !important;
+            background: ${isDarkMode ? "rgba(7, 24, 16, 0.86)" : "rgba(240, 253, 244, 0.94)"} !important;
+            color: ${isDarkMode ? "#86efac" : "#15803d"} !important;
+            font-family: ui-monospace, monospace !important;
+            font-size: 11px !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.04em !important;
+            text-decoration: none !important;
+            backdrop-filter: blur(12px) !important;
+            box-shadow: ${isDarkMode ? "0 8px 22px rgba(0, 0, 0, 0.5)" : "0 8px 22px rgba(15, 23, 42, 0.08)"} !important;
           }
 
           .hero-mobile-scroll-hint {
