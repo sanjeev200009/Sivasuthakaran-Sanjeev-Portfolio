@@ -639,6 +639,7 @@ export default function HeroSection() {
                 { name: "GitHub", icon: FiGithub, url: "https://github.com/sanjeev200009" },
                 { name: "LinkedIn", icon: FiLinkedin, url: "https://www.linkedin.com/in/sanjeevsiva/" },
                 { name: "Email", icon: FiMail, url: "mailto:sanjaysanjeev2000@gmail.com" },
+                { name: "WhatsApp", icon: FaWhatsapp, url: HERO_WHATSAPP_URL },
               ].map((s) => {
                 const Icon = s.icon;
                 return (
