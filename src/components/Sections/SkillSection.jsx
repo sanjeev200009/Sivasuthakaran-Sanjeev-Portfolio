@@ -59,7 +59,7 @@ export default function SkillSection() {
       id="skills"
       style={{
         position: "relative",
-        background: "#0a0a0a",
+        background: "var(--sublevel-k)",
         overflow: "hidden",
         padding: "120px 0 140px",
       }}
@@ -106,8 +106,10 @@ export default function SkillSection() {
                 transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 0.84, 0.24, 1] }}
                 style={{
                   position: "relative",
-                  border: "1px solid rgba(255,255,255,0.085)",
-                  background: "linear-gradient(180deg, rgba(255,255,255,0.016), rgba(255,255,255,0.003))",
+                  border: "1px solid var(--sublevel-line)",
+                  background: isDarkMode
+                    ? "linear-gradient(180deg, rgba(255,255,255,0.016), rgba(255,255,255,0.003))"
+                    : "rgba(255, 255, 255, 0.9)",
                   padding: "36px 36px 32px",
                   display: "flex",
                   flexDirection: "column",
@@ -142,9 +144,9 @@ export default function SkillSection() {
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          border: "1px solid rgba(255,255,255,0.1)",
-                          background: "rgba(255,255,255,0.03)",
-                          color: "#3b82f6",
+                          border: "1px solid var(--sublevel-line)",
+                          background: isDarkMode ? "rgba(255,255,255,0.03)" : "rgba(59, 130, 246, 0.08)",
+                          color: "var(--sublevel-accent)",
                           borderRadius: 2,
                         }}
                       >
@@ -155,7 +157,7 @@ export default function SkillSection() {
                           fontFamily: "ui-monospace, 'Geist Mono', monospace",
                           fontSize: 11,
                           letterSpacing: "0.12em",
-                          color: "#9ca3af",
+                          color: "var(--sublevel-w3)",
                           textTransform: "uppercase",
                           fontWeight: 600,
                         }}
@@ -169,9 +171,9 @@ export default function SkillSection() {
                         fontFamily: "ui-monospace, 'Geist Mono', monospace",
                         fontSize: 10,
                         letterSpacing: "0.1em",
-                        color: "#34d399",
-                        background: "rgba(52, 211, 153, 0.08)",
-                        border: "1px solid rgba(52, 211, 153, 0.2)",
+                        color: "#10b981",
+                        background: "rgba(16, 185, 129, 0.08)",
+                        border: "1px solid rgba(16, 185, 129, 0.2)",
                         padding: "3px 8px",
                         borderRadius: 2,
                         display: "inline-flex",
@@ -184,8 +186,8 @@ export default function SkillSection() {
                           width: 5,
                           height: 5,
                           borderRadius: "50%",
-                          background: "#34d399",
-                          boxShadow: "0 0 6px rgba(52,211,153,0.8)",
+                          background: "#10b981",
+                          boxShadow: "0 0 6px rgba(16, 185, 129, 0.8)",
                         }}
                       />
                       {pillar.status}
@@ -200,7 +202,7 @@ export default function SkillSection() {
                       lineHeight: 1.2,
                       letterSpacing: "-0.025em",
                       fontWeight: 500,
-                      color: "#f3f4f6",
+                      color: "var(--sublevel-w1)",
                       margin: "0 0 14px 0",
                     }}
                   >
@@ -213,7 +215,7 @@ export default function SkillSection() {
                       fontFamily: "system-ui, sans-serif",
                       fontSize: "0.95rem",
                       lineHeight: "1.6rem",
-                      color: "#9ca3af",
+                      color: "var(--sublevel-w2)",
                       margin: 0,
                     }}
                   >
@@ -238,9 +240,9 @@ export default function SkillSection() {
                           fontFamily: "ui-monospace, 'Geist Mono', monospace",
                           fontSize: 11,
                           padding: "4px 9px",
-                          background: "rgba(255,255,255,0.03)",
-                          border: "1px solid rgba(255,255,255,0.08)",
-                          color: "#d1d5db",
+                          background: isDarkMode ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.04)",
+                          border: "1px solid var(--sublevel-line)",
+                          color: "var(--sublevel-w3)",
                           borderRadius: 2,
                         }}
                       >
@@ -253,7 +255,7 @@ export default function SkillSection() {
                   <div
                     style={{
                       paddingTop: 16,
-                      borderTop: "1px solid rgba(255,255,255,0.07)",
+                      borderTop: "1px solid var(--sublevel-line)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
@@ -261,10 +263,10 @@ export default function SkillSection() {
                       fontSize: 11,
                     }}
                   >
-                    <span style={{ color: "#6b7280", letterSpacing: "0.08em" }}>
+                    <span style={{ color: "var(--sublevel-w4)", letterSpacing: "0.08em" }}>
                       {pillar.metricLabel}:
                     </span>
-                    <span style={{ color: "#60a5fa", fontWeight: 600 }}>
+                    <span style={{ color: "var(--sublevel-accent)", fontWeight: 600 }}>
                       {pillar.metrics}
                     </span>
                   </div>

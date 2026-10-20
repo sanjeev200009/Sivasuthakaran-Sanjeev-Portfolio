@@ -14,17 +14,11 @@ import {
     Mail,
     MapPin,
     Phone,
-    Laptop, Linkedin, Twitter, Github
+    Linkedin, Twitter, Github
 } from "lucide-react";
 
 import { FiGithub, FiLinkedin, FiTwitter} from "react-icons/fi";
 
-import PROJECT_IMG_1 from "../assets/images/project-1.png";
-import PROJECT_IMG_2 from "../assets/images/project-2.png";
-import PROJECT_IMG_3 from "../assets/images/project-3.png";
-import PROJECT_IMG_4 from "../assets/images/project-4.jpg";
-import PROJECT_IMG_5 from "../assets/images/project-5.jpg";
-import PROJECT_IMG_6 from "../assets/images/project-6.png";
 import {FaGithub, FaMedium, FaTwitter} from "react-icons/fa";
 
 export const SKILLS_CATEGORIES = [
@@ -100,88 +94,6 @@ export const STATS = [
     { number: "99%", label: "Performance Score", icon: Zap },
 ];
 
-export const PROJECTS = [
-    {
-        id: 1,
-        title: "Zero Hunger Mobile App",
-        description:
-            "Mobile application built with Android Studio (Java) to connect food donors with those in need, reducing food waste and supporting SDG Goal 2. Features include real-time food availability map, donation/request system, agricultural tips, community discussions, and secure authentication.",
-        image: PROJECT_IMG_1,
-        tags: ["Android Studio", "Java", "Firebase"],
-        liveURL: "#",
-        githubURL: "https://github.com/sanjeev200009/ZeroHunger.git",
-        featured: true,
-        category: "mobile",
-    },
-    {
-        id: 2,
-        title: "Sri Lankan Academic Risk Prediction System",
-        description:
-            "Web application using Python, Streamlit, and Scikit-learn to predict students at risk of academic failure. Includes probability visualization, intervention recommendations, data exploration, feature importance analysis, and performance metrics visualization.",
-        image: PROJECT_IMG_2,
-        tags: ["Python", "Streamlit", "Scikit-learn"],
-        liveURL: "https://aaxadzf7t2vqyfbtbhvkdu.streamlit.app/",
-        githubURL: "https://github.com/sanjeev200009/sanjeev200009-Mini-Project-Academic_Risk_Prediction-.git",
-        featured: true,
-        category: "machine-learning",
-    },
-    {
-        id: 3,
-        title: "NatureGo.lk - Eco-Tourism Platform",
-        description:
-            "Full-stack eco-tourism platform for Sri Lanka built with React, TypeScript, and Node.js. Features eco-friendly destination discovery, sustainable booking system, review management, and GitHub Actions deployment. Promotes environmental consciousness through accessible travel experiences.",
-        image: PROJECT_IMG_3,
-        tags: ["React", "TypeScript", "Node.js", "MongoDB", "Tailwind CSS"],
-        liveURL: "https://sanjeev200009.github.io/NatureGo.lk",
-        githubURL: "https://github.com/sanjeev200009/NatureGo.lk",
-        featured: true,
-        category: "full-stack",
-    },
-    {
-        id: 4,
-        title: "React Front-End Projects",
-        description:
-            "A collection of front-end projects built with React, TypeScript, and Tailwind CSS. Includes: E-Commerce App (product listings, cart, modular components), Smart Review Filter (dynamic categorization for reviews), and 30 Days React Challenge (30+ mini projects covering state management, props, hooks, and API integration).",
-        image: PROJECT_IMG_4,
-        tags: ["React", "TypeScript", "Tailwind CSS"],
-        liveURL: "#",
-        githubURL: "https://github.com/sanjeev200009/30_DAYS_CHALLANG_REACT.git",
-        featured: false,
-        category: "frontend",
-    },
-    {
-        id: 5,
-        title: "QuickCart – React Native E-Commerce App",
-        description:
-            "Hackathon project: a mobile e-commerce app built with React Native, Node.js, and MongoDB. Features seamless shopping experience, secure transactions, and backend API for data management. Strengthened skills in mobile development, API integration, and full-stack architecture.",
-        image: PROJECT_IMG_5,
-        tags: ["React Native", "Node.js", "MongoDB"],
-        liveURL: "#",
-        githubURL: "https://github.com/sanjeev200009/ReactNative-Hackathon-QuickCard-App.git",
-        featured: true,
-        category: "mobile",
-    },
-    {
-        id: 6,
-        title: "Travel Safety & Weather Dashboard",
-        description:
-            "A comprehensive dashboard that helps travelers make informed decisions with real-time weather, government travel advisories, and country details. Includes smart search, responsive UI, OAuth authentication, and MongoDB-backed history.",
-        image: PROJECT_IMG_6,
-        tags: [
-            "React",
-            "Node.js",
-            "Express.js",
-            "MongoDB",
-            "OAuth 2.0",
-            "OpenWeatherMap",
-        ],
-        liveURL: "#",
-        githubURL: "https://github.com/prabasajee/Travel-Safety-Weather-Dashboard",
-        featured: true,
-        category: "full-stack",
-    },
-];
-
 export const JOURNEY_STEPS = [
     {
         year: "2020",
@@ -209,10 +121,10 @@ export const JOURNEY_STEPS = [
     },
     {
         year: "2024",
-        title: "Major Projects & Training",
-        company: "Independent & University Projects",
-        description: "Developed impactful projects like Zero Hunger Mobile App, Academic Risk Prediction System, and School Management System. Completed Web Development training at University of Moratuwa.",
-        icon: Laptop,
+        title: "Web Development Training",
+        company: "University of Moratuwa",
+        description: "Completed structured web development training and strengthened the full-stack foundations that now support production product work.",
+        icon: Rocket,
         color: "bg-orange-500",
     },
     {

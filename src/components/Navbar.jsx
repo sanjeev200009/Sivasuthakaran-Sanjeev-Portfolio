@@ -51,9 +51,13 @@ export default function Navbar() {
       <nav
         aria-label="Main"
         style={{
-          boxShadow: "0 10px 35px -5px rgba(29, 78, 216, 0.3), 0 0 1px 1px rgba(255, 255, 255, 0.1)",
+          boxShadow: isDarkMode
+            ? "0 10px 35px -5px rgba(29, 78, 216, 0.3), 0 0 1px 1px rgba(255, 255, 255, 0.1)"
+            : "0 10px 35px -5px rgba(0, 0, 0, 0.06), 0 0 1px 1px rgba(0, 0, 0, 0.05)",
         }}
-        className="pointer-events-auto w-full max-w-[82.5rem] sublevel-navbar-gradient sublevel-frame rounded-sm px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between backdrop-blur-xl border border-white/10 text-white transition-all"
+        className={`pointer-events-auto w-full max-w-[82.5rem] sublevel-navbar-gradient sublevel-frame rounded-sm px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between backdrop-blur-xl border ${
+          isDarkMode ? "border-white/10 text-white" : "border-black/10 text-neutral-900"
+        } transition-all`}
       >
         {/* Sublevel corner bracket markers */}
         <i className="sublevel-corner tl" aria-hidden="true" />
@@ -66,16 +70,16 @@ export default function Navbar() {
           className="flex items-center gap-2.5 cursor-pointer select-none group"
           onClick={() => scrollSection("home")}
         >
-          <div className="w-2.5 h-2.5 bg-blue-300 transform rotate-45 group-hover:rotate-90 transition-transform duration-300 shadow-[0_0_8px_rgba(147,197,253,0.8)]" />
-          <span className="font-mono text-sm sm:text-base font-bold tracking-tight text-white">
-            SANJEEV<span className="text-blue-300">.</span>STUDIO
+          <div className="w-2.5 h-2.5 bg-blue-500 transform rotate-45 group-hover:rotate-90 transition-transform duration-300 shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
+          <span className={`font-mono text-sm sm:text-base font-bold tracking-tight ${isDarkMode ? "text-white" : "text-neutral-900"}`}>
+            SANJEEV<span className="text-blue-500">.</span>STUDIO
           </span>
           <span
             style={{
-              background: "rgba(0, 0, 0, 0.55)",
-              borderColor: "rgba(255, 255, 255, 0.15)",
+              background: isDarkMode ? "rgba(0, 0, 0, 0.55)" : "rgba(0, 0, 0, 0.04)",
+              borderColor: isDarkMode ? "rgba(255, 255, 255, 0.15)" : "rgba(0, 0, 0, 0.1)",
             }}
-            className="hidden sm:inline-block px-1.5 py-0.5 text-[9px] font-mono tracking-widest uppercase border rounded-sm text-neutral-300"
+            className={`hidden sm:inline-block px-1.5 py-0.5 text-[9px] font-mono tracking-widest uppercase border rounded-sm ${isDarkMode ? "text-neutral-300" : "text-neutral-600"}`}
           >
             V2.6
           </span>
@@ -87,18 +91,22 @@ export default function Navbar() {
             <button
               key={item.id}
               onClick={() => scrollSection(item.id)}
-              className="px-3 py-1.5 text-xs font-mono font-medium tracking-wider uppercase rounded-sm transition-all text-white/90 hover:text-white hover:bg-white/10"
+              className={`px-3 py-1.5 text-xs font-mono font-medium tracking-wider uppercase rounded-sm transition-all ${
+                isDarkMode
+                  ? "text-neutral-200 hover:text-white hover:bg-white/10"
+                  : "text-neutral-700 hover:text-neutral-950 hover:bg-black/5"
+              }`}
             >
               <span
                 style={{
-                  color: idx < 3 ? "#93c5fd" : "#9ca3af",
+                  color: idx < 3 ? (isDarkMode ? "#93c5fd" : "#2563eb") : (isDarkMode ? "#9ca3af" : "#64748b"),
                   fontWeight: 600,
                 }}
                 className="mr-1 text-[10px]"
               >
                 {item.code}
               </span>
-              <span className={idx === 4 ? "text-neutral-300 hover:text-white" : "text-white"}>
+              <span>
                 {item.label}
               </span>
             </button>
@@ -110,14 +118,16 @@ export default function Navbar() {
           {/* Machine prompt pill */}
           <div
             style={{
-              background: "rgba(0, 0, 0, 0.65)",
-              borderColor: "rgba(255, 255, 255, 0.12)",
+              background: isDarkMode ? "rgba(0, 0, 0, 0.65)" : "rgba(255, 255, 255, 0.8)",
+              borderColor: isDarkMode ? "rgba(255, 255, 255, 0.12)" : "rgba(0, 0, 0, 0.1)",
             }}
-            className="hidden sm:flex items-center gap-2 px-3 py-1.5 text-xs font-mono border rounded-sm text-neutral-300 shadow-inner"
+            className={`hidden sm:flex items-center gap-2 px-3 py-1.5 text-xs font-mono border rounded-sm shadow-inner ${
+              isDarkMode ? "text-neutral-300" : "text-neutral-700"
+            }`}
           >
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)] animate-pulse" />
-            <span className="text-neutral-400 text-[11px]">agent ~ $</span>
-            <span className="font-semibold text-emerald-400 text-[11px]">online</span>
+            <span className={isDarkMode ? "text-neutral-400 text-[11px]" : "text-neutral-500 text-[11px]"}>agent ~ $</span>
+            <span className="font-semibold text-emerald-500 text-[11px]">online</span>
           </div>
 
           {/* Theme toggle */}
@@ -125,10 +135,14 @@ export default function Navbar() {
             onClick={() => toggleDarkMode(isDarkMode ? "light" : "dark")}
             aria-label="Toggle theme"
             style={{
-              background: "rgba(0, 0, 0, 0.55)",
-              borderColor: "rgba(255, 255, 255, 0.12)",
+              background: isDarkMode ? "rgba(0, 0, 0, 0.55)" : "rgba(255, 255, 255, 0.9)",
+              borderColor: isDarkMode ? "rgba(255, 255, 255, 0.12)" : "rgba(0, 0, 0, 0.12)",
             }}
-            className="p-2 rounded-sm border text-neutral-300 hover:text-white hover:bg-white/10 transition-all"
+            className={`p-2 rounded-sm border transition-all ${
+              isDarkMode
+                ? "text-neutral-300 hover:text-white hover:bg-white/10"
+                : "text-neutral-700 hover:text-neutral-950 hover:bg-black/5"
+            }`}
           >
             {isDarkMode ? <Sun size={15} /> : <Moon size={15} />}
           </button>
@@ -138,10 +152,14 @@ export default function Navbar() {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle navigation menu"
             style={{
-              background: "rgba(0, 0, 0, 0.55)",
-              borderColor: "rgba(255, 255, 255, 0.12)",
+              background: isDarkMode ? "rgba(0, 0, 0, 0.55)" : "rgba(255, 255, 255, 0.9)",
+              borderColor: isDarkMode ? "rgba(255, 255, 255, 0.12)" : "rgba(0, 0, 0, 0.12)",
             }}
-            className="lg:hidden p-2 rounded-sm border text-neutral-300 hover:text-white hover:bg-white/10 transition-all"
+            className={`lg:hidden p-2 rounded-sm border transition-all ${
+              isDarkMode
+                ? "text-neutral-300 hover:text-white hover:bg-white/10"
+                : "text-neutral-700 hover:text-neutral-950 hover:bg-black/5"
+            }`}
           >
             {isMenuOpen ? <X size={16} /> : <Menu size={16} />}
           </button>

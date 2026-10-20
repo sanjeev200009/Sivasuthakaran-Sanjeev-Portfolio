@@ -12,7 +12,7 @@ export function AnimatedRule({ className = "", thin = false }) {
         border: 0,
         height: 1,
         width: "100%",
-        background: thin ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.085)",
+        background: thin ? "var(--sublevel-line)" : "var(--sublevel-line-bright)",
         transformOrigin: "left",
         transform: inView ? "scaleX(1)" : "scaleX(0)",
         transition: "transform 1.1s cubic-bezier(.16,.84,.24,1)",
@@ -50,11 +50,11 @@ export default function SublevelSectionHeader({
       >
         {/* Big framed title — f-h1 display scale */}
         <div
+          className="sublevel-frame"
           style={{
             position: "relative",
-            border: "1px solid rgba(255,255,255,0.085)",
+            border: "1px solid var(--sublevel-line)",
             padding: "24px 32px 28px",
-            background: "linear-gradient(180deg,rgba(255,255,255,.014),rgba(255,255,255,0))",
             opacity: headInView ? 1 : 0,
             transform: headInView ? "translateY(0)" : "translateY(18px)",
             transition: "opacity 0.7s ease, transform 0.7s cubic-bezier(.16,.84,.24,1)",
@@ -68,7 +68,7 @@ export default function SublevelSectionHeader({
           {tag && (
             <p
               style={{
-                color: "#3b82f6",
+                color: "var(--sublevel-accent)",
                 fontFamily: "ui-monospace, 'Geist Mono', monospace",
                 fontSize: 11,
                 lineHeight: "14px",
@@ -89,7 +89,7 @@ export default function SublevelSectionHeader({
               lineHeight: 1,
               letterSpacing: "-0.035em",
               fontWeight: 400,
-              color: "#e6e6e6",
+              color: "var(--sublevel-w1)",
               margin: 0,
             }}
           >
@@ -100,12 +100,12 @@ export default function SublevelSectionHeader({
         {/* Framed subtitle */}
         {subtitle && (
           <div
+            className="sublevel-frame"
             style={{
               position: "relative",
-              border: "1px solid rgba(255,255,255,0.085)",
+              border: "1px solid var(--sublevel-line)",
               padding: "20px 24px",
               maxWidth: subtitleMaxWidth,
-              background: "linear-gradient(180deg,rgba(255,255,255,.014),rgba(255,255,255,0))",
               opacity: headInView ? 1 : 0,
               transform: headInView ? "translateY(0)" : "translateY(18px)",
               transition: "opacity 0.7s ease 0.12s, transform 0.7s cubic-bezier(.16,.84,.24,1) 0.12s",
@@ -122,7 +122,7 @@ export default function SublevelSectionHeader({
                 lineHeight: "1.5rem",
                 letterSpacing: "-0.02em",
                 fontWeight: 600,
-                color: "#c4c4c4",
+                color: "var(--sublevel-w2)",
                 margin: 0,
               }}
             >

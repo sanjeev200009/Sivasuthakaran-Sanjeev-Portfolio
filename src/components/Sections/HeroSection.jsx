@@ -4,8 +4,16 @@ import { ArrowUpRight, Download, Terminal, Sparkles, Send } from "lucide-react";
 import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import { useTheme } from "../../context/ThemeContext.jsx";
 import { downloadCVFetch, downloadCV } from "../../utils/cvDownload.js";
-import SANJEEV_CUTOUT from "../../assets/images/sanjeev-cutout.png";
-import SANJEEV_ILLUSTRATED from "../../assets/images/sanjeev-illustrated.png";
+import { PORTFOLIO_IMAGES } from "../../utils/media.js";
+
+const SANJEEV_CUTOUT = PORTFOLIO_IMAGES.hero.cutout;
+const SANJEEV_ILLUSTRATED = PORTFOLIO_IMAGES.hero.illustrated;
+
+const HERO_TITLES = [
+  { line1: "SANJEEV", line2: "SIVASUTHAKARAN", cardRole: "Associate Product & AI Engineer" },
+  { line1: "ASSOCIATE", line2: "PRODUCT ENGINEER", cardRole: "Associate Product Engineer" },
+  { line1: "FREELANCE", line2: "DEVELOPER", cardRole: "Freelance Developer" },
+];
 
 export default function HeroSection() {
   const { isDarkMode } = useTheme();
@@ -45,7 +53,6 @@ export default function HeroSection() {
 
   // Text opposite shift for extreme 3D parallax depth
   const textShiftX = useTransform(springX, [-0.5, 0.5], [14, -14]);
-  const textShiftY = useTransform(springY, [-0.5, 0.5], [10, -10]);
 
   // Rings glow shift
   const ringsX = useTransform(springX, [-0.5, 0.5], [-24, 24]);
@@ -89,12 +96,6 @@ export default function HeroSection() {
   };
 
   // ─── Fast Rotating Typewriter: 3 Titles Cycling (Name & Roles) ───
-  const HERO_TITLES = [
-    { line1: "SANJEEV", line2: "SIVASUTHAKARAN", cardRole: "Associate Product & AI Engineer" },
-    { line1: "ASSOCIATE", line2: "PRODUCT ENGINEER", cardRole: "Associate Product Engineer" },
-    { line1: "FREELANCE", line2: "DEVELOPER", cardRole: "Freelance Developer" },
-  ];
-
   const [titleIndex, setTitleIndex] = useState(0);
   const [typedFirst, setTypedFirst] = useState("");
   const [typedSecond, setTypedSecond] = useState("");
@@ -177,7 +178,9 @@ export default function HeroSection() {
       style={{
         position: "relative",
         minHeight: "100vh",
-        background: "radial-gradient(circle at 50% 40%, #0d0b1a 0%, #06050b 60%, #030305 100%)",
+        background: isDarkMode
+          ? "radial-gradient(circle at 50% 40%, #0d0b1a 0%, #06050b 60%, #030305 100%)"
+          : "radial-gradient(circle at 50% 35%, #ffffff 0%, #f1f5f9 60%, #e2e8f0 100%)",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
@@ -260,7 +263,7 @@ export default function HeroSection() {
           top: "clamp(85px, 13vh, 130px)",
           left: 0,
           right: 0,
-          zIndex: 2,
+          zIndex: 24,
           pointerEvents: "none",
           display: "flex",
           flexDirection: "column",
@@ -284,9 +287,9 @@ export default function HeroSection() {
             lineHeight: 0.86,
             letterSpacing: "-0.02em",
             textTransform: "uppercase",
-            color: "#ffffff",
+            color: isDarkMode ? "#ffffff" : "#0f172a",
             margin: 0,
-            textShadow: "0 10px 40px rgba(0,0,0,0.8)",
+            textShadow: isDarkMode ? "0 6px 18px rgba(0,0,0,0.58)" : "0 3px 12px rgba(15,23,42,0.08)",
             userSelect: "none",
             fontWeight: 900,
             cursor: "pointer",
@@ -311,13 +314,7 @@ export default function HeroSection() {
               position: "relative",
             }}
           >
-            <span
-              style={{
-                background: "linear-gradient(180deg, #ffffff 60%, rgba(255,255,255,0.7) 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-              }}
-            >
+            <span>
               {typedSecond}
             </span>
             {(phase === "TYPE_SECOND" || phase === "HOLD" || phase === "DELETE_SECOND") && (
@@ -461,7 +458,9 @@ export default function HeroSection() {
               right: 0,
               bottom: 0,
               height: 48,
-              background: "linear-gradient(180deg, transparent 0%, #06050b 100%)",
+              background: isDarkMode
+                ? "linear-gradient(180deg, transparent 0%, #06050b 100%)"
+                : "linear-gradient(180deg, transparent 0%, #f1f5f9 100%)",
               pointerEvents: "none",
               zIndex: 15,
             }}
@@ -570,12 +569,12 @@ export default function HeroSection() {
               display: "flex",
               flexDirection: "column",
               gap: 16,
-              background: "rgba(6, 5, 11, 0.65)",
+              background: isDarkMode ? "rgba(6, 5, 11, 0.65)" : "rgba(255, 255, 255, 0.88)",
               backdropFilter: "blur(12px)",
               padding: "24px 28px",
               borderRadius: 8,
-              border: "1px solid rgba(255, 255, 255, 0.08)",
-              boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
+              border: isDarkMode ? "1px solid rgba(255, 255, 255, 0.08)" : "1px solid rgba(0, 0, 0, 0.08)",
+              boxShadow: isDarkMode ? "0 20px 40px rgba(0,0,0,0.4)" : "0 10px 30px rgba(0,0,0,0.06)",
               pointerEvents: "auto",
             }}
           >
@@ -585,7 +584,7 @@ export default function HeroSection() {
                   fontFamily: "ui-monospace, monospace",
                   fontSize: 11,
                   letterSpacing: "0.14em",
-                  color: "#a78bfa",
+                  color: isDarkMode ? "#a78bfa" : "#7c3aed",
                   textTransform: "uppercase",
                   fontWeight: 600,
                   display: "block",
@@ -599,7 +598,7 @@ export default function HeroSection() {
                   fontFamily: "'Urbanist', system-ui, sans-serif",
                   fontSize: "1.35rem",
                   fontWeight: 600,
-                  color: "#ffffff",
+                  color: isDarkMode ? "#ffffff" : "#0f172a",
                   lineHeight: 1.25,
                   margin: "0 0 8px 0",
                   transition: "all 0.3s ease",
@@ -612,7 +611,7 @@ export default function HeroSection() {
                   fontFamily: "system-ui, sans-serif",
                   fontSize: "0.92rem",
                   lineHeight: "1.55rem",
-                  color: "#c4c4c4",
+                  color: isDarkMode ? "#c4c4c4" : "#475569",
                   margin: 0,
                 }}
               >
@@ -668,9 +667,9 @@ export default function HeroSection() {
                   height: 38,
                   padding: "0 16px",
                   borderRadius: 9999,
-                  background: "rgba(255, 255, 255, 0.05)",
-                  border: "1px solid rgba(255, 255, 255, 0.15)",
-                  color: "#e5e7eb",
+                  background: isDarkMode ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.04)",
+                  border: isDarkMode ? "1px solid rgba(255, 255, 255, 0.15)" : "1px solid rgba(0, 0, 0, 0.12)",
+                  color: isDarkMode ? "#e5e7eb" : "#1e293b",
                   fontFamily: "ui-monospace, monospace",
                   fontSize: 11,
                   fontWeight: 600,
@@ -683,15 +682,15 @@ export default function HeroSection() {
                   transition: "all 0.2s ease",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "rgba(255, 255, 255, 0.12)";
-                  e.currentTarget.style.color = "#ffffff";
+                  e.currentTarget.style.background = isDarkMode ? "rgba(255, 255, 255, 0.12)" : "rgba(0, 0, 0, 0.08)";
+                  e.currentTarget.style.color = isDarkMode ? "#ffffff" : "#0f172a";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "rgba(255, 255, 255, 0.05)";
-                  e.currentTarget.style.color = "#e5e7eb";
+                  e.currentTarget.style.background = isDarkMode ? "rgba(255, 255, 255, 0.05)" : "rgba(0, 0, 0, 0.04)";
+                  e.currentTarget.style.color = isDarkMode ? "#e5e7eb" : "#1e293b";
                 }}
               >
-                <Download size={13} style={{ color: "#a78bfa" }} />
+                <Download size={13} style={{ color: isDarkMode ? "#a78bfa" : "#7c3aed" }} />
                 CV
               </button>
             </div>
@@ -711,12 +710,12 @@ export default function HeroSection() {
               alignItems: "flex-end",
               textAlign: "right",
               gap: 18,
-              background: "rgba(6, 5, 11, 0.65)",
+              background: isDarkMode ? "rgba(6, 5, 11, 0.65)" : "rgba(255, 255, 255, 0.88)",
               backdropFilter: "blur(12px)",
               padding: "24px 28px",
               borderRadius: 8,
-              border: "1px solid rgba(255, 255, 255, 0.08)",
-              boxShadow: "0 20px 40px rgba(0,0,0,0.4)",
+              border: isDarkMode ? "1px solid rgba(255, 255, 255, 0.08)" : "1px solid rgba(0, 0, 0, 0.08)",
+              boxShadow: isDarkMode ? "0 20px 40px rgba(0,0,0,0.4)" : "0 10px 30px rgba(0,0,0,0.06)",
               pointerEvents: "auto",
             }}
           >
@@ -727,7 +726,7 @@ export default function HeroSection() {
                   fontSize: "1.18rem",
                   lineHeight: "1.55rem",
                   fontWeight: 500,
-                  color: "#f3f4f6",
+                  color: isDarkMode ? "#f3f4f6" : "#0f172a",
                   margin: "0 0 8px 0",
                   letterSpacing: "-0.01em",
                 }}
@@ -739,7 +738,7 @@ export default function HeroSection() {
                   fontFamily: "system-ui, sans-serif",
                   fontSize: "0.88rem",
                   lineHeight: "1.5rem",
-                  color: "#9ca3af",
+                  color: isDarkMode ? "#9ca3af" : "#475569",
                   margin: 0,
                 }}
               >
@@ -857,7 +856,7 @@ export default function HeroSection() {
           .hero-bg-title-wrapper {
             top: clamp(125px, 15vh, 175px) !important;
             padding: 0 10px !important;
-            z-index: 2 !important;
+            z-index: 9 !important;
           }
 
           .hero-bg-title {
@@ -950,10 +949,10 @@ export default function HeroSection() {
             gap: 12px !important;
             padding: 8px 10px 8px 16px !important;
             border-radius: 9999px !important;
-            background: rgba(10, 10, 18, 0.9) !important;
-            border: 1px solid rgba(255, 255, 255, 0.18) !important;
+            background: ${isDarkMode ? "rgba(10, 10, 18, 0.9)" : "rgba(255, 255, 255, 0.92)"} !important;
+            border: 1px solid ${isDarkMode ? "rgba(255, 255, 255, 0.18)" : "rgba(0, 0, 0, 0.12)"} !important;
             backdrop-filter: blur(14px) !important;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.75), 0 0 24px rgba(124, 58, 237, 0.3) !important;
+            box-shadow: ${isDarkMode ? "0 8px 30px rgba(0, 0, 0, 0.75), 0 0 24px rgba(124, 58, 237, 0.3)" : "0 8px 30px rgba(0, 0, 0, 0.08), 0 0 20px rgba(124, 58, 237, 0.15)"} !important;
             max-width: 95vw !important;
           }
 
@@ -961,7 +960,7 @@ export default function HeroSection() {
             font-family: 'Urbanist', system-ui, sans-serif !important;
             font-size: 0.94rem !important;
             font-weight: 700 !important;
-            color: #f3f4f6 !important;
+            color: ${isDarkMode ? "#f3f4f6" : "#0f172a"} !important;
             white-space: nowrap !important;
             overflow: hidden !important;
             text-overflow: ellipsis !important;
@@ -1000,7 +999,7 @@ export default function HeroSection() {
             font-size: 10.5px !important;
             letter-spacing: 0.1em !important;
             text-transform: uppercase !important;
-            color: #9ca3af !important;
+            color: ${isDarkMode ? "#9ca3af" : "#64748b"} !important;
             opacity: 0.85 !important;
             animation: heroBounce 2s ease infinite !important;
           }
@@ -1017,7 +1016,7 @@ export default function HeroSection() {
             flex: unset !important;
             padding: 24px 16px 40px !important;
             pointer-events: auto !important;
-            background: #06050b !important;
+            background: ${isDarkMode ? "#06050b" : "#f8fafc"} !important;
           }
 
           .hero-wings-grid {

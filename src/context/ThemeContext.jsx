@@ -6,26 +6,37 @@ export const ThemeProvider = ({ children }) => {
     // Initialize from inline script decision to avoid flicker
     const initial = (typeof document !== 'undefined' && document.documentElement.classList.contains('dark'))
         ? 'dark'
-        : (localStorage.getItem('theme') || 'light');
-    const [isDarkMode, toggleDarkMode] = useState(initial);
+        : (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) || 'dark';
+    const [theme, setTheme] = useState(initial);
+
+    const toggleDarkMode = (targetMode) => {
+        setTheme((prev) => {
+            if (typeof targetMode === "string") return targetMode;
+            return prev === "dark" ? "light" : "dark";
+        });
+    };
 
     useEffect(() => {
         const root = window.document.documentElement;
-        if (isDarkMode === "dark") {
+        if (theme === "dark") {
             root.classList.add("dark");
             root.style.setProperty('color-scheme', 'dark');
-            root.style.backgroundColor = '#0a0a0a'; // gray-950
+            root.style.backgroundColor = '#0a0a0a';
         } else {
             root.classList.remove("dark");
             root.style.setProperty('color-scheme', 'light');
-            root.style.backgroundColor = '#f9fafb'; // gray-50
+            root.style.backgroundColor = '#f8fafc';
         }
-        localStorage.setItem("theme", isDarkMode);
-    }, [isDarkMode]);
+        try {
+            localStorage.setItem("theme", theme);
+        } catch {
+            // no-op
+        }
+    }, [theme]);
 
     return (
         <ThemeContext.Provider
-            value={{ isDarkMode: isDarkMode === "dark", toggleDarkMode }}
+            value={{ isDarkMode: theme === "dark", toggleDarkMode, theme }}
         >
             {children}
         </ThemeContext.Provider>

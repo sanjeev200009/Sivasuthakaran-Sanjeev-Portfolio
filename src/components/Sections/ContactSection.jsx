@@ -84,15 +84,16 @@ export default function ContactSection() {
     document.body.style.overflow = "unset";
   };
 
-  const inputClass =
-    "w-full px-4 py-3 rounded-sm border border-neutral-800 bg-neutral-900/70 text-white placeholder-neutral-600 font-mono text-sm focus:outline-none focus:border-blue-500/60 focus:ring-1 focus:ring-blue-500/20 transition-colors";
+  const inputClass = isDarkMode
+    ? "w-full px-4 py-3 rounded-sm border border-neutral-800 bg-neutral-900/70 text-white placeholder-neutral-500 font-mono text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 transition-colors"
+    : "w-full px-4 py-3 rounded-sm border border-neutral-300 bg-white text-neutral-900 placeholder-neutral-400 font-mono text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-500/20 transition-colors";
 
   return (
     <section
       id="contact"
       style={{
         position: "relative",
-        background: "#0a0a0a",
+        background: "var(--sublevel-k)",
         overflow: "hidden",
         padding: "120px 0 160px",
       }}
@@ -113,12 +114,19 @@ export default function ContactSection() {
         }}
       >
         {/* Grand Sublevel Header */}
-        <SublevelSectionHeader
-          tag="TERMINAL // OPEN CHANNEL"
-          title="Open Channel"
-          subtitle="Available for full-time engineering roles, AI product development, and architectural consulting. Terminal active 24/7."
-          topRule={true}
-        />
+        <motion.div
+          initial={{ opacity: 0, transform: "translateY(18px)" }}
+          whileInView={{ opacity: 1, transform: "translateY(0)" }}
+          viewport={{ once: true, amount: 0.45, margin: "0px 0px -80px" }}
+          transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+        >
+          <SublevelSectionHeader
+            tag="TERMINAL // OPEN CHANNEL"
+            title="Open Channel"
+            subtitle="Available for full-time engineering roles, AI product development, and architectural consulting. Terminal active 24/7."
+            topRule={true}
+          />
+        </motion.div>
 
         {/* Main Grid */}
         <div
@@ -131,10 +139,10 @@ export default function ContactSection() {
         >
           {/* Left: Contact Form / Interactive Terminal (7 cols) */}
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.6, ease: [0.16, 0.84, 0.24, 1] }}
+            initial={{ opacity: 0, transform: "translateY(18px)" }}
+            whileInView={{ opacity: 1, transform: "translateY(0)" }}
+            viewport={{ once: true, amount: 0.28, margin: "0px 0px -70px" }}
+            transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
             style={{
               gridColumn: "span 7 / span 7",
             }}
@@ -189,8 +197,8 @@ export default function ContactSection() {
               <div
                 style={{
                   padding: "10px 14px",
-                  background: "rgba(255,255,255,0.02)",
-                  border: "1px solid rgba(255,255,255,0.06)",
+                  background: isDarkMode ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.03)",
+                  border: "1px solid var(--sublevel-line)",
                   borderRadius: 2,
                   fontFamily: "ui-monospace, 'Geist Mono', monospace",
                   fontSize: 12,
@@ -201,9 +209,10 @@ export default function ContactSection() {
                 }}
               >
                 <span style={{ color: "#60a5fa" }}>sanjeev@portfolio</span>
-                <span style={{ color: "#6b7280" }}>~</span>
-                <span style={{ color: "#34d399" }}>$</span>
-                <span style={{ color: "#d1d5db" }}>send --to sanjaysanjeev2000@gmail.com</span>
+                <span style={{ color: "var(--sublevel-w4)" }}>~</span>
+                <span style={{ color: "#10b981" }}>$</span>
+                <span style={{ color: "var(--sublevel-w2)" }}>send --to sanjaysanjeev2000@gmail.com</span>
+                <span className="contact-terminal-cursor" aria-hidden="true" />
               </div>
 
               <form onSubmit={handleContactSubmit} style={{ display: "flex", flexDirection: "column", gap: 18 }}>
@@ -301,10 +310,10 @@ export default function ContactSection() {
 
           {/* Right: Info + Availability + Schedule (5 cols) */}
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 0.84, 0.24, 1] }}
+            initial={{ opacity: 0, transform: "translateY(18px)" }}
+            whileInView={{ opacity: 1, transform: "translateY(0)" }}
+            viewport={{ once: true, amount: 0.28, margin: "0px 0px -70px" }}
+            transition={{ duration: 0.6, delay: 0.08, ease: [0.23, 1, 0.32, 1] }}
             style={{
               gridColumn: "span 5 / span 5",
               display: "flex",
@@ -365,10 +374,10 @@ export default function ContactSection() {
                         <Icon size={14} />
                       </div>
                       <div>
-                        <p style={{ fontFamily: "ui-monospace, monospace", fontSize: 10, color: "#6b7280", textTransform: "uppercase", margin: 0 }}>
+                        <p style={{ fontFamily: "ui-monospace, monospace", fontSize: 10, color: "var(--sublevel-w4)", textTransform: "uppercase", margin: 0 }}>
                           {info.label}
                         </p>
-                        <p style={{ fontFamily: "system-ui, sans-serif", fontSize: 13, color: "#f3f4f6", fontWeight: 500, margin: 0 }}>
+                        <p style={{ fontFamily: "system-ui, sans-serif", fontSize: 13, color: "var(--sublevel-w1)", fontWeight: 500, margin: 0 }}>
                           {info.value}
                         </p>
                       </div>
@@ -382,8 +391,7 @@ export default function ContactSection() {
             <div
               style={{
                 position: "relative",
-                border: "1px solid rgba(255,255,255,0.085)",
-                background: "rgba(255,255,255,0.012)",
+                border: "1px solid var(--sublevel-line)",
                 padding: "20px 24px",
                 display: "flex",
                 alignItems: "center",
@@ -400,17 +408,17 @@ export default function ContactSection() {
                   width: 8,
                   height: 8,
                   borderRadius: "50%",
-                  background: "#34d399",
-                  boxShadow: "0 0 8px rgba(52,211,153,0.8)",
+                  background: "#10b981",
+                  boxShadow: "0 0 8px rgba(16,185,129,0.8)",
                   animation: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
                   flexShrink: 0,
                 }}
               />
               <div>
-                <p style={{ fontFamily: "'Urbanist', system-ui, sans-serif", fontSize: "1.1rem", fontWeight: 600, color: "#34d399", margin: 0 }}>
+                <p style={{ fontFamily: "'Urbanist', system-ui, sans-serif", fontSize: "1.1rem", fontWeight: 600, color: "#10b981", margin: 0 }}>
                   AVAILABLE FOR HIRE
                 </p>
-                <p style={{ fontFamily: "ui-monospace, monospace", fontSize: 11, color: "#9ca3af", margin: "2px 0 0" }}>
+                <p style={{ fontFamily: "ui-monospace, monospace", fontSize: 11, color: "var(--sublevel-w3)", margin: "2px 0 0" }}>
                   Full-Time · Contract · AI Automation Systems
                 </p>
               </div>
@@ -423,8 +431,8 @@ export default function ContactSection() {
               whileTap={{ scale: 0.99 }}
               style={{
                 position: "relative",
-                border: "1px solid rgba(255,255,255,0.12)",
-                background: "rgba(255,255,255,0.02)",
+                border: "1px solid var(--sublevel-line)",
+                background: isDarkMode ? "rgba(255,255,255,0.02)" : "rgba(0,0,0,0.02)",
                 padding: "20px",
                 display: "flex",
                 alignItems: "center",
@@ -434,7 +442,7 @@ export default function ContactSection() {
                 fontSize: 12,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                color: "#e5e7eb",
+                color: "var(--sublevel-w1)",
                 borderRadius: 2,
                 cursor: "pointer",
                 transition: "all 0.2s ease",
@@ -445,7 +453,7 @@ export default function ContactSection() {
               <i className="sublevel-corner tr" />
               <i className="sublevel-corner bl" />
               <i className="sublevel-corner br" />
-              <Calendar size={14} style={{ color: "#3b82f6" }} />
+              <Calendar size={14} style={{ color: "var(--sublevel-accent)" }} />
               SCHEDULE AN ENGINEERING CALL
             </motion.button>
           </motion.div>
@@ -453,6 +461,19 @@ export default function ContactSection() {
       </div>
 
       <style>{`
+        .contact-terminal-cursor {
+          width: 7px;
+          height: 14px;
+          display: inline-block;
+          flex: 0 0 auto;
+          background: #60a5fa;
+          box-shadow: 0 0 12px rgba(96, 165, 250, 0.55);
+          animation: contactCursorBlink 900ms linear infinite;
+        }
+        @keyframes contactCursorBlink {
+          0%, 45% { opacity: 1; }
+          46%, 100% { opacity: 0.18; }
+        }
         @media (max-width: 960px) {
           .contact-grid {
             display: flex !important;
@@ -461,6 +482,12 @@ export default function ContactSection() {
           .contact-left-col, .contact-right-col {
             grid-column: 1 / -1 !important;
             width: 100% !important;
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .contact-terminal-cursor {
+            animation: none;
+            opacity: 1;
           }
         }
       `}</style>

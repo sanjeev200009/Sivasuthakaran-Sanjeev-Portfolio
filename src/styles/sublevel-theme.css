@@ -137,18 +137,195 @@ html:not(.dark) .sublevel-corner {
   border-radius: 0.125rem;
 }
 
-/* Section-level background: always deep dark for the OS theme */
-#home,
-#skills,
-#stack,
-#about,
-#contact {
+/* Section-level background: dark theme defaults */
+html.dark #home,
+html.dark #skills,
+html.dark #stack,
+html.dark #about,
+html.dark #contact {
   background-color: #0a0a0a;
 }
 
-/* Work / Projects section uses pure black like Sublevel */
-#work {
+html.dark #work {
   background-color: #000;
+}
+
+/* Light mode section background */
+html:not(.dark) #home {
+  background: radial-gradient(circle at 50% 35%, #ffffff 0%, #f1f5f9 60%, #e2e8f0 100%) !important;
+  color: #0f172a !important;
+}
+
+html:not(.dark) #skills,
+html:not(.dark) #stack,
+html:not(.dark) #about,
+html:not(.dark) #contact,
+html:not(.dark) #work,
+html:not(.dark) footer {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* Light Mode Global Elements & Components */
+html:not(.dark) body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+html:not(.dark) .sublevel-frame {
+  border-color: rgba(0, 0, 0, 0.09) !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.04) !important;
+}
+
+html:not(.dark) .sublevel-frame h2,
+html:not(.dark) .sublevel-frame h3,
+html:not(.dark) .sublevel-frame h4,
+html:not(.dark) h2,
+html:not(.dark) h3,
+html:not(.dark) h4 {
+  color: #0f172a !important;
+}
+
+html:not(.dark) .sublevel-frame p,
+html:not(.dark) p {
+  color: #334155;
+}
+
+html:not(.dark) .sublevel-corner {
+  border-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+html:not(.dark) .sublevel-divider,
+html:not(.dark) hr {
+  background: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Light mode Navbar */
+html:not(.dark) .sublevel-navbar-gradient {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(0, 0, 0, 0.09) !important;
+  box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.08), 0 0 1px 1px rgba(0, 0, 0, 0.04) !important;
+}
+
+html:not(.dark) .sublevel-navbar-gradient button[aria-label="Toggle theme"],
+html:not(.dark) .sublevel-navbar-gradient button[aria-label="Toggle navigation menu"] {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #0f172a !important;
+}
+
+/* Hero Section in Light Mode */
+html:not(.dark) .hero-bg-title {
+  color: #0f172a !important;
+  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.06) !important;
+}
+
+html:not(.dark) .hero-bg-title span > span:first-child {
+  color: #0f172a !important;
+}
+
+html:not(.dark) .hero-bg-title span > span {
+  background: linear-gradient(180deg, #0f172a 60%, #334155 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+html:not(.dark) .hero-left-wing,
+html:not(.dark) .hero-right-wing {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(0, 0, 0, 0.09) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06) !important;
+}
+
+html:not(.dark) .hero-left-wing h2,
+html:not(.dark) .hero-right-wing p:first-of-type {
+  color: #0f172a !important;
+}
+
+html:not(.dark) .hero-left-wing p,
+html:not(.dark) .hero-right-wing p:last-of-type {
+  color: #475569 !important;
+}
+
+html:not(.dark) .hero-left-wing button {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  color: #1e293b !important;
+}
+
+html:not(.dark) .hero-avatar-pill-container button {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  color: #0f172a !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
+}
+
+html:not(.dark) .hero-mobile-dock-pill {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08) !important;
+}
+
+html:not(.dark) .hero-mobile-dock-role {
+  color: #0f172a !important;
+}
+
+html:not(.dark) .hero-mobile-scroll-hint {
+  color: #64748b !important;
+}
+
+html:not(.dark) .hero-visual-stage {
+  background: #f8fafc !important;
+}
+
+html:not(.dark) .hero-info-layer {
+  background: #f8fafc !important;
+}
+
+html:not(.dark) .hero-portrait-inner > div:last-child {
+  background: linear-gradient(180deg, transparent 0%, #f8fafc 100%) !important;
+}
+
+/* Projects in Light Mode */
+html:not(.dark) .proj-shot {
+  background: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.09) !important;
+}
+
+html:not(.dark) .proj-go {
+  color: #0f172a !important;
+}
+
+/* Contact in Light Mode */
+html:not(.dark) input,
+html:not(.dark) textarea {
+  color-scheme: light !important;
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html:not(.dark) input::placeholder,
+html:not(.dark) textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Footer in Light Mode */
+html:not(.dark) footer {
+  border-top-color: rgba(0, 0, 0, 0.08) !important;
+  background-color: #f1f5f9 !important;
+}
+
+html:not(.dark) footer p,
+html:not(.dark) footer span,
+html:not(.dark) footer a {
+  color: #475569 !important;
+}
+
+html:not(.dark) footer h3,
+html:not(.dark) footer h4 {
+  color: #0f172a !important;
 }
 
 /* Sublevel-exact section padding for non-hero sections */
@@ -156,15 +333,6 @@ html:not(.dark) .sublevel-corner {
   position: relative;
   padding-top: 5rem;
   padding-bottom: 5rem;
-}
-
-/* Input dark styling override for contact form */
-input[type="text"],
-input[type="email"],
-input[type="date"],
-input[type="time"],
-textarea {
-  color-scheme: dark;
 }
 
 /* Diagonal line animated canvas pattern */

@@ -16,3 +16,9 @@ node_modules
 .vscode/*
 !.vscode/extensions.json
 .idea
+
+# Local Superdesign working files
+.superdesign/
+
+# Temporary headless-browser capture profile
+.edge-capture-profile/

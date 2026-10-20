@@ -34,7 +34,11 @@ const Footer = () => {
     document.getElementById(target)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <footer className="relative isolate overflow-hidden border-t border-neutral-800/60 bg-[#0a0a0a]">
+    <footer className={`relative isolate overflow-hidden border-t transition-colors ${
+      isDarkMode
+        ? "border-neutral-800/60 bg-[#0a0a0a]"
+        : "border-neutral-200/80 bg-[#f8fafc]"
+    }`}>
       {/* Background vrules */}
       <div className="sublevel-bg-vrules" aria-hidden="true">
         <i /><i /><i /><i /><i /><i />
@@ -78,7 +82,7 @@ const Footer = () => {
               <span className="grid h-8 w-8 place-items-center rounded-sm bg-blue-600/90 text-xs font-bold text-white font-mono">
                 SS
               </span>
-              <span className="text-sm font-semibold text-white tracking-tight">
+              <span className={`text-sm font-semibold tracking-tight ${isDarkMode ? "text-white" : "text-neutral-900"}`}>
                 Sivasuthakaran Sanjeev
               </span>
             </button>
@@ -90,11 +94,11 @@ const Footer = () => {
               <i className="sublevel-corner br" aria-hidden="true" />
               {/* Terminal prompt */}
               <div className="flex items-center gap-2 mb-3">
-                <Terminal size={11} className="text-blue-400" />
+                <Terminal size={11} className="text-blue-500" />
                 <span className="sublevel-badge">README.txt</span>
               </div>
-              <p className="text-xs text-neutral-400 leading-relaxed">
-                Associate Product & AI Engineer building production systems across
+              <p className={`text-xs leading-relaxed ${isDarkMode ? "text-neutral-400" : "text-neutral-600"}`}>
+                Associate Product &amp; AI Engineer building production systems across
                 web, cloud, and agentic AI. Based in Colombo, Sri Lanka.
               </p>
             </div>
@@ -136,7 +140,11 @@ const Footer = () => {
                   <li key={link.label}>
                     <button
                       onClick={() => scrollToSection(link.target)}
-                      className="group/link relative text-left text-xs font-mono text-neutral-500 hover:text-white transition-colors duration-200"
+                      className={`group/link relative text-left text-xs font-mono transition-colors duration-200 ${
+                        isDarkMode
+                          ? "text-neutral-400 hover:text-white"
+                          : "text-neutral-600 hover:text-neutral-950"
+                      }`}
                     >
                       {link.label}
                       <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-blue-500/60 transition-[width] duration-200 ease-out group-hover/link:w-full" />
@@ -166,7 +174,11 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.name}
-                    className="sublevel-frame sublevel-frame-hover grid h-9 w-9 place-items-center rounded-sm text-neutral-500 hover:text-white transition-colors"
+                    className={`sublevel-frame sublevel-frame-hover grid h-9 w-9 place-items-center rounded-sm transition-colors ${
+                      isDarkMode
+                        ? "text-neutral-400 hover:text-white"
+                        : "text-neutral-600 hover:text-neutral-900"
+                    }`}
                   >
                     <Icon size={14} />
                   </a>
@@ -178,7 +190,9 @@ const Footer = () => {
 
         {/* Bottom bar */}
         <hr className="sublevel-divider mt-12 mb-5" />
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-[10px] text-neutral-600">
+        <div className={`flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-[10px] ${
+          isDarkMode ? "text-neutral-500" : "text-neutral-600"
+        }`}>
           <span>© 2026 SIVASUTHAKARAN SANJEEV · ALL SYSTEMS OPERATIONAL</span>
           <span className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-blue-500/60" />
@@ -190,7 +204,9 @@ const Footer = () => {
       {/* Large ghost text */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-[-0.06em] z-0 overflow-hidden text-center text-[25vw] font-bold leading-[0.82] tracking-[-0.08em] text-neutral-900/80 [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_50%,black_100%)] [mask-image:linear-gradient(to_bottom,transparent_0%,black_50%,black_100%)] sm:text-[22vw] lg:text-[18rem]"
+        className={`pointer-events-none absolute inset-x-0 bottom-[-0.06em] z-0 overflow-hidden text-center text-[25vw] font-bold leading-[0.82] tracking-[-0.08em] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0%,black_50%,black_100%)] [mask-image:linear-gradient(to_bottom,transparent_0%,black_50%,black_100%)] sm:text-[22vw] lg:text-[18rem] ${
+          isDarkMode ? "text-neutral-900/80" : "text-neutral-300/60"
+        }`}
       >
         SANJEEV
       </div>
