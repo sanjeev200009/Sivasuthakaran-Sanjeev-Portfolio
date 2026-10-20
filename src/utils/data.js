@@ -207,6 +207,6 @@ export const REACT_APPLICATION = [
     {
         icon: Phone,
         label: "Phone",
-        value: "+94 753 883 167",
+        value: "+94 72 285 8346",
     },
 ];

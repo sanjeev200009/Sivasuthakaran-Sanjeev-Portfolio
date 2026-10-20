@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { FaWhatsapp } from "react-icons/fa";
 import {
   Send,
   MapPin,
@@ -18,6 +19,10 @@ import { EMAIL_CONFIG } from "../../config/emailjs.js";
 import { useTheme } from "../../context/ThemeContext.jsx";
 import { SOCIAL_LINKS, REACT_APPLICATION } from "../../utils/data.js";
 import SublevelSectionHeader from "./SublevelSectionHeader.jsx";
+
+const WHATSAPP_URL = `https://wa.me/94722858346?text=${encodeURIComponent(
+  "Hi Sanjeev, I found your portfolio and would like to discuss a freelance project."
+)}`;
 
 export default function ContactSection() {
   const { isDarkMode } = useTheme();
@@ -457,6 +462,36 @@ export default function ContactSection() {
                   );
                 })}
               </div>
+
+              <motion.a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noreferrer"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                aria-label="Discuss a freelance project with Sanjeev on WhatsApp"
+                style={{
+                  marginTop: 4,
+                  padding: "13px 16px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 9,
+                  borderRadius: 2,
+                  border: "1px solid rgba(37, 211, 102, 0.32)",
+                  background: "rgba(37, 211, 102, 0.1)",
+                  color: isDarkMode ? "#86efac" : "#087f3f",
+                  fontFamily: "ui-monospace, monospace",
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  textDecoration: "none",
+                }}
+              >
+                <FaWhatsapp size={17} />
+                WhatsApp · Freelance Enquiry
+              </motion.a>
             </div>
 
             {/* Availability Diagnostic Box */}
@@ -813,6 +848,41 @@ export default function ContactSection() {
                     {scheduleError}
                   </p>
                 )}
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }} aria-hidden="true">
+                  <span style={{ height: 1, flex: 1, background: "rgba(255,255,255,0.1)" }} />
+                  <span style={{ color: "#6b7280", fontFamily: "ui-monospace, monospace", fontSize: 10 }}>
+                    OR CONTACT DIRECTLY
+                  </span>
+                  <span style={{ height: 1, flex: 1, background: "rgba(255,255,255,0.1)" }} />
+                </div>
+                <motion.a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.99 }}
+                  aria-label="Open WhatsApp to discuss a freelance project"
+                  style={{
+                    padding: "13px 18px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 9,
+                    borderRadius: 2,
+                    border: "1px solid rgba(37, 211, 102, 0.35)",
+                    background: "rgba(37, 211, 102, 0.1)",
+                    color: "#86efac",
+                    fontFamily: "ui-monospace, monospace",
+                    fontSize: 11,
+                    fontWeight: 700,
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    textDecoration: "none",
+                  }}
+                >
+                  <FaWhatsapp size={17} />
+                  WhatsApp +94 72 285 8346
+                </motion.a>
               </form>
             </motion.div>
           </motion.div>
