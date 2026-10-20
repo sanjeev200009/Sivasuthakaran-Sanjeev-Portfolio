@@ -83,8 +83,8 @@ export default function HeroSection() {
     mouseY.set(0);
   };
 
-  const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  const openScheduleModal = () => {
+    window.dispatchEvent(new Event("portfolio:open-schedule"));
   };
 
   const handleCVDownload = async () => {
@@ -511,7 +511,7 @@ export default function HeroSection() {
           <span className="hero-mobile-dock-dot" />
           <button
             type="button"
-            onClick={() => scrollToSection("contact")}
+            onClick={openScheduleModal}
             className="hero-mobile-dock-cta"
           >
             <span>Let's Talk</span>
@@ -749,7 +749,7 @@ export default function HeroSection() {
             {/* Exact "Let's Talk ↗" Pill from Reference Design */}
             <motion.button
               className="hero-lets-talk-btn"
-              onClick={() => scrollToSection("contact")}
+              onClick={openScheduleModal}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
               style={{

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Send,
@@ -24,6 +24,12 @@ export default function ContactSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isScheduleSubmitting, setIsScheduleSubmitting] = useState(false);
+  const [scheduleError, setScheduleError] = useState("");
+  const [successMessage, setSuccessMessage] = useState({
+    title: "Message Dispatched",
+    detail: "I will review your message and reply within 24 hours.",
+  });
   const [contactForm, setContactForm] = useState({ name: "", email: "", message: "" });
   const [scheduleForm, setScheduleForm] = useState({ name: "", email: "", date: "", time: "", message: "" });
 
@@ -48,6 +54,10 @@ export default function ContactSection() {
       const result = await response.json();
 
       if (result.success) {
+        setSuccessMessage({
+          title: "Message Dispatched",
+          detail: "I will review your message and reply within 24 hours.",
+        });
         setShowSuccessPopup(true);
         setContactForm({ name: "", email: "", message: "" });
         setTimeout(() => setShowSuccessPopup(false), 3000);
@@ -67,22 +77,84 @@ export default function ContactSection() {
     setScheduleForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleScheduleSubmit = (e) => {
+  const handleScheduleSubmit = async (e) => {
     e.preventDefault();
-    alert("Thank you! I'll get back to you within 24 hours to confirm the meeting.");
-    setIsModalOpen(false);
-    setScheduleForm({ name: "", email: "", date: "", time: "", message: "" });
+    setScheduleError("");
+    setIsScheduleSubmitting(true);
+
+    try {
+      if (!EMAIL_CONFIG.ACCESS_KEY) {
+        throw new Error("The scheduling endpoint is not configured.");
+      }
+
+      const formData = new FormData();
+      formData.append("access_key", EMAIL_CONFIG.ACCESS_KEY);
+      formData.append("name", scheduleForm.name);
+      formData.append("email", scheduleForm.email);
+      formData.append("preferred_date", scheduleForm.date);
+      formData.append("preferred_time", scheduleForm.time);
+      formData.append("timezone", "Asia/Colombo (GMT+5:30)");
+      formData.append("message", scheduleForm.message || "No agenda supplied.");
+      formData.append("subject", `Call request from ${scheduleForm.name} — ${scheduleForm.date} at ${scheduleForm.time}`);
+      formData.append("from_name", scheduleForm.name);
+
+      const response = await fetch(EMAIL_CONFIG.API_URL, { method: "POST", body: formData });
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "Unable to submit the call request.");
+      }
+
+      setSuccessMessage({
+        title: "Call Request Received",
+        detail: "Your preferred date and time were sent. I will reply by email to confirm the call.",
+      });
+      setScheduleForm({ name: "", email: "", date: "", time: "", message: "" });
+      setIsModalOpen(false);
+      document.body.style.overflow = "";
+      setShowSuccessPopup(true);
+      setTimeout(() => setShowSuccessPopup(false), 4000);
+    } catch (error) {
+      console.error("Error scheduling call:", error);
+      setScheduleError("The request could not be sent. Please try again or email me directly.");
+    } finally {
+      setIsScheduleSubmitting(false);
+    }
   };
 
   const openModal = () => {
+    setScheduleError("");
     setIsModalOpen(true);
     document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    document.body.style.overflow = "unset";
+    document.body.style.overflow = "";
   };
+
+  useEffect(() => {
+    const openScheduleModal = () => {
+      setScheduleError("");
+      setIsModalOpen(true);
+      document.body.style.overflow = "hidden";
+    };
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") {
+        setIsModalOpen(false);
+        document.body.style.overflow = "";
+      }
+    };
+
+    window.addEventListener("portfolio:open-schedule", openScheduleModal);
+    window.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      window.removeEventListener("portfolio:open-schedule", openScheduleModal);
+      window.removeEventListener("keydown", closeOnEscape);
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   const inputClass = isDarkMode
     ? "w-full px-4 py-3 rounded-sm border border-neutral-800 bg-neutral-900/70 text-white placeholder-neutral-500 font-mono text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 transition-colors"
@@ -552,10 +624,10 @@ export default function ContactSection() {
                 TRANSMISSION CONFIRMED
               </p>
               <h3 style={{ fontFamily: "'Urbanist', system-ui, sans-serif", fontSize: "1.4rem", color: "#ffffff", margin: "0 0 8px" }}>
-                Message Dispatched
+                {successMessage.title}
               </h3>
               <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.9rem", color: "#9ca3af", margin: 0 }}>
-                I will review your message and reply within 24 hours.
+                {successMessage.detail}
               </p>
             </motion.div>
           </motion.div>
@@ -587,6 +659,9 @@ export default function ContactSection() {
               }}
               className="sublevel-frame"
               onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="schedule-dialog-title"
             >
               <i className="sublevel-corner tl" />
               <i className="sublevel-corner tr" />
@@ -597,6 +672,7 @@ export default function ContactSection() {
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <Calendar size={15} style={{ color: "#3b82f6" }} />
                   <span
+                    id="schedule-dialog-title"
                     style={{
                       fontFamily: "ui-monospace, monospace",
                       fontSize: 11,
@@ -697,10 +773,11 @@ export default function ContactSection() {
                 </div>
                 <motion.button
                   type="submit"
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.99 }}
+                  disabled={isScheduleSubmitting}
+                  whileHover={!isScheduleSubmitting ? { scale: 1.01 } : {}}
+                  whileTap={!isScheduleSubmitting ? { scale: 0.99 } : {}}
                   style={{
-                    background: "#2563eb",
+                    background: isScheduleSubmitting ? "#1f2937" : "#2563eb",
                     border: "none",
                     borderRadius: 2,
                     padding: "14px 20px",
@@ -709,8 +786,8 @@ export default function ContactSection() {
                     letterSpacing: "0.12em",
                     textTransform: "uppercase",
                     fontWeight: 600,
-                    color: "#ffffff",
-                    cursor: "pointer",
+                    color: isScheduleSubmitting ? "#9ca3af" : "#ffffff",
+                    cursor: isScheduleSubmitting ? "not-allowed" : "pointer",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -719,8 +796,23 @@ export default function ContactSection() {
                   }}
                 >
                   <Send size={13} />
-                  CONFIRM CALL REQUEST
+                  {isScheduleSubmitting ? "SENDING REQUEST..." : "CONFIRM CALL REQUEST"}
                 </motion.button>
+                {scheduleError && (
+                  <p
+                    role="alert"
+                    style={{
+                      margin: 0,
+                      color: "#f87171",
+                      fontFamily: "ui-monospace, monospace",
+                      fontSize: 11,
+                      lineHeight: 1.5,
+                      textAlign: "center",
+                    }}
+                  >
+                    {scheduleError}
+                  </p>
+                )}
               </form>
             </motion.div>
           </motion.div>
