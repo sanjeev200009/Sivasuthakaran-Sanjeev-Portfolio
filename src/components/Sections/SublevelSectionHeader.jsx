@@ -3,7 +3,7 @@ import { useInView } from "framer-motion";
 
 export function AnimatedRule({ className = "", thin = false }) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.05 });
+  const inView = useInView(ref, { once: false, amount: 0.05 });
   return (
     <hr
       ref={ref}
@@ -30,7 +30,7 @@ export default function SublevelSectionHeader({
   className = "",
 }) {
   const headRef = useRef(null);
-  const headInView = useInView(headRef, { once: true, amount: 0.05 });
+  const headInView = useInView(headRef, { once: false, amount: 0.05 });
 
   return (
     <div className={`w-full ${className}`}>

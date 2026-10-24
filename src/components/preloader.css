@@ -9,43 +9,37 @@
   pointer-events: auto;
 }
 
-.portfolio-preloader__sheet {
+/* Six backdrop columns that line up with the page's vertical guide rules */
+.portfolio-preloader__cols {
   position: absolute;
   inset: 0;
-  overflow: hidden;
-  background: #0a0a0a;
-  transform: translate3d(0, 0, 0);
-  will-change: transform, opacity;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
 }
 
-.portfolio-preloader__sheet::before,
-.portfolio-preloader__sheet::after {
+.portfolio-preloader__cols span {
+  position: relative;
+  /* 1px overlap hides hairline seams between columns */
+  margin-right: -1px;
+  background: #0a0a0a;
+  border-right: 1px solid rgba(255, 255, 255, 0.045);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+/* Glowing leading edge shown while each column rises */
+.portfolio-preloader__cols span::after {
   content: "";
   position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 3;
-  pointer-events: none;
-  opacity: 0;
-}
-
-.portfolio-preloader__sheet::before {
-  height: 7rem;
-  background: linear-gradient(
-    0deg,
-    rgba(59, 130, 246, 0.18) 0%,
-    rgba(243, 244, 246, 0.055) 18%,
-    transparent 100%
-  );
-}
-
-.portfolio-preloader__sheet::after {
-  height: 2px;
-  background: rgba(225, 231, 255, 0.88);
+  height: 1px;
+  background: rgba(225, 231, 255, 0.9);
   box-shadow:
-    0 0 22px rgba(59, 130, 246, 0.46),
-    0 22px 58px rgba(0, 0, 0, 0.82);
+    0 0 18px rgba(59, 130, 246, 0.55),
+    0 -40px 60px -20px rgba(59, 130, 246, 0.22);
+  opacity: 0;
 }
 
 .portfolio-preloader__content {
@@ -115,27 +109,58 @@
   pointer-events: none;
 }
 
-.portfolio-preloader.is-revealing .portfolio-preloader__sheet {
-  animation: preloader-curtain-rise 760ms var(--preloader-ease-in-out) forwards;
+/* 1) Content lifts away */
+.portfolio-preloader.is-revealing .portfolio-preloader__label,
+.portfolio-preloader.is-revealing .portfolio-preloader__counter {
+  animation: preloader-content-out 420ms cubic-bezier(0.55, 0, 0.78, 0.3) forwards;
 }
 
-.portfolio-preloader.is-revealing .portfolio-preloader__sheet::before,
-.portfolio-preloader.is-revealing .portfolio-preloader__sheet::after {
+.portfolio-preloader.is-revealing .portfolio-preloader__label {
+  animation-delay: 40ms;
+}
+
+.portfolio-preloader.is-revealing .portfolio-preloader__track {
+  transform-origin: right center;
+  animation: preloader-track-out 460ms var(--preloader-ease-in-out) forwards;
+}
+
+/* 2) Columns rise in a left-to-right wave (delays must match CURTAIN_RISE_MS in Preloader.jsx) */
+.portfolio-preloader.is-revealing .portfolio-preloader__cols span {
+  animation: preloader-column-rise 760ms var(--preloader-ease-in-out) forwards;
+  animation-delay: calc(300ms + var(--col) * 70ms);
+}
+
+.portfolio-preloader.is-revealing .portfolio-preloader__cols span::after {
   animation: preloader-curtain-edge 760ms var(--preloader-ease-in-out) forwards;
+  animation-delay: calc(300ms + var(--col) * 70ms);
 }
 
-@keyframes preloader-curtain-rise {
-  0% {
-    transform: translate3d(0, 0, 0);
-    opacity: 1;
+@keyframes preloader-content-out {
+  to {
+    transform: translate3d(0, -28px, 0);
+    opacity: 0;
+    filter: blur(6px);
   }
-  12% {
-    transform: translate3d(0, -1.5%, 0);
-    opacity: 1;
+}
+
+@keyframes preloader-track-out {
+  0% {
+    transform: scaleX(1);
+    filter: brightness(1);
+  }
+  25% {
+    transform: scaleX(1);
+    filter: brightness(2.2);
   }
   100% {
-    transform: translate3d(0, -100.5%, 0);
-    opacity: 1;
+    transform: scaleX(0);
+    filter: brightness(1);
+  }
+}
+
+@keyframes preloader-column-rise {
+  to {
+    transform: translate3d(0, -101%, 0);
   }
 }
 
@@ -143,7 +168,7 @@
   0% {
     opacity: 0;
   }
-  10% {
+  12% {
     opacity: 1;
   }
   84% {
@@ -165,13 +190,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .portfolio-preloader.is-revealing .portfolio-preloader__sheet {
+  .portfolio-preloader.is-revealing {
     animation: preloader-reduced-fade 200ms var(--preloader-ease-out) forwards;
   }
 
-  .portfolio-preloader.is-revealing .portfolio-preloader__sheet::before,
-  .portfolio-preloader.is-revealing .portfolio-preloader__sheet::after {
-    animation: none;
+  .portfolio-preloader.is-revealing *,
+  .portfolio-preloader.is-revealing *::after {
+    animation: none !important;
   }
 }
 

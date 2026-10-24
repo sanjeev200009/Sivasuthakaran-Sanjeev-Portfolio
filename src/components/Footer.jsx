@@ -68,7 +68,7 @@ const Footer = () => {
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.6 }}
           >
             <button
@@ -130,7 +130,7 @@ const Footer = () => {
               aria-label={column.title}
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.6, delay: columnIndex * 0.08 }}
             >
               <p className="sublevel-badge mb-5">{column.title}</p>
@@ -159,7 +159,7 @@ const Footer = () => {
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <p className="sublevel-badge mb-5">CONNECT</p>

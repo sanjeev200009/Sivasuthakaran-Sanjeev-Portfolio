@@ -3,7 +3,9 @@ import "./preloader.css";
 
 const LOAD_TO_NINETY_FOUR_MS = 1900;
 const LOAD_FINISH_MS = 260;
-const CURTAIN_RISE_MS = 760;
+// Keep in sync with preloader.css: content exit, then 6 columns at 70ms stagger rising over 760ms.
+const COLUMN_COUNT = 6;
+const CURTAIN_RISE_MS = 300 + (COLUMN_COUNT - 1) * 70 + 760;
 const REDUCED_HOLD_MS = 500;
 const REDUCED_EXIT_MS = 220;
 
@@ -162,19 +164,24 @@ export default function Preloader({ onComplete }) {
       aria-live="polite"
       aria-label={phase === "revealing" ? "Portfolio ready" : "Loading portfolio"}
     >
-      <div className="portfolio-preloader__sheet">
-        <div className="portfolio-preloader__content" aria-hidden="true">
-          <p className="portfolio-preloader__label">SANJEEV.STUDIO</p>
+      {/* Backdrop split along the page's 6 guide columns; they rise in a staggered wave on reveal */}
+      <div className="portfolio-preloader__cols" aria-hidden="true">
+        {Array.from({ length: COLUMN_COUNT }, (_, index) => (
+          <span key={index} style={{ "--col": index }} />
+        ))}
+      </div>
 
-          <div className="portfolio-preloader__track">
-            <span ref={progressRef} className="portfolio-preloader__progress" />
-          </div>
+      <div className="portfolio-preloader__content" aria-hidden="true">
+        <p className="portfolio-preloader__label">SANJEEV.STUDIO</p>
 
-          <p className="portfolio-preloader__counter">
-            <span ref={counterRef}>0</span>
-            <span className="portfolio-preloader__percent">%</span>
-          </p>
+        <div className="portfolio-preloader__track">
+          <span ref={progressRef} className="portfolio-preloader__progress" />
         </div>
+
+        <p className="portfolio-preloader__counter">
+          <span ref={counterRef}>0</span>
+          <span className="portfolio-preloader__percent">%</span>
+        </p>
       </div>
     </div>
   );

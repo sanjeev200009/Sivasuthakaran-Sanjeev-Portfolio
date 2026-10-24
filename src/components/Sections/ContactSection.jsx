@@ -194,7 +194,7 @@ export default function ContactSection() {
         <motion.div
           initial={{ opacity: 0, transform: "translateY(18px)" }}
           whileInView={{ opacity: 1, transform: "translateY(0)" }}
-          viewport={{ once: true, amount: 0.45, margin: "0px 0px -80px" }}
+          viewport={{ once: false, amount: 0.45, margin: "0px 0px -80px" }}
           transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
         >
           <SublevelSectionHeader
@@ -218,7 +218,7 @@ export default function ContactSection() {
           <motion.div
             initial={{ opacity: 0, transform: "translateY(18px)" }}
             whileInView={{ opacity: 1, transform: "translateY(0)" }}
-            viewport={{ once: true, amount: 0.28, margin: "0px 0px -70px" }}
+            viewport={{ once: false, amount: 0.28, margin: "0px 0px -70px" }}
             transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
             style={{
               gridColumn: "span 7 / span 7",
@@ -389,7 +389,7 @@ export default function ContactSection() {
           <motion.div
             initial={{ opacity: 0, transform: "translateY(18px)" }}
             whileInView={{ opacity: 1, transform: "translateY(0)" }}
-            viewport={{ once: true, amount: 0.28, margin: "0px 0px -70px" }}
+            viewport={{ once: false, amount: 0.28, margin: "0px 0px -70px" }}
             transition={{ duration: 0.6, delay: 0.08, ease: [0.23, 1, 0.32, 1] }}
             style={{
               gridColumn: "span 5 / span 5",
