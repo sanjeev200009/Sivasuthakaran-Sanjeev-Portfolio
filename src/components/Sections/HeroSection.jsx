@@ -24,11 +24,11 @@ export default function HeroSection() {
   const { isDarkMode } = useTheme();
   const heroRef = useRef(null);
   const [isMobileViewport, setIsMobileViewport] = useState(() =>
-    typeof window !== "undefined" && window.matchMedia("(max-width: 640px)").matches
+    typeof window !== "undefined" && window.matchMedia("(max-width: 900px)").matches
   );
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 640px)");
+    const mediaQuery = window.matchMedia("(max-width: 900px)");
     const updateViewportMode = () => setIsMobileViewport(mediaQuery.matches);
     updateViewportMode();
     mediaQuery.addEventListener("change", updateViewportMode);
@@ -902,22 +902,9 @@ export default function HeroSection() {
           pointer-events: auto;
         }
 
-        /* ── Tablet (641–900px) ──────────────────────────────── */
-        @media (max-width: 900px) {
-          .hero-wings-grid {
-            grid-template-columns: 1fr !important;
-            gap: 16px !important;
-          }
-          .hero-wings-grid > div {
-            max-width: 100% !important;
-            margin: 0 !important;
-            text-align: left !important;
-            align-items: flex-start !important;
-          }
-        }
 
-        /* ── Mobile (≤ 640px): Dedicated 100svh Grand Hero Visual ── */
-        @media (max-width: 640px) {
+        /* ── Mobile & tablet (≤ 900px): Dedicated 100svh Grand Hero Visual ── */
+        @media (max-width: 900px) {
           #home {
             flex-direction: column !important;
             min-height: auto !important;
