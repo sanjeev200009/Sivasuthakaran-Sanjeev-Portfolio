@@ -31,12 +31,12 @@ export default function AboutSection() {
 
     const targets = section.querySelectorAll("[data-about-reveal]");
     const observer = new IntersectionObserver((entries) => {
+      // Reveal at 30% visible, reset only once fully out of view, so it replays on every scroll pass without flicker.
       entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.dataset.visible = "true";
-        observer.unobserve(entry.target);
+        if (entry.intersectionRatio >= 0.3) entry.target.dataset.visible = "true";
+        else if (!entry.isIntersecting) entry.target.dataset.visible = "false";
       });
-    }, { threshold: 0.3, rootMargin: "0px 0px -18%" });
+    }, { threshold: [0, 0.3], rootMargin: "0px 0px -18%" });
 
     targets.forEach((target) => observer.observe(target));
     return () => observer.disconnect();

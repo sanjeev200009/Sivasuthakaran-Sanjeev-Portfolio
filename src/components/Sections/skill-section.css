@@ -1,0 +1,270 @@
+/* Engineering Capabilities — live-typed JSON cards in the Sublevel theme */
+#skills {
+  --cj-key: #8ab4ff;
+  --cj-str: #86efac;
+  --cj-num: #fcd34d;
+  --cj-bool: #c4b5fd;
+  --cj-punct: #6b7280;
+  --cj-hl-bg: rgba(59, 130, 246, 0.2);
+  --cj-hl-fg: #dbeafe;
+  --cj-editor: rgba(255, 255, 255, 0.018);
+  --cj-active: rgba(59, 130, 246, 0.08);
+  --cj-mono: ui-monospace, "Geist Mono", "SFMono-Regular", monospace;
+}
+
+html:not(.dark) #skills {
+  --cj-key: #1d4ed8;
+  --cj-str: #047857;
+  --cj-num: #b45309;
+  --cj-bool: #7c3aed;
+  --cj-punct: #9ca3af;
+  --cj-hl-bg: rgba(37, 99, 235, 0.1);
+  --cj-hl-fg: #1e40af;
+  --cj-editor: #f8fafc;
+  --cj-active: rgba(37, 99, 235, 0.06);
+}
+
+/* Request line under the section header */
+.cap-request {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin: 0 0 20px;
+  padding: 12px 16px;
+  border: 1px solid var(--sublevel-line);
+  font-family: var(--cj-mono);
+  font-size: 12px;
+  color: var(--sublevel-w2);
+}
+
+.cap-request__method {
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #fff;
+  background: var(--sublevel-accent);
+}
+
+.cap-request__path {
+  color: var(--sublevel-w1);
+}
+
+.cap-request__ok {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #10b981;
+  font-weight: 600;
+}
+
+.cap-request__ok i,
+.cap-card__status i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px rgba(16, 185, 129, 0.8);
+  animation: cj-pulse 2s ease-in-out infinite;
+}
+
+.cap-request__meta {
+  margin-left: auto;
+  color: var(--sublevel-g1);
+}
+
+/* Card */
+.cap-card {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.016), rgba(255, 255, 255, 0.003));
+}
+
+html:not(.dark) .cap-card {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.cap-card__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 16px 0 0;
+  border-bottom: 1px solid var(--sublevel-line);
+  font-family: var(--cj-mono);
+  font-size: 11px;
+}
+
+.cap-card__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border-right: 1px solid var(--sublevel-line);
+  color: var(--sublevel-w1);
+  box-shadow: inset 0 -2px 0 var(--sublevel-accent);
+}
+
+.cap-card__tab svg {
+  color: var(--sublevel-accent);
+}
+
+.cap-card__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-radius: 2px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  white-space: nowrap;
+}
+
+.cap-card__intro {
+  padding: 26px 28px 18px;
+}
+
+.cap-card__code {
+  display: block;
+  margin-bottom: 10px;
+  font-family: var(--cj-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--sublevel-accent);
+}
+
+.cap-card__title {
+  margin: 0;
+  font-family: "Urbanist", "Geist", system-ui, sans-serif;
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--sublevel-w1);
+}
+
+/* Editor */
+.cap-card__editor {
+  flex: 1;
+  margin: 0 28px;
+  padding: 14px 0;
+  border: 1px solid var(--sublevel-line);
+  background: var(--cj-editor);
+  font-family: var(--cj-mono);
+  font-size: 12.5px;
+  line-height: 1.8;
+  color: var(--sublevel-w1);
+}
+
+.cj-line {
+  display: grid;
+  grid-template-columns: 3.2em 1fr;
+  transition: background-color 0.2s ease;
+}
+
+.cj-line.is-active {
+  background: var(--cj-active);
+}
+
+.cj-ln {
+  padding-right: 1em;
+  text-align: right;
+  color: var(--cj-punct);
+  opacity: 0.35;
+  user-select: none;
+  transition: opacity 0.3s ease;
+}
+
+.cj-ln.is-on {
+  opacity: 0.8;
+}
+
+/* Indent by depth; wrapped lines hang 2ch deeper */
+.cj-code {
+  padding-left: calc(var(--depth) * 2ch + 2ch);
+  padding-right: 14px;
+  text-indent: -2ch;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.cj-p { color: var(--cj-punct); }
+.cj-k { color: var(--cj-key); }
+.cj-s { color: var(--cj-str); }
+.cj-n { color: var(--cj-num); }
+.cj-b { color: var(--cj-bool); font-style: italic; }
+
+.cj-h {
+  padding: 1px 3px;
+  border-radius: 2px;
+  color: var(--cj-hl-fg);
+  background: var(--cj-hl-bg);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.cj-ghost {
+  visibility: hidden;
+}
+
+/* Zero-width caret so typing never shifts text */
+.cj-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.15em;
+  margin-right: -2px;
+  vertical-align: text-bottom;
+  text-indent: 0;
+  background: var(--sublevel-accent);
+  box-shadow: 0 0 8px var(--sublevel-accent);
+}
+
+.cj-caret.is-idle {
+  animation: cj-blink 1.05s steps(1) infinite;
+}
+
+.cap-card__statusbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 16px 28px 0;
+  padding: 14px 0 22px;
+  border-top: 1px solid var(--sublevel-line);
+  font-family: var(--cj-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: var(--sublevel-g1);
+}
+
+.cap-card__statusbar .is-valid {
+  color: #10b981;
+}
+
+@keyframes cj-blink {
+  50% { opacity: 0; }
+}
+
+@keyframes cj-pulse {
+  50% { opacity: 0.35; }
+}
+
+@media (max-width: 560px) {
+  .cap-request__meta { margin-left: 0; }
+  .cap-card__intro { padding: 22px 18px 16px; }
+  .cap-card__editor { margin: 0 18px; font-size: 11.5px; }
+  .cap-card__statusbar { margin: 14px 18px 0; }
+  .cap-card__tab { padding: 11px 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cj-caret.is-idle,
+  .cap-request__ok i,
+  .cap-card__status i {
+    animation: none;
+  }
+}

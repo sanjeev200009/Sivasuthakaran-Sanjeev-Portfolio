@@ -1,0 +1,207 @@
+.portfolio-preloader {
+  --preloader-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --preloader-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  color: var(--sublevel-w1, #f3f4f6);
+  pointer-events: auto;
+}
+
+/* Six backdrop columns that line up with the page's vertical guide rules */
+.portfolio-preloader__cols {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.portfolio-preloader__cols span {
+  position: relative;
+  /* 1px overlap hides hairline seams between columns */
+  margin-right: -1px;
+  background: #0a0a0a;
+  border-right: 1px solid rgba(255, 255, 255, 0.045);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+/* Glowing leading edge shown while each column rises */
+.portfolio-preloader__cols span::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: rgba(225, 231, 255, 0.9);
+  box-shadow:
+    0 0 18px rgba(59, 130, 246, 0.55),
+    0 -40px 60px -20px rgba(59, 130, 246, 0.22);
+  opacity: 0;
+}
+
+.portfolio-preloader__content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.portfolio-preloader__label {
+  position: absolute;
+  top: clamp(1.5rem, 4vw, 2.5rem);
+  left: clamp(1.25rem, 4vw, 2.5rem);
+  margin: 0;
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  color: var(--sublevel-w1, #f3f4f6);
+}
+
+.portfolio-preloader__track {
+  position: absolute;
+  top: 60%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.portfolio-preloader__progress {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6 0%, #f3f4f6 88%);
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.portfolio-preloader__counter {
+  position: absolute;
+  right: clamp(1rem, 4vw, 2.5rem);
+  bottom: clamp(1.25rem, 4vw, 2.5rem);
+  display: flex;
+  align-items: baseline;
+  margin: 0;
+  font-family: "Urbanist", system-ui, sans-serif;
+  font-size: clamp(5.5rem, 18vw, 15rem);
+  font-weight: 200;
+  font-variant-numeric: tabular-nums;
+  line-height: 0.72;
+  letter-spacing: -0.07em;
+  color: var(--sublevel-w1, #f3f4f6);
+}
+
+.portfolio-preloader__percent {
+  margin-left: 0.03em;
+  font-size: 0.3em;
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  opacity: 0.65;
+}
+
+.portfolio-preloader.is-revealing {
+  pointer-events: none;
+}
+
+/* 1) Content lifts away */
+.portfolio-preloader.is-revealing .portfolio-preloader__label,
+.portfolio-preloader.is-revealing .portfolio-preloader__counter {
+  animation: preloader-content-out 420ms cubic-bezier(0.55, 0, 0.78, 0.3) forwards;
+}
+
+.portfolio-preloader.is-revealing .portfolio-preloader__label {
+  animation-delay: 40ms;
+}
+
+.portfolio-preloader.is-revealing .portfolio-preloader__track {
+  transform-origin: right center;
+  animation: preloader-track-out 460ms var(--preloader-ease-in-out) forwards;
+}
+
+/* 2) Columns rise in a left-to-right wave (delays must match CURTAIN_RISE_MS in Preloader.jsx) */
+.portfolio-preloader.is-revealing .portfolio-preloader__cols span {
+  animation: preloader-column-rise 760ms var(--preloader-ease-in-out) forwards;
+  animation-delay: calc(300ms + var(--col) * 70ms);
+}
+
+.portfolio-preloader.is-revealing .portfolio-preloader__cols span::after {
+  animation: preloader-curtain-edge 760ms var(--preloader-ease-in-out) forwards;
+  animation-delay: calc(300ms + var(--col) * 70ms);
+}
+
+@keyframes preloader-content-out {
+  to {
+    transform: translate3d(0, -28px, 0);
+    opacity: 0;
+    filter: blur(6px);
+  }
+}
+
+@keyframes preloader-track-out {
+  0% {
+    transform: scaleX(1);
+    filter: brightness(1);
+  }
+  25% {
+    transform: scaleX(1);
+    filter: brightness(2.2);
+  }
+  100% {
+    transform: scaleX(0);
+    filter: brightness(1);
+  }
+}
+
+@keyframes preloader-column-rise {
+  to {
+    transform: translate3d(0, -101%, 0);
+  }
+}
+
+@keyframes preloader-curtain-edge {
+  0% {
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  84% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .portfolio-preloader__track {
+    top: 56%;
+  }
+
+  .portfolio-preloader__counter {
+    font-size: clamp(5rem, 28vw, 8.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-preloader.is-revealing {
+    animation: preloader-reduced-fade 200ms var(--preloader-ease-out) forwards;
+  }
+
+  .portfolio-preloader.is-revealing *,
+  .portfolio-preloader.is-revealing *::after {
+    animation: none !important;
+  }
+}
+
+@keyframes preloader-reduced-fade {
+  to {
+    opacity: 0;
+  }
+}

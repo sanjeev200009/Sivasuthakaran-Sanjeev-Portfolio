@@ -131,7 +131,7 @@ export default function ProjectSection() {
           .fromTo(track.querySelectorAll(".project-tool"), { autoAlpha: 0, y: 10 }, { autoAlpha: 1, y: 0, stagger: 0.035, duration: 0.24 }, 0.64);
       });
       gsap.utils.toArray(".project-reveal").forEach((item) => {
-        gsap.fromTo(item, { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.72, ease: "power3.out", scrollTrigger: { trigger: item, start: "top 84%", once: true } });
+        gsap.fromTo(item, { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.72, ease: "power3.out", scrollTrigger: { trigger: item, start: "top 84%", end: "bottom 10%", toggleActions: "play reverse play reverse" } });
       });
     });
     media.add("(max-width: 899px), (prefers-reduced-motion: reduce)", () => gsap.set([".project-portal-meta", ".project-tool", ".project-reveal"], { clearProps: "all" }));
