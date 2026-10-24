@@ -26,6 +26,19 @@
     }
 }
 
+/* Content panel that scrolls up over the sticky hero */
+.scroll-curtain {
+    position: relative;
+    z-index: 10;
+    background-color: #f9fafb;
+    box-shadow: 0 -24px 48px -12px rgba(0, 0, 0, 0.18);
+}
+
+html.dark .scroll-curtain {
+    background-color: #0a0a0a;
+    box-shadow: 0 -24px 48px -12px rgba(0, 0, 0, 0.6);
+}
+
 /* Increase scroll padding on larger screens to match navbar height */
 @media (min-width: 768px) {
     html {

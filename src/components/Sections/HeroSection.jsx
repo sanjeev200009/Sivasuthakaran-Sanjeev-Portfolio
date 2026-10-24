@@ -75,10 +75,27 @@ export default function HeroSection() {
   const ringsY = useTransform(springY, [-0.5, 0.5], [-18, 18]);
 
   // Scroll Parallax & Discovery
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
+  // Hero is sticky (the next sections slide over it like a curtain), so progress
+  // comes from page scroll rather than the hero's own position.
+  const { scrollY } = useScroll();
+  const scrollYProgress = useTransform(scrollY, (v) =>
+    Math.min(1, v / (heroRef.current?.offsetHeight || window.innerHeight))
+  );
+
+  // Pin at the top, or at the bottom edge when the hero is taller than the viewport
+  const [stickyTop, setStickyTop] = useState(0);
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    const update = () => setStickyTop(Math.min(0, window.innerHeight - el.offsetHeight));
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    window.addEventListener("resize", update);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", update);
+    };
+  }, []);
 
   const textScrollY = useTransform(scrollYProgress, [0, 1], [0, 160]);
   const portraitScrollY = useTransform(scrollYProgress, [0, 1], [0, 70]);
@@ -201,7 +218,9 @@ export default function HeroSection() {
       onMouseMove={isMobileViewport ? undefined : handleMouseMove}
       onMouseLeave={isMobileViewport ? undefined : handleMouseLeave}
       style={{
-        position: "relative",
+        position: "sticky",
+        top: stickyTop,
+        zIndex: 0,
         minHeight: "100vh",
         background: isDarkMode
           ? "radial-gradient(circle at 50% 40%, #0d0b1a 0%, #06050b 60%, #030305 100%)"

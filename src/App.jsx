@@ -23,12 +23,15 @@ const App = () => {
             >
                     <Navbar/>
                     <HeroSection/>
-                    <TrustedBuildersSection/>
-                    <SkillSection/>
-                    <ProjectSection/>
-                    <AboutSection/>
-                    <ContactSection/>
-                    <Footer/>
+                    {/* Opaque panel that slides up over the sticky hero */}
+                    <div className="scroll-curtain">
+                        <TrustedBuildersSection/>
+                        <SkillSection/>
+                        <ProjectSection/>
+                        <AboutSection/>
+                        <ContactSection/>
+                        <Footer/>
+                    </div>
                 </div>
         </ThemeProvider>
     );
